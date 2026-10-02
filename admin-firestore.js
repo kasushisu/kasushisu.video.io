@@ -2,7 +2,10 @@ import {
   observeAuth,
   signInGoogle,
   signOutGoogle,
-  claimOrVerifyAdmin,
+  claimOrVerifyAccess,
+  subscribeAccessList,
+  grantEditorAccess,
+  revokeEditorAccess,
   subscribeLibraryItems,
   saveLibraryItem,
   deleteLibraryItem,
@@ -13,8 +16,11 @@ import {
 let items = [];
 let selectedId = null;
 let unsubscribeItems = null;
+let unsubscribeAccess = null;
+let accessEntries = [];
 let currentUser = null;
 let adminAllowed = false;
+let currentRole = "";
 
 const builtins = ["title","mask","keyword","icons","count","kpi","bars","flow","beforeafter","split","lowerthird","uipanel","staticcam","pan","pushin","focus","broll","jlcut","shotseq","speedramp","parallax","browser","cursor","fade","dissolve","wipe","pushtrans"];
 const $ = (id) => document.getElementById(id);
@@ -50,20 +56,23 @@ async function activateAdmin(user) {
   $("authMessage").textContent = "管理者権限を確認しています...";
   $("authDetail").textContent = user.email || user.uid;
   try {
-    const result = await claimOrVerifyAdmin(user);
+    const result = await claimOrVerifyAccess(user);
     if (!result.allowed) {
       adminAllowed = false;
-      setAuthError("このGoogleアカウントには管理者権限がありません。", user);
+      setAuthError("このGoogleアカウントには編集権限がありません。管理者に編集者として登録してもらってください。", user);
       return;
     }
     adminAllowed = true;
-    $("accountName").textContent = user.displayName || "管理者";
-    $("accountEmail").textContent = user.email || user.uid;
+    currentRole = result.role || "editor";
+    $("accountName").textContent = user.displayName || (currentRole === "admin" ? "管理者" : "編集者");
+    $("accountEmail").textContent = (user.email || user.uid) + " / " + (currentRole === "admin" ? "管理者" : "編集者");
+    $("accessBtn").classList.toggle("hidden", currentRole !== "admin");
     setGate("open");
     startItemsSubscription();
+    if (currentRole === "admin") startAccessSubscription();
   } catch (error) {
     console.error(error);
-    setAuthError("管理者確認に失敗しました。アクセスルールの設定を確認してください。", user);
+    setAuthError("権限確認に失敗しました。アクセスルールの設定を確認してください。", user);
   }
 }
 
@@ -72,8 +81,13 @@ observeAuth((user) => {
   else {
     currentUser = null;
     adminAllowed = false;
+    currentRole = "";
     if (unsubscribeItems) unsubscribeItems();
+    if (unsubscribeAccess) unsubscribeAccess();
     unsubscribeItems = null;
+    unsubscribeAccess = null;
+    accessEntries = [];
+    $("accessBtn").classList.add("hidden");
     $("loginBtn").classList.remove("hidden");
     $("logoutGateBtn").classList.add("hidden");
     $("authDetail").textContent = "";
@@ -168,12 +182,22 @@ function renderPreview() {
 }
 ["fPreview","fAnimate","fMediaUrl","fName","fMethod"].forEach((id) => $(id).addEventListener("input", renderPreview));
 
+function showToast(title = "完了しました", detail = "") {
+  const toast = $("saveToast");
+  toast.querySelector("b").textContent = title;
+  toast.querySelector("small").textContent = detail;
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 2400);
+}
+
 function showSavedFeedback(message = "保存しました") {
   const btn = $("saveBtn");
   btn.textContent = "✓ 編集完了！";
   btn.classList.add("saved");
   btn.disabled = true;
   $("status").textContent = message;
+  $("saveToast").querySelector("b").textContent = "編集完了！";
+  $("saveToast").querySelector("small").textContent = message;
   $("saveToast").classList.add("show");
   setTimeout(() => {
     btn.textContent = "保存する";
@@ -225,6 +249,85 @@ $("deleteBtn").onclick = async () => {
   }
 };
 
+
+function renderAccessList() {
+  if (!$('accessList')) return;
+  if (!accessEntries.length) {
+    $('accessList').innerHTML = '<div class="accessEmpty">まだ編集者は登録されていません。</div>';
+    return;
+  }
+  $('accessList').innerHTML = accessEntries.map((x) => `
+    <div class="accessUser">
+      <div><b>${esc(x.email || x.id)}</b><span>編集者</span></div>
+      <button class="accessRemove" data-email="${esc(x.email || x.id)}">編集許可を外す</button>
+    </div>`).join('');
+  document.querySelectorAll('.accessRemove').forEach((btn) => {
+    btn.onclick = async () => {
+      const email = btn.dataset.email;
+      if (!confirm(`${email} の編集許可を外しますか？`)) return;
+      btn.disabled = true;
+      try {
+        await revokeEditorAccess(email);
+        showToast('編集許可を外しました', email);
+      } catch (error) {
+        console.error(error);
+        alert('編集許可の解除に失敗しました。');
+      } finally { btn.disabled = false; }
+    };
+  });
+}
+
+function startAccessSubscription() {
+  if (unsubscribeAccess) unsubscribeAccess();
+  unsubscribeAccess = subscribeAccessList((entries) => {
+    accessEntries = entries;
+    renderAccessList();
+  }, (error) => {
+    console.error(error);
+    $('accessStatus').textContent = '編集者一覧を読み込めませんでした。';
+  });
+}
+
+function openAccessModal() {
+  if (currentRole !== 'admin') return;
+  $('accessModal').classList.remove('hidden');
+  $('accessModal').setAttribute('aria-hidden', 'false');
+  $('accessEmail').focus();
+}
+function closeAccessModal() {
+  $('accessModal').classList.add('hidden');
+  $('accessModal').setAttribute('aria-hidden', 'true');
+  $('accessStatus').textContent = '';
+  $('accessEmail').value = '';
+}
+
+$('accessBtn').onclick = openAccessModal;
+$('accessClose').onclick = closeAccessModal;
+$('accessModal').onclick = (e) => { if (e.target === $('accessModal')) closeAccessModal(); };
+$('grantEditorBtn').onclick = async () => {
+  if (currentRole !== 'admin') return;
+  const email = $('accessEmail').value.trim().toLowerCase();
+  if (!email || !email.includes('@')) {
+    $('accessStatus').textContent = 'メールアドレスを入力してください。';
+    return;
+  }
+  $('grantEditorBtn').disabled = true;
+  $('accessStatus').textContent = '登録中...';
+  try {
+    await grantEditorAccess(email, currentUser);
+    $('accessStatus').textContent = `「${email}」に編集を許可しました。`;
+    $('accessEmail').value = '';
+    showToast('編集を許可しました', email);
+  } catch (error) {
+    console.error(error);
+    $('accessStatus').textContent = '登録に失敗しました。';
+    alert('編集者の登録に失敗しました。アクセスルールを確認してください。');
+  } finally { $('grantEditorBtn').disabled = false; }
+};
+$('accessEmail').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') $('grantEditorBtn').click();
+});
+
 $("sideSearch").oninput = renderList;
 
 $("seedBtn").onclick = async () => {
@@ -239,7 +342,7 @@ $("exportBtn").onclick = () => {
   const blob = new Blob([JSON.stringify(items, null, 2)], { type: "application/json" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = "business-video-library-firestore.json";
+  a.download = "business-video-library.json";
   a.click();
   URL.revokeObjectURL(a.href);
 };

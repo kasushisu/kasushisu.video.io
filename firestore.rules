@@ -9,27 +9,57 @@ service cloud.firestore {
       return exists(/databases/$(database)/documents/settings/admin);
     }
 
-    function isAdmin() {
+    function isInitialAdmin() {
       return signedIn()
         && adminExists()
         && get(/databases/$(database)/documents/settings/admin).data.uid == request.auth.uid;
     }
 
-    // Public library content: anyone can read, only the claimed admin can write.
-    match /videoLibrary/{itemId} {
-      allow read: if true;
-      allow create, update, delete: if isAdmin();
+    function hasEmailRole(roleName) {
+      return signedIn()
+        && request.auth.token.email != null
+        && exists(/databases/$(database)/documents/access/$(request.auth.token.email))
+        && get(/databases/$(database)/documents/access/$(request.auth.token.email)).data.role == roleName;
     }
 
-    // First signed-in user claims the admin role once.
+    // Backward compatibility with the previous UID-based editor version.
+    function hasLegacyUidRole(roleName) {
+      return signedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == roleName;
+    }
+
+    function canEdit() {
+      return isInitialAdmin() || hasEmailRole("editor") || hasLegacyUidRole("editor") || hasLegacyUidRole("admin");
+    }
+
+    match /videoLibrary/{itemId} {
+      allow read: if true;
+      allow create, update, delete: if canEdit();
+    }
+
+    // The first signed-in user claims the single administrator role once.
     match /settings/admin {
       allow read: if signedIn();
       allow create: if signedIn()
         && !exists(/databases/$(database)/documents/settings/admin)
         && request.resource.data.uid == request.auth.uid;
-      allow update: if isAdmin()
+      allow update: if isInitialAdmin()
         && request.resource.data.uid == resource.data.uid;
       allow delete: if false;
+    }
+
+    // Editor permissions are granted by email from the admin screen.
+    match /access/{email} {
+      allow read: if isInitialAdmin()
+        || (signedIn() && request.auth.token.email == email);
+      allow create, update, delete: if isInitialAdmin();
+    }
+
+    // Legacy UID-role documents remain readable for existing users.
+    match /users/{userId} {
+      allow read: if signedIn() && request.auth.uid == userId;
+      allow create, update, delete: if false;
     }
   }
 }

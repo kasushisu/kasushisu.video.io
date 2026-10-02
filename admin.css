@@ -21,3 +21,15 @@
   font-size:11px;
   overflow-wrap:anywhere;
 }
+
+.accessModal{position:fixed;inset:0;z-index:120;background:rgba(15,23,42,.62);display:grid;place-items:center;padding:20px}
+.accessModal.hidden{display:none}
+.accessDialog{width:min(620px,100%);max-height:86vh;overflow:auto;background:#fff;border-radius:20px;padding:22px;box-shadow:0 30px 100px rgba(0,0,0,.25)}
+.accessHeader{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;border-bottom:1px solid #e4e7ec;padding-bottom:15px;margin-bottom:16px}
+.accessHeader h2{margin:0 0 5px;font-size:21px}.accessHeader p{margin:0;color:#667085;font-size:12px;line-height:1.6}
+.accessClose{border:0;background:#f2f4f7;width:36px;height:36px;border-radius:50%;font-size:20px;cursor:pointer;flex:none}
+.accessAdd{display:grid;grid-template-columns:1fr auto;gap:9px}.accessAdd input{min-width:0;height:43px;border:1px solid #d0d5dd;border-radius:10px;padding:0 12px;font:inherit;font-size:13px}
+.accessStatus{min-height:22px;margin:8px 0 4px;color:#027a48;font-size:12px;font-weight:700}
+.accessSectionTitle{font-size:11px;font-weight:900;color:#475467;margin:14px 0 8px}
+.accessList{display:grid;gap:8px}.accessUser{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 12px;border:1px solid #e4e7ec;border-radius:11px;background:#f9fafb}.accessUser b{display:block;font-size:13px}.accessUser span{display:block;color:#667085;font-size:10px;margin-top:2px}.accessRemove{border:1px solid #fecdca;background:#fff1f3;color:#b42318;border-radius:8px;padding:7px 9px;font-size:11px;font-weight:800;cursor:pointer;white-space:nowrap}.accessEmpty{padding:20px;border:1px dashed #d0d5dd;border-radius:10px;text-align:center;color:#667085;font-size:12px}.accessHelp{margin:14px 0 0;color:#667085;font-size:11px;line-height:1.7}
+@media(max-width:600px){.accessAdd{grid-template-columns:1fr}.accessUser{align-items:flex-start;flex-direction:column}.accessRemove{width:100%}}

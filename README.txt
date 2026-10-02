@@ -28,3 +28,13 @@ Business Video Visual Library - データベース 無料版
   例: videos/wipe.webm
 
 詳しくは FIREBASE_SETUP.md を参照してください。
+
+
+権限管理:
+- 管理者 / 編集者に対応
+- 編集者追加手順は ROLE_SETUP.md を参照
+
+
+編集者管理:
+- 管理者画面の「👥 編集者を管理」からメールアドレスだけで編集許可を付与・解除できます。
+- 詳細は EDITOR_ACCESS.md を参照してください。
