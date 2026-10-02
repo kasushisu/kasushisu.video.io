@@ -77,6 +77,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
 <script>
+  // あなたのFirebase情報をセット済みです
   const firebaseConfig = {
     apiKey: "AIzaSyB5h33UE3EyizqJUIkbopXnQk5jQtU4aOI",
     authDomain: "my-videosite-58b4e.firebaseapp.com",
@@ -91,51 +92,204 @@
   window.db = firebase.firestore();
 </script>
 
+<!-- ▼ プログラム本体 ▼ -->
 <script src="data.js"></script>
 <script src="app.js"></script>
 <script>
-let items=getItems(),selectedId=items[0]?.id||null,mediaDirty=false,pendingMedia=null;
-const builtins=["title","mask","keyword","icons","count","kpi","bars","flow","beforeafter","split","lowerthird","uipanel","staticcam","pan","pushin","focus","broll","jlcut","shotseq","speedramp","parallax","browser","cursor","fade","dissolve","wipe","pushtrans"];
-const $=id=>document.getElementById(id);
-window.CATEGORIES.filter(x=>x!=="すべて").forEach(x=>$("fCategory").insertAdjacentHTML("beforeend",`<option>${esc(x)}</option>`));window.METHODS.filter(x=>x!=="すべて").forEach(x=>$("fMethod").insertAdjacentHTML("beforeend",`<option>${esc(x)}</option>`));builtins.forEach(x=>$("fPreview").insertAdjacentHTML("beforeend",`<option>${esc(x)}</option>`));
-function renderList(){items=getItems();const w=$("sideSearch").value.trim().toLowerCase();$("itemList").innerHTML=items.filter(x=>!w||(x.id+" "+x.name+" "+x.category).toLowerCase().includes(w)).map(x=>`<button class="itemBtn ${x.id===selectedId?"active":""}" data-id="${esc(x.id)}"><b>${esc(x.id)}｜${esc(x.name)}</b><span>${esc(x.category)} / ${esc(x.method)}</span></button>`).join("");document.querySelectorAll(".itemBtn").forEach(b=>b.onclick=()=>{selectedId=b.dataset.id;loadSelected();renderList()})}
-function loadSelected(){const x=getItems().find(i=>i.id===selectedId);if(!x)return;["Id","Name","Desc","Use","Tech","Note","Tags","Youtube","MediaUrl"].forEach(k=>{const key=k.charAt(0).toLowerCase()+k.slice(1);$("f"+k).value=x[key]||""});$("fCategory").value=x.category\vert{}\vert{}"モーション";$("fMethod").value=x.method||"AE";$("fLevel").value=x.level\vert{}\vert{}"初級";$("fPreview").value=x.preview||"title";$("fAnimate").checked=!!x.animate;pendingMedia=x.mediaData?{data:x.mediaData,type:x.mediaType}:null;mediaDirty=false;$("fileMeta").textContent=x.mediaData?("アップロード済み: "+(x.mediaType||"media")):"";renderPreview()}
-function currentDraft(){return {id:$("fId").value.trim(),name:$("fName").value.trim(),category:$("fCategory").value,method:$("fMethod").value,level:$("fLevel").value,desc:$("fDesc").value.trim(),use:$("fUse").value.trim(),tech:$("fTech").value.trim(),note:$("fNote").value.trim(),tags:$("fTags").value.trim(),youtube:$("fYoutube").value.trim(),preview:$("fPreview").value,animate:$("fAnimate").checked,mediaUrl:$("fMediaUrl").value.trim(),mediaData:pendingMedia?.data||"",mediaType:pendingMedia?.type||""}}
-function renderPreview(){const x=currentDraft();$("previewAdmin").innerHTML=renderMedia(x,true)}
-["fPreview","fAnimate","fMediaUrl","fName","fMethod"].forEach(id=>$(id).addEventListener("input",renderPreview));
+let items = getItems();
+let selectedId = items[0]?.id || null;
+let mediaDirty = false;
+let pendingMedia = null;
+
+const builtins = ["title","mask","keyword","icons","count","kpi","bars","flow","beforeafter","split","lowerthird","uipanel","staticcam","pan","pushin","focus","broll","jlcut","shotseq","speedramp","parallax","browser","cursor","fade","dissolve","wipe","pushtrans"];
+const $ = id => document.getElementById(id);
+
+window.CATEGORIES.filter(x => x !== "すべて").forEach(x => $("fCategory").insertAdjacentHTML("beforeend", `<option>${esc(x)}</option>`));
+window.METHODS.filter(x => x !== "すべて").forEach(x => $("fMethod").insertAdjacentHTML("beforeend", `<option>${esc(x)}</option>`));
+builtins.forEach(x => $("fPreview").insertAdjacentHTML("beforeend", `<option>${esc(x)}</option>`));
+
+function renderList() {
+  items = getItems();
+  const w = $("sideSearch").value.trim().toLowerCase();
+  $("itemList").innerHTML = items.filter(x => !w || (x.id + " " + x.name + " " + x.category).toLowerCase().includes(w)).map(x => 
+    `<button class="itemBtn ${x.id === selectedId ? "active" : ""}" data-id="${esc(x.id)}">
+      <b>${esc(x.id)}｜${esc(x.name)}</b>
+      <span>${esc(x.category)} / ${esc(x.method)}</span>
+    </button>`
+  ).join("");
+  
+  document.querySelectorAll(".itemBtn").forEach(b => {
+    b.onclick = () => {
+      selectedId = b.dataset.id;
+      loadSelected();
+      renderList();
+    };
+  });
+}
+
+function loadSelected() {
+  const x = getItems().find(i => i.id === selectedId);
+  if(!x) return;
+  ["Id","Name","Desc","Use","Tech","Note","Tags","Youtube","MediaUrl"].forEach(k => {
+    const key = k.charAt(0).toLowerCase() + k.slice(1);
+    $("f"+k).value = x[key] || "";
+  });
+  $("fCategory").value = x.category || "モーション";
+  $("fMethod").value = x.method || "AE";
+  $("fLevel").value = x.level || "初級";
+  $("fPreview").value = x.preview || "title";
+  $("fAnimate").checked = !!x.animate;
+  pendingMedia = x.mediaData ? {data: x.mediaData, type: x.mediaType} : null;
+  mediaDirty = false;
+  $("fileMeta").textContent = x.mediaData ? ("アップロード済み: " + (x.mediaType || "media")) : "";
+  renderPreview();
+}
+
+function currentDraft() {
+  return {
+    id: $("fId").value.trim(),
+    name: $("fName").value.trim(),
+    category: $("fCategory").value,
+    method: $("fMethod").value,
+    level: $("fLevel").value,
+    desc: $("fDesc").value.trim(),
+    use: $("fUse").value.trim(),
+    tech: $("fTech").value.trim(),
+    note: $("fNote").value.trim(),
+    tags: $("fTags").value.trim(),
+    youtube: $("fYoutube").value.trim(),
+    preview: $("fPreview").value,
+    animate: $("fAnimate").checked,
+    mediaUrl: $("fMediaUrl").value.trim(),
+    mediaData: pendingMedia?.data || "",
+    mediaType: pendingMedia?.type || ""
+  };
+}
+
+function renderPreview() {
+  const x = currentDraft();
+  $("previewAdmin").innerHTML = renderMedia(x, true);
+}
+
+["fPreview","fAnimate","fMediaUrl","fName","fMethod"].forEach(id => {
+  $(id).addEventListener("input", renderPreview);
+});
 
 // Firebaseへ保存する処理
-$("saveBtn").onclick=async ()=>{
-  const x=currentDraft();
-  if(!x.id||!x.name){alert("IDと名称は必須です");return}
-  let arr=getItems();
-  const oldIndex=arr.findIndex(i=>i.id===selectedId);
-  if(oldIndex>=0)arr[oldIndex]=x;else arr.push(x);
+$("saveBtn").onclick = async () => {
+  const x = currentDraft();
+  if(!x.id || !x.name) { alert("IDと名称は必須です"); return; }
+  let arr = getItems();
+  const oldIndex = arr.findIndex(i => i.id === selectedId);
+  if(oldIndex >= 0) arr[oldIndex] = x;
+  else arr.push(x);
   
   try {
-    $("status").textContent="Firebaseへ保存中...";
+    $("status").textContent = "Firebaseへ保存中...";
     await window.db.collection("library").doc("alldata").set({ items: arr });
     setItems(arr);
-    selectedId=x.id;
-    $("status").textContent="Firebaseに保存しました！";
-    setTimeout(()=>$("status").textContent="",1800);
+    selectedId = x.id;
+    $("status").textContent = "Firebaseに保存しました！";
+    setTimeout(() => $("status").textContent = "", 1800);
     renderList();
     loadSelected();
   } catch(error) {
     console.error(error);
-    $("status").textContent="保存エラーが発生しました";
+    $("status").textContent = "保存エラーが発生しました";
   }
 };
 
-$("newBtn").onclick=()=>{selectedId="";["fId","fName","fDesc","fUse","fTech","fNote","fTags","fYoutube","fMediaUrl"].forEach(id=>$(id).value="");$("fCategory").value="モーション";$("fMethod").value="AE";$("fLevel").value="初級";$("fPreview").value="title";$("fAnimate").checked=false;pendingMedia=null;$("fileMeta").textContent="";renderPreview();renderList()};
-$("deleteBtn").onclick=()=>{if(!selectedId)return;if(!confirm("この項目を削除しますか？"))return;let arr=getItems().filter(i=>i.id!==selectedId);setItems(arr);items=arr;selectedId=arr[0]?.id||null;renderList();if(selectedId)loadSelected()};
-$("mediaFile").onchange=e=>{const f=e.target.files[0];if(!f)return;const limit=4.5*1024*1024;if(f.size>limit&&!confirm("ファイルが約"+(f.size/1024/1024).toFixed(1)+"MBあります。ブラウザ保存容量を超える可能性があります。続行しますか？")){e.target.value="";return}const r=new FileReader();r.onload=()=>{pendingMedia={data:r.result,type:f.type};$("fileMeta").textContent=f.name+" / "+(f.size/1024/1024).toFixed(2)+"MB";renderPreview()};r.readAsDataURL(f)};
-$("clearMedia").onclick=()=>{pendingMedia=null;$("mediaFile").value="";$("fileMeta").textContent="アップロード素材を解除しました";renderPreview()};
-$("sideSearch").oninput=renderList;
-$("resetBtn").onclick=()=>{if(!confirm("編集内容をすべて初期状態に戻しますか？"))return;items=resetItems();selectedId=items[0]?.id||null;renderList();loadSelected()};
-$("exportBtn").onclick=()=>{const blob=new Blob([JSON.stringify(getItems(),null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="business-video-library.json";a.click();URL.revokeObjectURL(a.href)};
-$("importFile").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const arr=JSON.parse(r.result);if(!Array.isArray(arr))throw new Error();setItems(arr);items=arr;selectedId=arr[0]?.id||null;renderList();if(selectedId)loadSelected();alert("読み込みました")}catch(err){alert("JSON形式を確認してください")}};r.readAsText(f)};
-renderList();if(selectedId)loadSelected();
+$("newBtn").onclick = () => {
+  selectedId = "";
+  ["fId","fName","fDesc","fUse","fTech","fNote","fTags","fYoutube","fMediaUrl"].forEach(id => $(id).value = "");
+  $("fCategory").value = "モーション";
+  $("fMethod").value = "AE";
+  $("fLevel").value = "初級";
+  $("fPreview").value = "title";
+  $("fAnimate").checked = false;
+  pendingMedia = null;
+  $("fileMeta").textContent = "";
+  renderPreview();
+  renderList();
+};
+
+$("deleteBtn").onclick = () => {
+  if(!selectedId) return;
+  if(!confirm("この項目を削除しますか？")) return;
+  let arr = getItems().filter(i => i.id !== selectedId);
+  setItems(arr);
+  items = arr;
+  selectedId = arr[0]?.id || null;
+  renderList();
+  if(selectedId) loadSelected();
+};
+
+$("mediaFile").onchange = e => {
+  const f = e.target.files[0];
+  if(!f) return;
+  const limit = 4.5 * 1024 * 1024;
+  if(f.size > limit && !confirm("ファイルが約" + (f.size/1024/1024).toFixed(1) + "MBあります。続行しますか？")) {
+    e.target.value = "";
+    return;
+  }
+  const r = new FileReader();
+  r.onload = () => {
+    pendingMedia = {data: r.result, type: f.type};
+    $("fileMeta").textContent = f.name + " / " + (f.size/1024/1024).toFixed(2) + "MB";
+    renderPreview();
+  };
+  r.readAsDataURL(f);
+};
+
+$("clearMedia").onclick = () => {
+  pendingMedia = null;
+  $("mediaFile").value = "";
+  $("fileMeta").textContent = "アップロード素材を解除しました";
+  renderPreview();
+};
+
+$("sideSearch").oninput = renderList;
+
+$("resetBtn").onclick = () => {
+  if(!confirm("編集内容をすべて初期状態に戻しますか？")) return;
+  items = resetItems();
+  selectedId = items[0]?.id || null;
+  renderList();
+  loadSelected();
+};
+
+$("exportBtn").onclick = () => {
+  const blob = new Blob([JSON.stringify(getItems(), null, 2)], {type: "application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "business-video-library.json";
+  a.click();
+  URL.revokeObjectURL(a.href);
+};
+
+$("importFile").onchange = e => {
+  const f = e.target.files[0];
+  if(!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      const arr = JSON.parse(r.result);
+      if(!Array.isArray(arr)) throw new Error();
+      setItems(arr);
+      items = arr;
+      selectedId = arr[0]?.id || null;
+      renderList();
+      if(selectedId) loadSelected();
+      alert("読み込みました");
+    } catch(err) {
+      alert("JSON形式を確認してください");
+    }
+  };
+  r.readAsText(f);
+};
+
+renderList();
+if(selectedId) loadSelected();
 </script>
 </body>
 </html>
