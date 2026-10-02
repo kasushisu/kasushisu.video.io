@@ -24,7 +24,29 @@ function loadSelected(){const x=getItems().find(i=>i.id===selectedId);if(!x)retu
 function currentDraft(){return {id:$("fId").value.trim(),name:$("fName").value.trim(),category:$("fCategory").value,method:$("fMethod").value,level:$("fLevel").value,desc:$("fDesc").value.trim(),use:$("fUse").value.trim(),tech:$("fTech").value.trim(),note:$("fNote").value.trim(),tags:$("fTags").value.trim(),youtube:$("fYoutube").value.trim(),preview:$("fPreview").value,animate:$("fAnimate").checked,mediaUrl:$("fMediaUrl").value.trim(),mediaData:pendingMedia?.data||"",mediaType:pendingMedia?.type||""}}
 function renderPreview(){const x=currentDraft();$("previewAdmin").innerHTML=renderMedia(x,true)}
 ["fPreview","fAnimate","fMediaUrl","fName","fMethod"].forEach(id=>$(id).addEventListener("input",renderPreview));
-$("saveBtn").onclick=()=>{const x=currentDraft();if(!x.id||!x.name){alert("IDと名称は必須です");return}let arr=getItems();const oldIndex=arr.findIndex(i=>i.id===selectedId);if(oldIndex>=0)arr[oldIndex]=x;else arr.push(x);setItems(arr);selectedId=x.id;$("status").textContent="保存しました";setTimeout(()=>$("status").textContent="",1800);renderList();loadSelected()};
+$("saveBtn").onclick=async ()=>{
+  const x=currentDraft();
+  if(!x.id||!x.name){alert("IDと名称は必須です");return}
+  let arr=getItems();
+  const oldIndex=arr.findIndex(i=>i.id===selectedId);
+  if(oldIndex>=0)arr[oldIndex]=x;
+  else arr.push(x);
+  
+  // ▼ ここからFirebaseへ送信する処理
+  try {
+    $("status").textContent="Firebaseへ保存中...";
+    await window.setDoc(window.doc(window.db, "library", "all-data"), { items: arr });
+    setItems(arr); // 念のため手元も更新
+    selectedId=x.id;
+    $("status").textContent="Firebaseに保存しました！";
+    setTimeout(()=>$("status").textContent="",1800);
+    renderList();
+    loadSelected();
+  } catch(error) {
+    console.error(error);
+    $("status").textContent="保存エラーが発生しました";
+  }
+};
 $("newBtn").onclick=()=>{selectedId="";["fId","fName","fDesc","fUse","fTech","fNote","fTags","fYoutube","fMediaUrl"].forEach(id=>$(id).value="");$("fCategory").value="モーション";$("fMethod").value="AE";$("fLevel").value="初級";$("fPreview").value="title";$("fAnimate").checked=false;pendingMedia=null;$("fileMeta").textContent="";renderPreview();renderList()};
 $("deleteBtn").onclick=()=>{if(!selectedId)return;if(!confirm("この項目を削除しますか？"))return;let arr=getItems().filter(i=>i.id!==selectedId);setItems(arr);items=arr;selectedId=arr[0]?.id||null;renderList();if(selectedId)loadSelected()};
 $("mediaFile").onchange=e=>{const f=e.target.files[0];if(!f)return;const limit=4.5*1024*1024;if(f.size>limit&&!confirm("ファイルが約"+(f.size/1024/1024).toFixed(1)+"MBあります。ブラウザ保存容量を超える可能性があります。続行しますか？")){e.target.value="";return}const r=new FileReader();r.onload=()=>{pendingMedia={data:r.result,type:f.type};$("fileMeta").textContent=f.name+" / "+(f.size/1024/1024).toFixed(2)+"MB";renderPreview()};r.readAsDataURL(f)};
