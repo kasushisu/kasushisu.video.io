@@ -123,6 +123,16 @@ main{padding:30px 0 90px}
 .uislide{width:190px;height:108px;position:relative;overflow:hidden} .uislide .s{position:absolute;inset:0;background:#fff;border:1px solid #d0d5dd;border-radius:12px} .uislide .a{animation:slideA 3s infinite} .uislide .b{transform:translateX(110%);animation:slideB 3s infinite} @keyframes slideA{0%,25%{transform:translateX(0)}50%,100%{transform:translateX(-110%)}} @keyframes slideB{0%,25%{transform:translateX(110%)}50%,78%{transform:translateX(0)}100%{transform:translateX(110%)}}
 .buttonPulse{padding:12px 18px;background:#111827;color:#fff;border-radius:10px;font-weight:800;position:relative} .buttonPulse:after{content:"";position:absolute;inset:-1px;border:2px solid var(--pink);border-radius:11px;animation:ring 2s infinite} @keyframes ring{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.45);opacity:0}}
 
+
+.ytRefs{margin-top:18px;border-top:1px solid rgba(255,255,255,.14);padding-top:14px}
+.ytRefsTitle{font-size:12px;font-weight:800;color:#fff;margin-bottom:9px}
+.ytList{display:grid;gap:8px}
+.ytLink{display:flex;align-items:center;justify-content:space-between;gap:10px;text-decoration:none;background:#fff;color:#111827;border-radius:10px;padding:10px 12px;font-size:12px;font-weight:800;transition:.18s}
+.ytLink:hover{transform:translateY(-1px);background:#f8fafc}
+.ytLink span{display:block;font-size:10px;font-weight:600;color:#667085;margin-top:2px}
+.ytIcon{flex:none;width:26px;height:20px;border-radius:6px;background:#ff0033;color:#fff;display:grid;place-items:center;font-size:10px}
+.refHint{margin-top:9px;color:#98a2b3!important;font-size:11px!important;line-height:1.55!important}
+
 @media(max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}.sheetTop,.details{grid-template-columns:1fr}}
 @media(max-width:640px){.grid{grid-template-columns:1fr}.topline{display:block}.count{width:100%;justify-content:center}}
 </style>
@@ -155,7 +165,10 @@ main{padding:30px 0 90px}
 <div class="head"><button class="close" id="close">×</button><div class="code" id="dCode"></div><h2 id="dName"></h2><p id="dDesc"></p><div class="pills" id="dPills"></div></div></div>
 <div class="details">
 <div><div class="block"><h4>向いている用途</h4><p id="dUse"></p></div><div class="note"><b>使うときのポイント</b><p id="dNote"></p></div></div>
-<div><div class="tech"><h4>技術メモ</h4><p id="dAE"></p></div><div class="block" style="margin-top:20px"><h4>検索ワード</h4><p id="dTags"></p></div></div>
+<div><div class="tech"><h4>技術メモ</h4><p id="dAE"></p>
+<div class="ytRefs"><div class="ytRefsTitle">参考YouTube</div><div class="ytList" id="dYT"></div>
+<p class="refHint">外部YouTubeに移動します。具体的な参考動画があるものは直接リンク、それ以外は関連チュートリアル検索を開きます。</p></div>
+</div><div class="block" style="margin-top:20px"><h4>検索ワード</h4><p id="dTags"></p></div></div>
 </div>
 <div class="foot">※ プレビューはAEでよく使うタイミング・イージング・レイヤー感をCSSで再現した試作です。実運用では実際のAE書き出し動画（WebM/MP4）へ差し替える設計です。</div>
 </div></div>
@@ -258,13 +271,81 @@ buildFilters(cats,document.getElementById("catFilters"),"cat");buildFilters(meth
 q.oninput=render;
 
 const modal=document.getElementById("modal");
+
+function ytSearchUrl(query){
+  return "https://www.youtube.com/results?search_query="+encodeURIComponent(query);
+}
+function youtubeRefs(x){
+  const refs=[];
+
+  // Curated reference videos
+  if(x.cat==="カメラワーク"){
+    refs.push({
+      title:"StudioBinder：Camera Movement Techniques",
+      sub:"固定・パン・チルト・Push In・Pull Out・Trackingなどをまとめて確認",
+      url:"https://www.youtube.com/watch?v=IiyBo-qLDeM"
+    });
+  }
+  if(x.id==="E03" || x.id==="E04"){
+    refs.push({
+      title:"How To Do L Cuts and J Cuts",
+      sub:"Jカット / Lカットの考え方と編集方法",
+      url:"https://www.youtube.com/watch?v=Nqoev3JPXig"
+    });
+  }
+  if(["D01","D02","D03","D04"].includes(x.id)){
+    refs.push({
+      title:"Infographic Animation [AfterEffects Tutorial]",
+      sub:"棒グラフ・円グラフ・カウント系のAEインフォグラフィック",
+      url:"https://www.youtube.com/watch?v=cXxuWBQQ4vY"
+    });
+  }
+  if(["D03","D07","D08"].includes(x.id)){
+    refs.push({
+      title:"Graph Animation in After Effects",
+      sub:"グラフ描画・Trim Paths・データ表現の参考",
+      url:"https://www.youtube.com/watch?v=BHtkYj8pW4Y"
+    });
+  }
+
+  // Always add a technique-specific YouTube search link
+  let query = "";
+  if(x.method==="AE"){
+    query = "After Effects " + x.name + " tutorial";
+  } else if(x.method==="撮影"){
+    query = x.name + " camera movement tutorial filmmaking";
+  } else {
+    query = x.name + " tutorial After Effects filmmaking";
+  }
+  refs.push({
+    title:"YouTubeで「"+x.name+"」を探す",
+    sub:"関連チュートリアルを検索",
+    url:ytSearchUrl(query)
+  });
+
+  // Limit duplicates / keep UI compact
+  const seen=new Set();
+  return refs.filter(r=>{
+    if(seen.has(r.url)) return false;
+    seen.add(r.url); return true;
+  }).slice(0,3);
+}
+function renderYoutubeRefs(x){
+  const refs=youtubeRefs(x);
+  return refs.map(r=>`
+    <a class="ytLink" href="${r.url}" target="_blank" rel="noopener noreferrer">
+      <div><div>${r.title}</div><span>${r.sub}</span></div>
+      <div class="ytIcon">▶</div>
+    </a>`).join("");
+}
+
 function openDetail(id){
  const x=items.find(i=>i.id===id); if(!x)return;
  document.getElementById("bigPrev").innerHTML=preview(x.preview,x.method,true);
  document.getElementById("dCode").textContent=`${x.id} / ${x.cat}`;
  document.getElementById("dName").textContent=x.name;document.getElementById("dDesc").textContent=x.desc;
  document.getElementById("dPills").innerHTML=`<span class="pill">${x.level}</span><span class="pill">${x.method}</span><span class="pill">${x.cat}</span>`;
- document.getElementById("dUse").textContent=x.use;document.getElementById("dAE").textContent=x.ae;document.getElementById("dNote").textContent=x.note;document.getElementById("dTags").textContent=x.tags;
+ document.getElementById("dUse").textContent=x.use;document.getElementById("dAE").textContent=x.ae;document.getElementById("dNote").textContent=x.note;document.getElementById("dTags").textContent=x.tags;document.getElementById("dYT").innerHTML=renderYoutubeRefs(x);
  modal.classList.add("open");document.body.style.overflow="hidden";
 }
 function closeModal(){modal.classList.remove("open");document.body.style.overflow=""}
