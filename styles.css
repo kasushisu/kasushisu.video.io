@@ -29,3 +29,5 @@ main{padding:28px 0 90px}.intro{display:flex;justify-content:space-between;gap:2
 @media(max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}.sheetTop,.details{grid-template-columns:1fr}}@media(max-width:650px){.grid{grid-template-columns:1fr}.intro{display:block}.count{width:100%;justify-content:center}}
 
 .adminFab{position:fixed;right:22px;bottom:22px;z-index:18;display:inline-flex;align-items:center;gap:7px;padding:12px 16px;border-radius:999px;background:#111827;color:#fff;text-decoration:none;font-size:13px;font-weight:900;box-shadow:0 14px 36px rgba(15,23,42,.24);border:1px solid rgba(255,255,255,.12);transition:.18s ease}.adminFab:hover{transform:translateY(-2px);box-shadow:0 18px 42px rgba(15,23,42,.28)}.adminTopButton{box-shadow:0 8px 20px rgba(15,23,42,.08)}@media(max-width:650px){.adminFab{right:14px;bottom:14px;padding:10px 13px;font-size:12px}}
+
+.syncStatus{cursor:default}.syncStatus.online{color:#067647;background:#ecfdf3;border-color:#abefc6}.syncStatus.error{color:#b42318;background:#fff1f3;border-color:#fecdca}

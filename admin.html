@@ -1,37 +1,41 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>管理画面 - Business Video Visual Library</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="admin.css"></head>
-<body><div id="saveToast" class="saveToast" role="status" aria-live="polite"><span class="saveToastIcon">✓</span><div><b>編集完了！</b><small>公開ページに反映しました</small></div></div><div class="adminShell"><aside class="sidebar"><div class="brand">Visual Library CMS</div><div class="sideNote">公開ページの項目・説明・参考URL・プレビューを編集できます。</div>
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>管理画面 - Business Video Visual Library</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="admin.css"></head>
+<body>
+<div id="saveToast" class="saveToast" role="status" aria-live="polite"><span class="saveToastIcon">✓</span><div><b>編集完了！</b><small>Firestoreに保存しました</small></div></div>
+<div id="authGate" class="authGate"><div class="authCard"><div class="authMark">⚙</div><h1>管理画面</h1><p id="authMessage">編集するにはGoogleアカウントでログインしてください。</p><button id="loginBtn" class="btn primary authButton">Googleでログイン</button><button id="logoutGateBtn" class="btn ghost authButton hidden">ログアウト</button><div id="authDetail" class="authDetail"></div><p class="authHint">初回のみ、最初にログインしたGoogleアカウントが管理者として登録されます。</p></div></div>
+<div class="adminShell" id="adminShell" aria-hidden="true"><aside class="sidebar"><div class="brand">Visual Library CMS</div><div class="sideNote">Firestoreに保存され、公開ページへ全端末共通で反映されます。画像・動画はGitHubのURLを使用します。</div>
+<div class="accountBox"><div id="accountName" class="accountName"></div><div id="accountEmail" class="accountEmail"></div><button id="logoutBtn" class="miniLogout">ログアウト</button></div>
 <div class="sideActions"><button id="newBtn" class="btn primary">＋ 新規</button><a class="btn light" style="text-align:center;text-decoration:none" href="index.html">公開ページ</a></div>
 <input id="sideSearch" class="sideSearch" placeholder="項目を検索"><div class="itemList" id="itemList"></div></aside>
-<main class="editor"><div class="editorTop"><div><h1>項目を編集</h1><div class="status" id="status"></div></div><div class="toolbar"><button id="exportBtn" class="btn ghost">JSON書き出し</button><label class="btn ghost" style="display:inline-block">JSON読込<input id="importFile" type="file" accept="application/json" class="hidden"></label><button id="resetBtn" class="btn danger">初期データに戻す</button></div></div>
+<main class="editor"><div class="editorTop"><div><h1>項目を編集</h1><div class="status" id="status"></div></div><div class="toolbar"><button id="seedBtn" class="btn ghost">初期データを登録</button><button id="exportBtn" class="btn ghost">JSON書き出し</button><label class="btn ghost" style="display:inline-block">JSON読込<input id="importFile" type="file" accept="application/json" class="hidden"></label></div></div>
+<div id="emptyFirestoreBanner" class="cloudBanner hidden"><b>Firestoreに項目がありません。</b><span>「初期データを登録」を押すと、現在の見本データをクラウドへ登録できます。</span></div>
 <div class="formGrid"><section class="panelBox"><h2>基本情報</h2>
 <div class="two"><div class="field"><label>ID</label><input id="fId"></div><div class="field"><label>カテゴリ</label><select id="fCategory"></select></div></div>
 <div class="field"><label>名称</label><input id="fName"></div><div class="field"><label>一言説明</label><input id="fDesc"></div>
 <div class="two"><div class="field"><label>作り方</label><select id="fMethod"></select></div><div class="field"><label>難易度</label><select id="fLevel"><option>初級</option><option>中級</option><option>上級</option></select></div></div>
 <div class="field"><label>向いている用途</label><input id="fUse"></div><div class="field"><label>技術メモ</label><textarea id="fTech"></textarea></div><div class="field"><label>使うときのポイント</label><textarea id="fNote"></textarea></div><div class="field"><label>検索ワード</label><input id="fTags"></div><div class="field"><label>参考YouTube URL</label><input id="fYoutube" placeholder="https://www.youtube.com/..."></div>
-<div class="toolbar"><button id="saveBtn" class="btn primary">保存する</button><button id="deleteBtn" class="btn danger">削除</button></div></section>
+<div class="toolbar"><button id="saveBtn" class="btn primary">Firestoreへ保存</button><button id="deleteBtn" class="btn danger">削除</button></div></section>
 <section class="panelBox"><h2>プレビュー</h2><div id="previewAdmin" class="previewAdmin"></div>
 <div class="field" style="margin-top:14px"><label>内蔵プレビュー</label><select id="fPreview"></select></div><div class="field"><label><input id="fAnimate" type="checkbox" style="width:auto;margin-right:6px">分かりやすい場合だけアニメーションする</label></div>
-<div class="uploadBox"><b style="font-size:12px">画像 / 動画を差し替え</b><div class="field" style="margin-top:9px;margin-bottom:7px"><input id="mediaFile" type="file" accept="image/*,video/mp4,video/webm"></div><small>画像・短いMP4/WebMをアップロードできます。ファイルはブラウザ内に保存されます。大きい動画はブラウザ容量に収まらない場合があります。</small><div id="fileMeta" class="fileMeta"></div><button id="clearMedia" class="btn ghost" style="margin-top:8px">アップロードを解除</button></div>
-<div class="field" style="margin-top:14px"><label>または外部画像/動画URL</label><input id="fMediaUrl" placeholder="https://.../preview.webp"></div>
-<p class="help">アップロード素材または外部URLが設定されている場合は、内蔵プレビューより優先して公開ページに表示します。</p></section></div></main></div>
-<script src="data.js"></script><script src="app.js"></script><script>
-let items=getItems(),selectedId=items[0]?.id||null,mediaDirty=false,pendingMedia=null;
-const builtins=["title","mask","keyword","icons","count","kpi","bars","flow","beforeafter","split","lowerthird","uipanel","staticcam","pan","pushin","focus","broll","jlcut","shotseq","speedramp","parallax","browser","cursor","fade","dissolve","wipe","pushtrans"];
-const $=id=>document.getElementById(id);
-window.CATEGORIES.filter(x=>x!=="すべて").forEach(x=>$("fCategory").insertAdjacentHTML("beforeend",`<option>${esc(x)}</option>`));window.METHODS.filter(x=>x!=="すべて").forEach(x=>$("fMethod").insertAdjacentHTML("beforeend",`<option>${esc(x)}</option>`));builtins.forEach(x=>$("fPreview").insertAdjacentHTML("beforeend",`<option>${esc(x)}</option>`));
-function renderList(){items=getItems();const w=$("sideSearch").value.trim().toLowerCase();$("itemList").innerHTML=items.filter(x=>!w||(x.id+" "+x.name+" "+x.category).toLowerCase().includes(w)).map(x=>`<button class="itemBtn ${x.id===selectedId?"active":""}" data-id="${esc(x.id)}"><b>${esc(x.id)}｜${esc(x.name)}</b><span>${esc(x.category)} / ${esc(x.method)}</span></button>`).join("");document.querySelectorAll(".itemBtn").forEach(b=>b.onclick=()=>{selectedId=b.dataset.id;loadSelected();renderList()})}
-function loadSelected(){const x=getItems().find(i=>i.id===selectedId);if(!x)return;["Id","Name","Desc","Use","Tech","Note","Tags","Youtube","MediaUrl"].forEach(k=>{const key=k.charAt(0).toLowerCase()+k.slice(1);$("f"+k).value=x[key]||""});$("fCategory").value=x.category||"モーション";$("fMethod").value=x.method||"AE";$("fLevel").value=x.level||"初級";$("fPreview").value=x.preview||"title";$("fAnimate").checked=!!x.animate;pendingMedia=x.mediaData?{data:x.mediaData,type:x.mediaType}:null;mediaDirty=false;$("fileMeta").textContent=x.mediaData?("アップロード済み: "+(x.mediaType||"media")):"";renderPreview()}
-function currentDraft(){return {id:$("fId").value.trim(),name:$("fName").value.trim(),category:$("fCategory").value,method:$("fMethod").value,level:$("fLevel").value,desc:$("fDesc").value.trim(),use:$("fUse").value.trim(),tech:$("fTech").value.trim(),note:$("fNote").value.trim(),tags:$("fTags").value.trim(),youtube:$("fYoutube").value.trim(),preview:$("fPreview").value,animate:$("fAnimate").checked,mediaUrl:$("fMediaUrl").value.trim(),mediaData:pendingMedia?.data||"",mediaType:pendingMedia?.type||""}}
-function renderPreview(){const x=currentDraft();$("previewAdmin").innerHTML=renderMedia(x,true)}
-["fPreview","fAnimate","fMediaUrl","fName","fMethod"].forEach(id=>$(id).addEventListener("input",renderPreview));
-$("saveBtn").onclick=()=>{const x=currentDraft();if(!x.id||!x.name){alert("IDと名称は必須です");return}let arr=getItems();const oldIndex=arr.findIndex(i=>i.id===selectedId);if(oldIndex>=0)arr[oldIndex]=x;else arr.push(x);setItems(arr);selectedId=x.id;const saveBtn=$("saveBtn");saveBtn.textContent="✓ 編集完了！";saveBtn.classList.add("saved");saveBtn.disabled=true;$("status").textContent="編集内容を保存しました";const toast=$("saveToast");toast.classList.add("show");window.trackFirebaseEvent?.("admin_save",{item_id:x.id,category:x.category,method:x.method});renderList();loadSelected();setTimeout(()=>{saveBtn.textContent="保存する";saveBtn.classList.remove("saved");saveBtn.disabled=false},1600);setTimeout(()=>{$("status").textContent="";toast.classList.remove("show")},2300)};
-$("newBtn").onclick=()=>{selectedId="";["fId","fName","fDesc","fUse","fTech","fNote","fTags","fYoutube","fMediaUrl"].forEach(id=>$(id).value="");$("fCategory").value="モーション";$("fMethod").value="AE";$("fLevel").value="初級";$("fPreview").value="title";$("fAnimate").checked=false;pendingMedia=null;$("fileMeta").textContent="";renderPreview();renderList()};
-$("deleteBtn").onclick=()=>{if(!selectedId)return;if(!confirm("この項目を削除しますか？"))return;let arr=getItems().filter(i=>i.id!==selectedId);setItems(arr);items=arr;selectedId=arr[0]?.id||null;renderList();if(selectedId)loadSelected()};
-$("mediaFile").onchange=e=>{const f=e.target.files[0];if(!f)return;const limit=4.5*1024*1024;if(f.size>limit&&!confirm("ファイルが約"+(f.size/1024/1024).toFixed(1)+"MBあります。ブラウザ保存容量を超える可能性があります。続行しますか？")){e.target.value="";return}const r=new FileReader();r.onload=()=>{pendingMedia={data:r.result,type:f.type};$("fileMeta").textContent=f.name+" / "+(f.size/1024/1024).toFixed(2)+"MB";renderPreview()};r.readAsDataURL(f)};
-$("clearMedia").onclick=()=>{pendingMedia=null;$("mediaFile").value="";$("fileMeta").textContent="アップロード素材を解除しました";renderPreview()};
-$("sideSearch").oninput=renderList;
-$("resetBtn").onclick=()=>{if(!confirm("編集内容をすべて初期状態に戻しますか？"))return;items=resetItems();selectedId=items[0]?.id||null;renderList();loadSelected()};
-$("exportBtn").onclick=()=>{const blob=new Blob([JSON.stringify(getItems(),null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="business-video-library.json";a.click();URL.revokeObjectURL(a.href)};
-$("importFile").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const arr=JSON.parse(r.result);if(!Array.isArray(arr))throw new Error();setItems(arr);items=arr;selectedId=arr[0]?.id||null;renderList();if(selectedId)loadSelected();alert("読み込みました")}catch(err){alert("JSON形式を確認してください")}};r.readAsText(f)};
-renderList();if(selectedId)loadSelected();
-</script><script type="module" src="firebase.js"></script></body></html>
+<div class="uploadBox">
+<b style="font-size:12px">無料版：GitHubの画像 / 動画を使う</b>
+<p class="help" style="margin:8px 0 10px">
+画像や動画ファイルはGitHubリポジトリに置き、そのパスまたはURLを下へ入力してください。
+Firebase Storageは使わないため追加料金はかかりません。
+</p>
+<div class="mediaExamples">
+  <code>images/pan.webp</code>
+  <code>videos/wipe.webm</code>
+  <code>https://example.github.io/site/images/sample.webp</code>
+</div>
+</div>
+<div class="field" style="margin-top:14px">
+  <label>プレビュー画像 / 動画 URL・GitHub内パス</label>
+  <input id="fMediaUrl" placeholder="例：images/pan.webp または videos/pan.webm">
+</div>
+<p class="help">
+未入力の場合は内蔵プレビューを使用します。<br>
+<code>.mp4</code> / <code>.webm</code> / <code>.ogg</code> は動画、それ以外は画像として表示します。
+</p></section></div></main></div>
+<script src="data.js"></script><script src="app.js"></script><script type="module" src="admin-firestore.js"></script>
+</body></html>
