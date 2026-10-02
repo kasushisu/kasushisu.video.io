@@ -1,432 +1,274 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Business Motion / AE Visual Library v2</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Business Video Visual Library</title>
 <style>
-:root {
-  --bg:#f6f8fc; --panel:#ffffff; --ink:#0f172a; --muted:#667085; --line:#e5e7eb;
-  --accent:#ff4f87; --accent2:#3b82f6; --soft:#fff2f7; --soft2:#eef4ff;
-  --shadow:0 16px 40px rgba(2,8,23,.08);
+:root{
+  --bg:#f4f7fb;--panel:#fff;--ink:#0b1220;--muted:#667085;--line:#e4e7ec;
+  --pink:#ff4f87;--blue:#3b82f6;--purple:#7257d9;--soft-pink:#fff2f7;--soft-blue:#edf4ff;
 }
 *{box-sizing:border-box}
 body{margin:0;font-family:Inter,"Noto Sans JP",system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink)}
-a{color:inherit}
-.hero{background:linear-gradient(180deg,#fff 0%,#fafbff 100%);border-bottom:1px solid var(--line);padding:56px 24px 28px}
-.wrap{max-width:1200px;margin:0 auto}
-.eyebrow{font-size:12px;letter-spacing:.16em;font-weight:900;color:var(--accent);text-transform:uppercase}
-h1{font-size:clamp(32px,5vw,66px);line-height:1.04;letter-spacing:-.045em;margin:12px 0 16px;max-width:980px}
-.lead{margin:0;max-width:800px;line-height:1.8;color:var(--muted);font-size:16px}
-.searchbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:28px}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+.hero{background:
+radial-gradient(circle at 80% 10%,rgba(59,130,246,.09),transparent 30%),
+radial-gradient(circle at 10% 0%,rgba(255,79,135,.08),transparent 25%),#fff;border-bottom:1px solid var(--line);padding:56px 0 28px}
+.eyebrow{font-size:12px;letter-spacing:.16em;font-weight:900;color:var(--pink)}
+h1{font-size:clamp(34px,5vw,66px);letter-spacing:-.05em;line-height:1.03;margin:12px 0 16px;max-width:900px}
+.lead{font-size:16px;color:var(--muted);line-height:1.85;max-width:820px;margin:0}
+.searchRow{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:28px}
 .search{position:relative;flex:1;min-width:260px}
-.search input{width:100%;height:56px;border:1px solid var(--line);border-radius:18px;background:#fff;padding:0 18px 0 48px;font-size:15px;outline:none;box-shadow:0 8px 24px rgba(15,23,42,.04)}
-.search:before{content:"⌕";position:absolute;left:17px;top:11px;font-size:28px;color:#98a2b3}
-.countbox{height:56px;padding:0 18px;border-radius:18px;background:#111827;color:#fff;display:flex;align-items:center;font-weight:800;white-space:nowrap}
-.groupLabel{font-size:12px;font-weight:800;color:#667085;margin:18px 0 10px}
+.search:before{content:"⌕";position:absolute;left:17px;top:12px;font-size:26px;color:#98a2b3}
+.search input{width:100%;height:56px;border:1px solid var(--line);border-radius:18px;background:#fff;padding:0 18px 0 48px;font-size:15px;outline:none;box-shadow:0 8px 22px rgba(15,23,42,.04)}
+.count{height:56px;padding:0 18px;border-radius:18px;background:#111827;color:#fff;font-weight:800;display:flex;align-items:center}
+.filterLabel{font-size:12px;font-weight:800;color:#667085;margin:18px 0 10px}
 .filters{display:flex;gap:8px;flex-wrap:wrap}
-.filter{border:1px solid var(--line);padding:9px 14px;border-radius:999px;background:#fff;color:#475467;font-size:13px;cursor:pointer;transition:.18s}
-.filter:hover{transform:translateY(-1px)}
+.filter{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 14px;font-size:13px;color:#475467;cursor:pointer}
 .filter.active{background:#111827;border-color:#111827;color:#fff}
-.filter.method.active{background:var(--accent2);border-color:var(--accent2)}
-.main{padding:28px 24px 80px}
-.summary{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin:0 0 20px 0}
-.summary h2{font-size:18px;margin:0}
-.summary p{margin:0;color:var(--muted);font-size:13px;line-height:1.7}
+.filter.method.active{background:var(--blue);border-color:var(--blue)}
+main{padding:30px 0 90px}
+.topline{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:18px}
+.topline h2{margin:0 0 4px;font-size:20px} .topline p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:22px;overflow:hidden;cursor:pointer;transition:.22s;box-shadow:0 6px 18px rgba(17,24,39,.03)}
-.card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:#cfd4dc}
-.preview{height:196px;background:linear-gradient(145deg,#f8fafc,#edf2ff);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;border-bottom:1px solid var(--line)}
-.meta{padding:16px 16px 18px}
-.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.code{font-size:11px;font-weight:800;color:#98a2b3;letter-spacing:.08em}
-.badges{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-.badge{font-size:10px;padding:5px 8px;border-radius:999px;background:#f2f4f7;color:#475467}
-.badge.method-ae{background:#eef4ff;color:#2557b8}
-.badge.method-shoot{background:#fff2f7;color:#cc2966}
-.badge.method-both{background:#f3f0ff;color:#6b48d8}
-.card h3{font-size:17px;letter-spacing:-.02em;margin:10px 0 6px}
-.card p{margin:0;color:var(--muted);font-size:13px;line-height:1.56}
-.empty{display:none;padding:80px 20px;text-align:center;color:var(--muted)}
-.smalltag{position:absolute;left:12px;top:12px;font-size:10px;font-weight:800;padding:5px 8px;border-radius:999px;background:rgba(255,255,255,.9);border:1px solid rgba(229,231,235,.95);color:#667085}
-.smalltag.method-ae{color:#2557b8} .smalltag.method-shoot{color:#cc2966} .smalltag.method-both{color:#6b48d8}
+.card{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;cursor:pointer;transition:.22s;box-shadow:0 6px 18px rgba(15,23,42,.03)}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 42px rgba(15,23,42,.09);border-color:#ccd2dc}
+.preview{height:205px;background:linear-gradient(145deg,#f9fbfd,#edf3ff);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.cardBody{padding:16px 16px 18px}
+.meta{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.code{font-size:11px;color:#98a2b3;font-weight:900;letter-spacing:.08em}
+.tags{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.tag{font-size:10px;border-radius:999px;padding:5px 8px;background:#f2f4f7;color:#475467}
+.tag.ae{background:var(--soft-blue);color:#2557b8} .tag.shoot{background:var(--soft-pink);color:#c62a63} .tag.both{background:#f2efff;color:#6248c4}
+.card h3{font-size:17px;letter-spacing:-.02em;margin:10px 0 6px} .card p{font-size:13px;color:var(--muted);line-height:1.55;margin:0}
+.previewTag{position:absolute;left:12px;top:12px;border-radius:999px;padding:5px 8px;background:rgba(255,255,255,.92);border:1px solid rgba(228,231,236,.95);font-size:10px;font-weight:900}
+.empty{display:none;padding:70px 20px;text-align:center;color:var(--muted)}
 
-.modal{display:none;position:fixed;inset:0;background:rgba(15,23,42,.62);z-index:100;align-items:center;justify-content:center;padding:20px}
-.modal.open{display:flex}
-.sheet{width:min(1040px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:26px;box-shadow:0 30px 100px rgba(0,0,0,.24)}
-.sheetTop{display:grid;grid-template-columns:1.05fr 1fr;min-height:320px;border-bottom:1px solid var(--line)}
-.bigPreview{background:linear-gradient(145deg,#f8fafc,#edf2ff);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;min-height:320px}
-.detailHead{padding:28px;position:relative}
-.close{position:absolute;right:18px;top:16px;width:38px;height:38px;border:0;border-radius:50%;background:#f2f4f7;font-size:20px;cursor:pointer}
-.detailHead h2{font-size:30px;letter-spacing:-.04em;margin:12px 0 12px}
-.detailHead p{line-height:1.75;color:var(--muted)}
-.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
-.pill{font-size:12px;padding:7px 10px;border-radius:8px;background:#f2f4f7}
-.details{padding:28px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.block h4{margin:0 0 10px;font-size:13px;color:#344054}
-.block p,.block li{font-size:14px;line-height:1.7;color:#475467}
-.block ul,.block ol{padding-left:20px;margin:0}
-.aeBox{background:#111827;color:#fff;border-radius:18px;padding:18px}
-.aeBox h4{margin:0 0 10px;color:#fff} .aeBox p{margin:6px 0;color:#d0d5dd;line-height:1.7}
-.footerNote{padding:0 28px 30px;color:#98a2b3;font-size:12px}
-.sectionCap{font-size:11px;font-weight:800;letter-spacing:.08em;color:#98a2b3}
-hr.sep{border:none;border-top:1px solid var(--line);margin:16px 0}
+/* Modal */
+.modal{position:fixed;inset:0;background:rgba(15,23,42,.62);display:none;align-items:center;justify-content:center;padding:20px;z-index:20}
+.modal.open{display:flex} .sheet{width:min(1060px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:26px;box-shadow:0 30px 100px rgba(0,0,0,.28)}
+.sheetTop{display:grid;grid-template-columns:1.08fr 1fr;min-height:330px;border-bottom:1px solid var(--line)}
+.bigPrev{min-height:330px;background:linear-gradient(145deg,#f9fbfd,#edf3ff);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.head{padding:30px;position:relative} .close{position:absolute;right:18px;top:18px;border:0;width:38px;height:38px;border-radius:50%;background:#f2f4f7;font-size:20px;cursor:pointer}
+.head h2{font-size:32px;letter-spacing:-.04em;margin:12px 0 10px} .head p{color:var(--muted);line-height:1.75}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px} .pill{font-size:12px;background:#f2f4f7;padding:7px 10px;border-radius:8px}
+.details{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:30px}
+.block h4{font-size:13px;margin:0 0 10px;color:#344054} .block p{font-size:14px;line-height:1.7;color:#475467;margin:0}
+.tech{background:#111827;border-radius:18px;padding:18px;color:#fff} .tech h4{margin:0 0 10px} .tech p{color:#d0d5dd;font-size:14px;line-height:1.7;margin:0}
+.note{margin-top:18px;background:#fff7fa;border:1px solid #ffd7e5;border-radius:14px;padding:14px} .note b{font-size:12px} .note p{margin:4px 0 0}
+.foot{padding:0 30px 30px;font-size:12px;color:#98a2b3}
 
-.demoText{font-weight:900;font-size:28px;letter-spacing:-.045em}
-.sub{font-size:11px;color:#667085;margin-top:6px;text-align:center}
-@keyframes fadeUp{0%,18%{opacity:0;transform:translateY(18px)}35%,82%{opacity:1;transform:none}100%{opacity:0;transform:translateY(-8px)}}
-@keyframes growX{0%,18%{transform:scaleX(0)}40%,82%{transform:scaleX(1)}100%{transform:scaleX(0)}}
-@keyframes pop{0%,20%{opacity:0;transform:scale(.7)}35%{opacity:1;transform:scale(1.12)}50%,82%{transform:scale(1)}100%{opacity:0}}
-@keyframes slideIn{0%,18%{opacity:0;transform:translateX(-24px)}38%,82%{opacity:1;transform:none}100%{opacity:0}}
+/* AE-ish preview primitives */
+@keyframes fadeUp{0%,15%{opacity:0;transform:translateY(22px)}35%,82%{opacity:1;transform:none}100%{opacity:0;transform:translateY(-8px)}}
+@keyframes pop{0%,15%{opacity:0;transform:scale(.72)}32%{opacity:1;transform:scale(1.1)}46%,82%{transform:scale(1)}100%{opacity:0}}
+@keyframes grow{0%,18%{transform:scaleX(0)}40%,82%{transform:scaleX(1)}100%{transform:scaleX(0)}}
+@keyframes slide{0%,15%{opacity:0;transform:translateX(-28px)}36%,82%{opacity:1;transform:none}100%{opacity:0}}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
-@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(220%)}}
+@keyframes zoom{0%,18%{transform:scale(.92)}48%,82%{transform:scale(1.12)}100%{transform:scale(.92)}}
+@keyframes float{0%,100%{transform:translateY(-4px)}50%{transform:translateY(4px)}}
+@keyframes pan{0%,100%{transform:translateX(-34px)}50%{transform:translateX(34px)}}
+@keyframes tilt{0%,100%{transform:translateY(20px)}50%{transform:translateY(-20px)}}
+@keyframes bar{0%,18%{transform:scaleY(0)}42%,82%{transform:scaleY(1)}100%{transform:scaleY(0)}}
+@keyframes focusA{0%,40%{filter:none;opacity:1}55%,100%{filter:blur(4px);opacity:.45}}
+@keyframes focusB{0%,40%{filter:blur(4px);opacity:.45}55%,100%{filter:none;opacity:1}}
+@keyframes leftToRight{0%,16%{transform:translateX(-130%)}45%,82%{transform:translateX(0)}100%{transform:translateX(130%)}}
+@keyframes spinOrbit{0%{transform:translate(0,-30px)}25%{transform:translate(38px,0)}50%{transform:translate(0,30px)}75%{transform:translate(-38px,0)}100%{transform:translate(0,-30px)}}
+@keyframes flashCut{0%,22%{opacity:1}23%,28%{opacity:.2}29%,52%{opacity:1}53%,58%{opacity:.2}59%,100%{opacity:1}}
 
-.preview .box{background:#fff;border:1px solid #d0d5dd;border-radius:12px;box-shadow:0 6px 18px rgba(15,23,42,.05)}
-.titleDemo .demoText{animation:fadeUp 2.5s infinite ease}
-.maskDemo{height:42px;overflow:hidden} .maskDemo span{font-size:26px;font-weight:900;display:block;animation:fadeUp 2.4s infinite ease}
-.underlineDemo .line{height:5px;background:var(--accent);border-radius:99px;margin-top:5px;transform-origin:left;animation:growX 2.2s infinite ease}
-.popDemo{font-size:32px;font-weight:900;animation:pop 2s infinite}
-.listDemo{width:72%} .listDemo div{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:9px 12px;margin:7px 0;font-size:12px;animation:slideIn 2.8s infinite} .listDemo div:nth-child(2){animation-delay:.16s} .listDemo div:nth-child(3){animation-delay:.32s}
-.typingDemo{font-family:ui-monospace,monospace;background:#fff;border:1px solid #d0d5dd;border-radius:10px;padding:12px 14px;white-space:nowrap;overflow:hidden;min-width:62%;animation:typing 3s steps(20) infinite} @keyframes typing{0%{width:0}58%,86%{width:64%}100%{width:0}}
-.sectionDemo .n{font-size:12px;color:var(--accent);font-weight:900} .sectionDemo .t{font-size:24px;font-weight:900;border-top:2px solid #111827;padding-top:8px;margin-top:6px;animation:fadeUp 2.6s infinite ease}
-.highlightDemo span{position:relative;font-size:24px;font-weight:900;z-index:1} .highlightDemo span:after{content:"";position:absolute;left:-4px;right:-4px;bottom:2px;height:11px;background:#ffd6e4;z-index:-1;transform-origin:left;animation:growX 2.2s infinite ease}
-.countDemo .num{font-size:48px;font-weight:950;letter-spacing:-.06em} .countDemo .num:after{content:"1,000";animation:countSwap 2.6s infinite} @keyframes countSwap{0%{content:"0"}20%{content:"120"}35%{content:"350"}50%{content:"680"}65%,84%{content:"1,000"}100%{content:"0"}}
-.bigstatDemo{text-align:center} .bigstatDemo .num{font-size:54px;font-weight:950;color:var(--accent2)}
-.barsDemo{display:flex;gap:10px;align-items:end;height:96px} .barsDemo i{display:block;width:24px;background:#111827;border-radius:6px 6px 2px 2px;transform-origin:bottom;animation:barGrow 2.5s infinite ease} .barsDemo i:nth-child(1){height:44px} .barsDemo i:nth-child(2){height:78px;animation-delay:.12s} .barsDemo i:nth-child(3){height:58px;animation-delay:.24s} @keyframes barGrow{0%,18%{transform:scaleY(0)}40%,82%{transform:scaleY(1)}100%{transform:scaleY(0)}}
-.donutDemo{width:106px;height:106px;border-radius:50%;background:conic-gradient(var(--accent2) 0 78%,#e5e7eb 78% 100%);display:grid;place-items:center;animation:pop 2.5s infinite} .donutDemo:before{content:"78%";width:72px;height:72px;border-radius:50%;background:#fff;display:grid;place-items:center;font-weight:900}
-.compareDemo{width:72%} .meter{margin:10px 0} .meter b{font-size:10px} .track{height:12px;background:#e5e7eb;border-radius:99px;overflow:hidden} .fill{height:100%;transform-origin:left;animation:growX 2.4s infinite} .before{width:88%;background:#111827} .after{width:56%;background:var(--accent)}
-.cardsDemo,.threecardsDemo{display:flex;gap:8px} .cardsDemo div,.threecardsDemo div{width:72px;height:86px;background:#fff;border:1px solid #e5e7eb;border-radius:12px;animation:fadeUp 2.8s infinite} .cardsDemo div:nth-child(2),.threecardsDemo div:nth-child(2){animation-delay:.14s} .cardsDemo div:nth-child(3),.threecardsDemo div:nth-child(3){animation-delay:.28s}
-.flowDemo{display:flex;align-items:center;gap:8px} .node{width:60px;height:54px;background:#fff;border:1px solid #d0d5dd;border-radius:10px;display:grid;place-items:center;font-size:11px;font-weight:800;animation:fadeUp 2.8s infinite} .node:nth-child(3){animation-delay:.2s} .node:nth-child(5){animation-delay:.4s} .arr{color:#98a2b3;font-size:18px}
-.vflowDemo{display:grid;gap:6px} .vstep{display:flex;align-items:center;gap:8px;font-size:11px} .dot{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:9px;color:#fff;background:#111827;animation:pop 2.6s infinite} .vstep:nth-child(2) .dot{animation-delay:.2s} .vstep:nth-child(3) .dot{animation-delay:.4s}
-.baDemo,.twoDemo,.solveDemo{display:flex;align-items:center;gap:12px} .miniCard{width:92px;height:74px;background:#fff;border:1px solid #e5e7eb;border-radius:11px;display:grid;place-items:center;font-size:11px;font-weight:800;text-align:center;animation:fadeUp 2.8s infinite} .miniCard.good{background:#fff6f9;border-color:#ffd7e4} .midArr{font-size:22px;color:var(--accent)}
-.networkDemo{position:relative;width:182px;height:110px} .bubble{position:absolute;width:54px;height:34px;background:#fff;border:1px solid #d0d5dd;border-radius:20px;display:grid;place-items:center;font-size:9px;font-weight:800;animation:fadeUp 3s infinite} .bubble.c{left:64px;top:38px;background:#111827;color:#fff} .bubble.a{left:5px;top:8px} .bubble.b{right:5px;top:8px} .bubble.d{left:5px;bottom:4px} .bubble.e{right:5px;bottom:4px}
-.timelineDemo{width:76%} .tl{height:3px;background:#d0d5dd;position:relative;overflow:hidden} .tl:after{content:"";position:absolute;inset:0;background:var(--accent2);transform-origin:left;animation:growX 2.8s infinite} .years{display:flex;justify-content:space-between;font-size:10px;font-weight:800;margin-top:8px}
-.iconsDemo{display:flex;gap:8px} .iconbox{width:74px;text-align:center;font-size:10px} .iconcirc{width:42px;height:42px;border-radius:50%;background:#fff;border:1px solid #d0d5dd;display:grid;place-items:center;margin:0 auto 6px;font-size:18px;animation:pop 2.5s infinite} .iconbox:nth-child(2) .iconcirc{animation-delay:.2s} .iconbox:nth-child(3) .iconcirc{animation-delay:.4s}
-.browserDemo{width:72%;height:108px;background:#fff;border:1px solid #d0d5dd;border-radius:12px;overflow:hidden;box-shadow:0 8px 22px rgba(17,24,39,.06);animation:fadeUp 2.8s infinite} .browserTop{height:18px;background:#f2f4f7;border-bottom:1px solid #e5e7eb} .browserBody{padding:10px} .browserBody i{display:block;height:7px;background:#e5e7eb;border-radius:4px;margin:6px 0} .browserBody i:nth-child(1){width:55%;background:#cbdcff} .browserBody i:nth-child(2){width:85%}
-.phoneDemo{width:64px;height:120px;border:5px solid #111827;border-radius:16px;background:#fff;padding:8px;animation:fadeUp 2.8s infinite} .phoneDemo i{display:block;height:8px;background:#e5e7eb;border-radius:4px;margin:8px 0} .phoneDemo i:nth-child(2){height:34px;background:#ffdbe7}
-.zoomDemo{width:68%;height:105px;background:#fff;border:1px solid #d0d5dd;border-radius:12px;padding:14px;animation:zoomFocus 3s infinite ease} .zoomDemo i{display:block;height:10px;background:#e5e7eb;border-radius:5px;margin:8px 0} .zoomDemo i:nth-child(2){width:65%;background:#d4e2ff} @keyframes zoomFocus{0%,18%{transform:scale(.92)}45%,82%{transform:scale(1.14)}100%{transform:scale(.92)}}
-.cursorDemo{width:182px;height:98px;background:#fff;border:1px solid #d0d5dd;border-radius:11px;position:relative} .btn{position:absolute;right:18px;bottom:16px;background:#111827;color:#fff;border-radius:7px;padding:8px 12px;font-size:10px} .cur{position:absolute;left:18px;top:16px;font-size:22px;animation:cursorMove 2.8s infinite ease} @keyframes cursorMove{0%,18%{transform:translate(0,0)}55%,80%{transform:translate(108px,48px) scale(.88)}100%{transform:translate(0,0)}}
-.pulseDemo{position:relative;background:#111827;color:#fff;padding:12px 18px;border-radius:10px;font-size:13px;font-weight:900} .pulseDemo:after{content:"";position:absolute;inset:-1px;border:2px solid var(--accent);border-radius:11px;animation:ring 2s infinite} @keyframes ring{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.45);opacity:0}}
-.uiSlideDemo{width:190px;height:106px;position:relative;overflow:hidden} .screen{position:absolute;inset:0;border-radius:10px;background:#fff;border:1px solid #d0d5dd} .screen.one{animation:screenOne 3.2s infinite ease} .screen.two{transform:translateX(110%);animation:screenTwo 3.2s infinite ease} @keyframes screenOne{0%,24%{transform:translateX(0)}44%,64%{transform:translateX(-110%)}100%{transform:translateX(-110%)}} @keyframes screenTwo{0%,24%{transform:translateX(110%)}44%,64%{transform:translateX(0)}100%{transform:translateX(110%)}}
-.lowerDemo{width:74%;padding-top:50px} .lowerBar{background:#111827;color:#fff;border-radius:9px;padding:10px 12px;animation:slideIn 2.8s infinite} .lowerBar b{display:block;font-size:12px} .lowerBar span{font-size:9px;color:#d0d5dd}
-.profileDemo{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:12px 14px;animation:fadeUp 2.8s infinite} .avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(145deg,#ffd7e6,#cbdcff)} .lines i{display:block;height:7px;background:#e5e7eb;border-radius:4px;margin:6px 0;width:92px} .lines i:first-child{width:60px;background:#cbd5e1}
-.quoteDemo{position:relative;width:72%;font-size:15px;font-weight:750;line-height:1.5;animation:fadeUp 3s infinite} .quoteDemo:before{content:"“";position:absolute;left:-24px;top:-20px;font-size:46px;color:#ffd5e4}
-.companyDemo{width:72%;background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:12px;animation:fadeUp 3s infinite} .companyDemo div{display:flex;justify-content:space-between;font-size:9px;padding:7px 0;border-bottom:1px solid #f2f4f7}
-.pinDemo{position:relative;width:170px;height:100px} .pin{position:absolute;width:14px;height:14px;border-radius:50% 50% 50% 0;background:var(--accent);transform:rotate(-45deg);animation:pop 2.4s infinite} .pin:nth-child(1){left:35px;top:28px} .pin:nth-child(2){left:95px;top:18px;animation-delay:.2s} .pin:nth-child(3){left:126px;top:60px;animation-delay:.4s}
-.splitDemo{display:grid;grid-template-columns:1fr 1.1fr;gap:12px;width:78%;align-items:center} .txtLines i{display:block;height:7px;background:#d0d5dd;border-radius:4px;margin:7px 0} .txtLines i:first-child{height:12px;width:74%;background:#111827} .visualBox{height:92px;border-radius:12px;background:linear-gradient(145deg,#ffdfe9,#dbe5ff);animation:fadeUp 2.8s infinite}
-.photoDemo{width:78%;height:110px;border-radius:14px;background:linear-gradient(135deg,#8f9bae,#d6dde7);position:relative;overflow:hidden;animation:photoZoom 5s infinite ease} .photoDemo span{position:absolute;left:14px;bottom:14px;color:#fff;font-size:16px;font-weight:900} @keyframes photoZoom{0%{transform:scale(1.04)}50%,100%{transform:scale(1)}}
-.splitVideoDemo{display:flex;width:78%;height:106px;border:1px solid #d0d5dd;border-radius:12px;overflow:hidden} .splitVideoDemo div{width:50%;display:grid;place-items:center;font-size:11px;font-weight:800} .splitVideoDemo div:first-child{background:#e9edf2} .splitVideoDemo div:last-child{background:#fff0f5}
-.stackDemo{position:relative;width:154px;height:110px} .stackDemo div{position:absolute;left:12px;width:130px;height:72px;background:#fff;border:1px solid #d0d5dd;border-radius:12px;animation:stackMove 3s infinite ease} .stackDemo div:nth-child(1){top:28px;transform:scale(.9)} .stackDemo div:nth-child(2){top:15px;transform:scale(.95)} .stackDemo div:nth-child(3){top:2px} @keyframes stackMove{0%,20%{opacity:.4;transform:translateY(16px) scale(.95)}45%,82%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:.4;transform:translateY(16px) scale(.95)}}
-.centerDemo{font-size:24px;font-weight:950;text-align:center;animation:fadeUp 2.8s infinite}
-.iconPopDemo{display:flex;gap:12px} .iconPopDemo span{font-size:30px;animation:pop 2.4s infinite} .iconPopDemo span:nth-child(2){animation-delay:.2s} .iconPopDemo span:nth-child(3){animation-delay:.4s}
-.arrowDemo{font-size:48px;color:var(--accent2);animation:slideIn 2.3s infinite}
-.checkDemo{width:70px;height:70px;border-radius:50%;border:4px solid #111827;display:grid;place-items:center;font-size:34px;font-weight:900;animation:pop 2.3s infinite}
-.outlineDemo{width:148px;height:74px;border:3px solid var(--accent);border-radius:12px;display:grid;place-items:center;font-size:12px;font-weight:900;animation:fadeUp 2.5s infinite}
-.connectDemo{display:flex;align-items:center;gap:6px} .cnode{width:56px;height:42px;border-radius:22px;background:#fff;border:1px solid #d0d5dd;display:grid;place-items:center;font-size:9px} .connline{width:70px;height:3px;background:#d0d5dd;position:relative;overflow:hidden} .connline:after{content:"";position:absolute;inset:0;background:var(--accent2);transform-origin:left;animation:growX 2.5s infinite}
-.softPulseDemo{width:72px;height:72px;border-radius:18px;background:#111827;display:grid;place-items:center;color:#fff;font-size:22px;animation:pulse 2.5s infinite ease-in-out}
-.chapterDemo{text-align:center} .chapterDemo .num{font-size:11px;color:var(--accent);font-weight:900} .chapterDemo .ch{font-size:26px;font-weight:950;margin-top:6px;animation:fadeUp 2.7s infinite}
-.logoDemo{font-size:30px;font-weight:950;letter-spacing:-.06em;animation:fadeUp 3s infinite}
-.logoLineDemo{font-size:28px;font-weight:950;position:relative;padding:8px 4px} .logoLineDemo:after{content:"";position:absolute;left:0;right:0;bottom:1px;height:3px;background:var(--accent2);transform-origin:left;animation:growX 2.8s infinite}
-.ctaDemo{text-align:center} .ctaDemo b{display:block;font-size:16px;margin-bottom:10px} .ctaBtn{display:inline-block;background:#111827;color:#fff;border-radius:9px;padding:10px 16px;font-size:11px;animation:pop 2.5s infinite}
-.qrDemo{display:flex;align-items:center;gap:14px} .qrbox{width:72px;height:72px;background:repeating-conic-gradient(#111 0 25%,#fff 0 50%) 50%/12px 12px;border:6px solid #fff;box-shadow:0 0 0 1px #d0d5dd}
-.endDemo{text-align:center} .endDemo .lg{font-size:24px;font-weight:950} .endDemo .url{font-size:10px;color:#667085;margin:8px 0} .endDemo .miniCta{display:inline-block;font-size:10px;padding:7px 11px;border-radius:8px;background:#111827;color:#fff}
+.demoTitle{font-size:29px;font-weight:950;letter-spacing:-.04em;animation:fadeUp 2.6s infinite}
+.maskWrap{height:44px;overflow:hidden} .maskWrap b{font-size:27px;display:block;animation:fadeUp 2.5s infinite}
+.popWord{font-size:32px;font-weight:950;animation:pop 2.2s infinite}
+.lineDemo{width:170px} .lineDemo b{font-size:22px} .lineDemo i{display:block;height:4px;background:var(--pink);border-radius:99px;transform-origin:left;animation:grow 2.4s infinite}
+.iconRow{display:flex;gap:13px} .iconRow span{width:48px;height:48px;background:#fff;border:1px solid #d0d5dd;border-radius:14px;display:grid;place-items:center;font-size:20px;animation:pop 2.5s infinite} .iconRow span:nth-child(2){animation-delay:.18s} .iconRow span:nth-child(3){animation-delay:.36s}
+.logoDemo{font-size:30px;font-weight:950;letter-spacing:-.06em;position:relative;padding:8px} .logoDemo:after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--blue);transform-origin:left;animation:grow 2.8s infinite}
+.pulseDemo{padding:12px 18px;border-radius:10px;background:#111827;color:#fff;font-weight:800;animation:pulse 2.4s infinite}
+.kinetic{font-size:25px;font-weight:950;line-height:1.15;text-align:center} .kinetic span{display:block;animation:slide 2.8s infinite} .kinetic span:nth-child(2){color:var(--pink);animation-delay:.2s}
+.countNum{font-size:54px;font-weight:950} .countNum:after{content:"1,000";animation:countSwap 2.8s infinite} @keyframes countSwap{0%{content:"0"}18%{content:"120"}34%{content:"380"}50%{content:"720"}65%,86%{content:"1,000"}100%{content:"0"}}
+.kpiRow,.cardRow{display:flex;gap:8px} .kpi,.miniCard{width:76px;height:88px;background:#fff;border:1px solid #d0d5dd;border-radius:12px;display:grid;place-items:center;text-align:center;font-size:10px;animation:fadeUp 2.8s infinite} .kpi:nth-child(2),.miniCard:nth-child(2){animation-delay:.15s} .kpi:nth-child(3),.miniCard:nth-child(3){animation-delay:.3s} .kpi b{font-size:18px}
+.barRow{height:105px;display:flex;align-items:flex-end;gap:10px} .barRow i{display:block;width:25px;background:#111827;border-radius:6px 6px 2px 2px;transform-origin:bottom;animation:bar 2.6s infinite} .barRow i:nth-child(1){height:46px} .barRow i:nth-child(2){height:82px;background:var(--pink);animation-delay:.12s} .barRow i:nth-child(3){height:62px;animation-delay:.24s}
+.donut{width:110px;height:110px;border-radius:50%;background:conic-gradient(var(--blue) 0 78%,#e5e7eb 78% 100%);display:grid;place-items:center;animation:pop 2.6s infinite} .donut:before{content:"78%";width:74px;height:74px;border-radius:50%;background:#fff;display:grid;place-items:center;font-weight:950}
+.flow{display:flex;align-items:center;gap:8px} .flow .n{width:64px;height:54px;background:#fff;border:1px solid #d0d5dd;border-radius:10px;display:grid;place-items:center;font-size:11px;font-weight:800;animation:fadeUp 2.8s infinite} .flow .n:nth-of-type(2){animation-delay:.2s} .flow .n:nth-of-type(3){animation-delay:.4s} .flow em{font-style:normal;color:#98a2b3}
+.ba{display:flex;align-items:center;gap:10px} .ba div{width:94px;height:74px;background:#fff;border:1px solid #d0d5dd;border-radius:12px;display:grid;place-items:center;text-align:center;font-size:11px;font-weight:800} .ba .after{background:#fff2f7;border-color:#ffd1e1;animation:pop 2.8s infinite}
+.network{position:relative;width:190px;height:110px} .node{position:absolute;width:58px;height:36px;background:#fff;border:1px solid #d0d5dd;border-radius:999px;display:grid;place-items:center;font-size:9px;font-weight:800} .node.c{left:66px;top:38px;background:#111827;color:#fff} .node.a{left:4px;top:8px} .node.b{right:4px;top:8px} .node.d{left:4px;bottom:4px} .node.e{right:4px;bottom:4px}
+.timeline{width:190px} .timeline i{display:block;height:3px;background:#d0d5dd;position:relative;overflow:hidden} .timeline i:after{content:"";position:absolute;inset:0;background:var(--blue);transform-origin:left;animation:grow 2.8s infinite} .years{display:flex;justify-content:space-between;font-size:10px;font-weight:800;margin-top:9px}
+.splitLayout{width:200px;display:grid;grid-template-columns:1fr 1.1fr;gap:12px;align-items:center} .copyLines i{display:block;height:7px;border-radius:4px;background:#d0d5dd;margin:7px 0} .copyLines i:first-child{height:12px;width:76%;background:#111827} .visual{height:96px;border-radius:14px;background:linear-gradient(145deg,#ffdbe8,#dbe5ff);animation:float 3s infinite}
+.centerMsg{font-size:25px;font-weight:950;text-align:center;animation:fadeUp 2.8s infinite}
+.fullPhoto{width:200px;height:116px;border-radius:14px;background:linear-gradient(135deg,#8d99aa,#d8dee7);position:relative;overflow:hidden;animation:zoom 5s infinite} .fullPhoto span{position:absolute;left:14px;bottom:14px;color:#fff;font-weight:900;font-size:16px}
+.twoSplit{display:flex;width:200px;height:110px;border-radius:12px;overflow:hidden;border:1px solid #d0d5dd} .twoSplit div{width:50%;display:grid;place-items:center;font-size:11px;font-weight:800} .twoSplit div:first-child{background:#e9edf2} .twoSplit div:last-child{background:#fff0f5}
+.uiPanel{width:210px;display:grid;grid-template-columns:1.3fr .9fr;gap:8px} .browserSmall,.sidePanel{height:105px;border:1px solid #d0d5dd;border-radius:12px;background:#fff} .browserSmall{position:relative;overflow:hidden} .browserSmall:before{content:"";display:block;height:16px;background:#f2f4f7;border-bottom:1px solid #e5e7eb} .browserSmall:after{content:"";position:absolute;left:12px;right:12px;top:34px;height:48px;background:linear-gradient(#dbe5ff 0 12px,transparent 12px 20px,#e5e7eb 20px 27px,transparent 27px 34px,#e5e7eb 34px 41px);border-radius:5px} .sidePanel{animation:fadeUp 2.8s infinite}
+.lowerDemo{width:205px;height:112px;border-radius:14px;background:linear-gradient(145deg,#dbe5ff,#f0f3f7);position:relative} .person{position:absolute;left:22px;bottom:0;width:64px;height:84px;border-radius:32px 32px 8px 8px;background:#c4cbd6} .lowerbar{position:absolute;left:60px;right:10px;bottom:12px;background:#111827;color:#fff;border-radius:8px;padding:8px 10px;font-size:10px;animation:slide 2.8s infinite}
+.minimal{width:200px;height:110px;background:#fff;border:1px solid #d0d5dd;border-radius:14px;position:relative} .minimal b{position:absolute;left:20px;top:35px;font-size:18px} .minimal i{position:absolute;left:20px;bottom:24px;width:46px;height:3px;background:var(--pink)}
+.camera{width:190px;height:112px;background:#fff;border:1px solid #d0d5dd;border-radius:14px;position:relative;overflow:hidden} .subject{position:absolute;width:48px;height:48px;border-radius:14px;background:linear-gradient(145deg,#ffc8db,#d7e3ff);left:71px;top:32px}
+.static .subject{animation:pulse 3s infinite} .pan .subject{animation:pan 3.2s infinite ease-in-out} .tilt .subject{animation:tilt 3.2s infinite ease-in-out} .dollyin{animation:zoom 3s infinite} .push{animation:zoom 3.4s infinite} .track .subject{animation:pan 3s infinite ease-in-out} .track:before{content:"";position:absolute;inset:10px;background:repeating-linear-gradient(90deg,transparent 0 46px,#eef2f7 47px 48px)} .orbit .subject{animation:spinOrbit 3.4s infinite linear} .orbit:before{content:"";position:absolute;left:40px;right:40px;top:18px;bottom:18px;border:1px dashed #d0d5dd;border-radius:50%} .focus .f1,.focus .f2{position:absolute;border-radius:12px} .focus .f1{left:22px;top:30px;width:54px;height:54px;background:#111827;animation:focusA 3s infinite} .focus .f2{right:22px;top:24px;width:66px;height:66px;background:#cbdcff;animation:focusB 3s infinite}
+.broll{display:flex;gap:10px;align-items:center} .broll .a{width:110px;height:90px;background:#fff;border:1px solid #d0d5dd;border-radius:12px} .broll .b{width:74px;height:56px;background:#fff2f7;border:1px solid #ffd1e1;border-radius:10px;animation:fadeUp 2.8s infinite}
+.cutaway{display:flex;gap:12px} .cutaway div{width:76px;height:76px;background:#fff;border:1px solid #d0d5dd;border-radius:12px;display:grid;place-items:center;font-size:10px;font-weight:800;animation:flashCut 2.8s infinite} .cutaway div:nth-child(2){animation-delay:.4s}
+.jlcut{width:210px} .videoTrack,.audioTrack{height:26px;border-radius:6px;margin:8px 0;overflow:hidden;position:relative} .videoTrack{background:linear-gradient(90deg,#cbdcff 0 48%,#ffd5e3 48% 100%)} .audioTrack{background:linear-gradient(90deg,#111827 0 62%,#697386 62% 100%)} .jlcut.l .audioTrack{background:linear-gradient(90deg,#697386 0 38%,#111827 38% 100%)}
+.match{display:flex;align-items:center;gap:12px} .match div{width:66px;height:66px;border-radius:50%;background:#111827;animation:fadeUp 2.8s infinite} .match div:last-child{background:var(--pink);animation-delay:.24s}
+.maskTrans{width:190px;height:112px;border-radius:14px;overflow:hidden;border:1px solid #d0d5dd;position:relative;background:#dfe6f0} .maskTrans:after{content:"";position:absolute;inset:0;background:#ffe4ed;clip-path:inset(0 100% 0 0);animation:revealMask 3s infinite} .maskTrans i{position:absolute;z-index:2;top:0;bottom:0;width:42px;background:#111827;animation:leftToRight 3s infinite} @keyframes revealMask{0%,28%{clip-path:inset(0 100% 0 0)}58%,100%{clip-path:inset(0 0 0 0)}}
+.tempo{display:flex;gap:7px} .tempo div{width:38px;height:76px;border-radius:9px;background:#fff;border:1px solid #d0d5dd;animation:flashCut 2.2s infinite} .tempo div:nth-child(2){animation-delay:.15s} .tempo div:nth-child(3){animation-delay:.3s} .tempo div:nth-child(4){animation-delay:.45s}
+.shotseq{display:flex;gap:8px;align-items:end} .shotseq div{background:#fff;border:1px solid #d0d5dd;border-radius:10px;display:grid;place-items:center;font-size:9px;font-weight:800} .shotseq .w{width:82px;height:66px} .shotseq .m{width:62px;height:78px} .shotseq .c{width:48px;height:90px}
+.speed{width:200px} .speed i{display:block;height:10px;border-radius:99px;background:linear-gradient(90deg,#111827 0 24%,var(--pink) 24% 70%,#111827 70% 100%);transform-origin:left;animation:grow 2.6s infinite} .speed small{display:flex;justify-content:space-between;margin-top:8px;color:#667085}
+.freeze{width:180px;height:105px;border-radius:14px;background:linear-gradient(145deg,#dbe5ff,#ffdfe9);display:grid;place-items:center;font-weight:900;position:relative;animation:flashCut 3s infinite} .freeze:after{content:"PAUSE";position:absolute;right:8px;top:8px;background:#111827;color:#fff;border-radius:99px;padding:4px 7px;font-size:9px}
+.parallax{width:190px;height:110px;border-radius:14px;background:#e8eef7;border:1px solid #d0d5dd;position:relative;overflow:hidden} .parallax i{position:absolute;border-radius:12px} .parallax .a{left:14px;right:14px;bottom:12px;height:28px;background:#a9c3fb;animation:pan 3s infinite} .parallax .b{left:26px;top:26px;width:78px;height:48px;background:#fff;animation:float 3s infinite} .parallax .c{right:18px;top:16px;width:52px;height:52px;background:#ffd2e2;animation:pulse 3s infinite}
+.camera25{width:190px;height:110px;perspective:400px;position:relative} .camera25 div{position:absolute;border-radius:12px;border:1px solid #d0d5dd;background:#fff} .camera25 .a{left:8px;right:8px;bottom:10px;height:30px;background:#cbdcff} .camera25 .b{left:22px;top:18px;width:74px;height:54px;animation:float 3s infinite} .camera25 .c{right:16px;top:10px;width:54px;height:68px;background:#ffdfe9;animation:pulse 3s infinite}
+.montage{display:flex;gap:8px} .montage div{width:42px;height:78px;background:#fff;border:1px solid #d0d5dd;border-radius:9px;animation:flashCut 2.5s infinite} .montage div:nth-child(2){animation-delay:.12s} .montage div:nth-child(3){animation-delay:.24s} .montage div:nth-child(4){animation-delay:.36s}
+.reveal{width:190px;height:110px;border-radius:14px;background:#e9eef5;border:1px solid #d0d5dd;position:relative;overflow:hidden} .reveal .t{position:absolute;right:30px;top:24px;width:68px;height:60px;border-radius:15px;background:linear-gradient(145deg,#ffd1e1,#d7e3ff)} .reveal .cover{position:absolute;left:0;top:0;bottom:0;width:48px;background:#111827;animation:leftToRight 3.2s infinite}
+.blurDemo{font-size:26px;font-weight:950;animation:blurSharp 3s infinite} @keyframes blurSharp{0%,24%{filter:blur(8px);opacity:.35}45%,82%{filter:none;opacity:1}100%{filter:blur(8px);opacity:.35}}
+.glowDemo{font-size:32px;font-weight:950;color:#2868d9;text-shadow:0 0 18px rgba(59,130,246,.55);animation:pulse 2.5s infinite}
+.browser{width:200px;height:112px;background:#fff;border:1px solid #d0d5dd;border-radius:12px;overflow:hidden;box-shadow:0 8px 22px rgba(15,23,42,.08)} .browser:before{content:"";display:block;height:18px;background:#f2f4f7;border-bottom:1px solid #e5e7eb} .browser:after{content:"";display:block;margin:14px;height:56px;background:linear-gradient(#cbdcff 0 12px,transparent 12px 22px,#e5e7eb 22px 29px,transparent 29px 38px,#e5e7eb 38px 45px);border-radius:6px}
+.phone{width:66px;height:128px;border:5px solid #111827;border-radius:17px;background:#fff;padding:8px;animation:fadeUp 2.8s infinite} .phone i{display:block;height:8px;background:#e5e7eb;border-radius:4px;margin:8px 0} .phone i:nth-child(2){height:38px;background:#ffdbe7}
+.cursorBox{width:190px;height:105px;background:#fff;border:1px solid #d0d5dd;border-radius:12px;position:relative} .cursorBtn{position:absolute;right:18px;bottom:16px;background:#111827;color:#fff;border-radius:7px;padding:8px 12px;font-size:10px} .cursorIcon{position:absolute;left:20px;top:18px;font-size:22px;animation:cursorMove 2.8s infinite ease} @keyframes cursorMove{0%,18%{transform:translate(0,0)}55%,80%{transform:translate(108px,48px) scale(.88)}100%{transform:translate(0,0)}}
+.uizoom{width:195px;height:106px;background:#fff;border:1px solid #d0d5dd;border-radius:12px;padding:14px;animation:zoom 3s infinite} .uizoom i{display:block;height:9px;background:#e5e7eb;border-radius:4px;margin:8px 0} .uizoom i:nth-child(2){width:65%;background:#cbdcff}
+.uislide{width:190px;height:108px;position:relative;overflow:hidden} .uislide .s{position:absolute;inset:0;background:#fff;border:1px solid #d0d5dd;border-radius:12px} .uislide .a{animation:slideA 3s infinite} .uislide .b{transform:translateX(110%);animation:slideB 3s infinite} @keyframes slideA{0%,25%{transform:translateX(0)}50%,100%{transform:translateX(-110%)}} @keyframes slideB{0%,25%{transform:translateX(110%)}50%,78%{transform:translateX(0)}100%{transform:translateX(110%)}}
+.buttonPulse{padding:12px 18px;background:#111827;color:#fff;border-radius:10px;font-weight:800;position:relative} .buttonPulse:after{content:"";position:absolute;inset:-1px;border:2px solid var(--pink);border-radius:11px;animation:ring 2s infinite} @keyframes ring{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.45);opacity:0}}
 
-# Camera work previews
-.cameraFrame{width:180px;height:108px;border-radius:12px;background:#fff;border:1px solid #d0d5dd;position:relative;overflow:hidden}
-.cameraFrame .subject{position:absolute;width:44px;height:44px;border-radius:12px;background:linear-gradient(145deg,#ffc7db,#d6e3ff);top:32px;left:68px}
-.staticDemo .subject{animation:pulse 3s infinite ease-in-out}
-.panDemo .subject{animation:panMove 3s infinite ease-in-out} @keyframes panMove{0%,100%{transform:translateX(-28px)}50%{transform:translateX(28px)}}
-.tiltDemo .subject{animation:tiltMove 3s infinite ease-in-out} @keyframes tiltMove{0%,100%{transform:translateY(18px)}50%{transform:translateY(-18px)}}
-.dollyInDemo{animation:zoomFocus 3s infinite ease}
-.dollyOutDemo{animation:dollyOut 3s infinite ease} @keyframes dollyOut{0%,20%{transform:scale(1.16)}50%,82%{transform:scale(1)}100%{transform:scale(1.16)}}
-.trackDemo .subject{animation:trackMove 3s infinite ease-in-out} .trackDemo .bgline{position:absolute;top:12px;bottom:12px;width:1px;background:#eef2f7} .trackDemo .bgline:nth-child(1){left:32px} .trackDemo .bgline:nth-child(2){left:92px} .trackDemo .bgline:nth-child(3){left:150px} @keyframes trackMove{0%,100%{transform:translateX(-34px)}50%{transform:translateX(34px)}}
-.pushInDemo{animation:zoomFocus 3s infinite ease}
-.pullOutDemo{animation:dollyOut 3s infinite ease}
-.orbitDemo .subject{animation:orbitMove 3.2s infinite ease-in-out} .orbitDemo .ring{position:absolute;inset:22px 34px;border:1px dashed #d0d5dd;border-radius:50%} @keyframes orbitMove{0%{transform:translate(0,-22px)}25%{transform:translate(30px,0)}50%{transform:translate(0,22px)}75%{transform:translate(-30px,0)}100%{transform:translate(0,-22px)}}
-.zoomInDemo{animation:zoomFocus 3s infinite ease}
-.rackFocusDemo .front,.rackFocusDemo .back{position:absolute;border-radius:10px} .rackFocusDemo .front{width:46px;height:46px;background:#111827;left:24px;top:30px;animation:focusFront 3s infinite} .rackFocusDemo .back{width:60px;height:60px;background:#cbdcff;right:20px;top:24px;animation:focusBack 3s infinite} @keyframes focusFront{0%,35%{filter:none;opacity:1}55%,100%{filter:blur(3px);opacity:.55}} @keyframes focusBack{0%,35%{filter:blur(3px);opacity:.55}55%,100%{filter:none;opacity:1}}
-.handheldDemo{animation:handheld 2.4s infinite ease-in-out} @keyframes handheld{0%,100%{transform:translate(0,0) rotate(0deg)}25%{transform:translate(-2px,1px) rotate(-.5deg)}50%{transform:translate(2px,-1px) rotate(.45deg)}75%{transform:translate(-1px,2px) rotate(-.35deg)}}
-
-# Video techniques previews
-.brollDemo{display:flex;gap:8px} .brollDemo .main{width:96px;height:84px;background:#fff;border:1px solid #d0d5dd;border-radius:12px;position:relative} .brollDemo .overlay{width:68px;height:52px;background:#fff0f5;border:1px solid #ffd7e4;border-radius:10px;margin-top:16px;animation:fadeUp 2.7s infinite}
-.brollDemo .main:after{content:"Interview";position:absolute;left:10px;bottom:10px;font-size:10px;color:#667085}
-.cutawayDemo{display:flex;gap:12px;align-items:center} .cutawayDemo .a,.cutawayDemo .b{width:72px;height:72px;border-radius:12px;border:1px solid #d0d5dd;background:#fff;display:grid;place-items:center;font-size:10px;font-weight:800} .cutawayDemo .a{animation:fadeUp 2.5s infinite} .cutawayDemo .b{animation:fadeUp 2.5s infinite .35s}
-.speedRampDemo{width:170px} .speedTrack{height:10px;border-radius:99px;background:#e5e7eb;overflow:hidden;position:relative} .speedTrack:after{content:"";position:absolute;left:0;top:0;bottom:0;width:100%;background:linear-gradient(90deg,#111827 0 22%,#ff4f87 22% 70%,#111827 70% 100%);transform-origin:left;animation:growX 2.6s infinite} .speedLabel{display:flex;justify-content:space-between;font-size:10px;color:#667085;margin-top:8px}
-.freezeDemo{position:relative} .freezeFrame{width:156px;height:96px;border-radius:12px;background:linear-gradient(145deg,#dbe4ff,#ffdfe9);display:grid;place-items:center;font-weight:900;animation:freezePulse 2.8s infinite} .freezeFrame:after{content:"PAUSE";position:absolute;right:8px;top:8px;background:#111827;color:#fff;border-radius:999px;padding:4px 7px;font-size:9px} @keyframes freezePulse{0%,20%{transform:scale(.95);opacity:.3}30%,80%{transform:scale(1);opacity:1}100%{opacity:.3}}
-.parallaxDemo{width:170px;height:100px;position:relative;overflow:hidden;border-radius:12px;background:#e7eef8;border:1px solid #d0d5dd} .parallaxDemo .layer1,.parallaxDemo .layer2,.parallaxDemo .layer3{position:absolute;border-radius:14px} .parallaxDemo .layer1{inset:auto 10px 12px 10px;height:26px;background:#a4c2ff;animation:para1 3s infinite ease} .parallaxDemo .layer2{left:24px;top:26px;width:74px;height:46px;background:#fff;animation:para2 3s infinite ease} .parallaxDemo .layer3{right:18px;top:18px;width:48px;height:48px;background:#ffd3e2;animation:para3 3s infinite ease} @keyframes para1{0%,100%{transform:translateX(-8px)}50%{transform:translateX(8px)}} @keyframes para2{0%,100%{transform:translateX(8px)}50%{transform:translateX(-8px)}} @keyframes para3{0%,100%{transform:translateY(-4px)}50%{transform:translateY(4px)}}
-.twopointfiveDemo{width:170px;height:100px;position:relative;transform-style:preserve-3d;animation:tilt3d 3s infinite ease-in-out} .twopointfiveDemo .p1,.twopointfiveDemo .p2,.twopointfiveDemo .p3{position:absolute;border-radius:12px;border:1px solid #d0d5dd;background:#fff} .twopointfiveDemo .p1{left:8px;right:8px;bottom:10px;height:28px;background:#cbdcff} .twopointfiveDemo .p2{left:20px;top:18px;width:68px;height:52px} .twopointfiveDemo .p3{right:16px;top:10px;width:52px;height:68px;background:#ffdfe9} @keyframes tilt3d{0%,100%{transform:rotateY(-6deg) rotateX(2deg)}50%{transform:rotateY(6deg) rotateX(-2deg)}}
-.matchCutDemo{display:flex;align-items:center;gap:10px} .matchCutDemo .mc{width:64px;height:64px;border-radius:50%;background:linear-gradient(145deg,#111827,#485569);animation:fadeUp 2.6s infinite} .matchCutDemo .mc.two{background:linear-gradient(145deg,#ff4f87,#ff98b7);animation-delay:.25s}
-.multiviewDemo{display:grid;grid-template-columns:repeat(2,70px);grid-template-rows:repeat(2,42px);gap:8px} .multiviewDemo div{background:#fff;border:1px solid #d0d5dd;border-radius:10px;animation:fadeUp 2.6s infinite} .multiviewDemo div:nth-child(2){animation-delay:.12s} .multiviewDemo div:nth-child(3){animation-delay:.24s} .multiviewDemo div:nth-child(4){animation-delay:.36s}
-.maskTransDemo{position:relative;width:170px;height:100px;border-radius:12px;overflow:hidden;border:1px solid #d0d5dd} .maskTransDemo .bg1{position:absolute;inset:0;background:#e4ebf5} .maskTransDemo .bg2{position:absolute;inset:0;background:#ffe8ef;clip-path:inset(0 100% 0 0);animation:maskReveal 2.8s infinite ease} .maskTransDemo .occluder{position:absolute;left:-20px;top:0;bottom:0;width:36px;background:#111827;animation:occlude 2.8s infinite ease} @keyframes occlude{0%,15%{transform:translateX(0)}45%,80%{transform:translateX(190px)}100%{transform:translateX(190px)}} @keyframes maskReveal{0%,25%{clip-path:inset(0 100% 0 0)}55%,80%{clip-path:inset(0 0 0 0)}100%{clip-path:inset(0 0 0 0)}}
-.timeMapDemo{width:170px} .tmLine{height:10px;border-radius:99px;background:#e5e7eb;position:relative;overflow:hidden} .tmLine:after{content:"";position:absolute;left:0;top:0;bottom:0;width:100%;background:linear-gradient(90deg,#111827 0 28%,#3b82f6 28% 50%,#111827 50% 72%,#ff4f87 72% 100%);animation:growX 2.8s infinite}
-.montageDemo{display:flex;gap:8px} .montageDemo div{width:42px;height:74px;background:#fff;border:1px solid #d0d5dd;border-radius:10px;animation:fadeUp 2.5s infinite} .montageDemo div:nth-child(2){animation-delay:.12s} .montageDemo div:nth-child(3){animation-delay:.24s} .montageDemo div:nth-child(4){animation-delay:.36s}
-.revealDemo{position:relative;width:170px;height:100px;border-radius:12px;overflow:hidden;border:1px solid #d0d5dd;background:#edf2f7} .revealDemo .cover{position:absolute;left:0;top:0;bottom:0;width:48px;background:#111827;animation:revealSlide 3s infinite ease} .revealDemo .target{position:absolute;right:26px;top:22px;width:64px;height:56px;border-radius:14px;background:linear-gradient(145deg,#ffd3e2,#d6e2ff);animation:fadeUp 3s infinite} @keyframes revealSlide{0%,15%{transform:translateX(0)}50%,80%{transform:translateX(160px)}100%{transform:translateX(160px)}}
-
-@media (max-width:980px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.sheetTop{grid-template-columns:1fr}.details{grid-template-columns:1fr}}
-@media (max-width:640px){.grid{grid-template-columns:1fr} .hero{padding-top:44px} .countbox{width:100%;justify-content:center} .summary{display:block} .summary h2{margin-bottom:6px}}
+@media(max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}.sheetTop,.details{grid-template-columns:1fr}}
+@media(max-width:640px){.grid{grid-template-columns:1fr}.topline{display:block}.count{width:100%;justify-content:center}}
 </style>
 </head>
 <body>
 <header class="hero">
-  <div class="wrap">
-    <div class="eyebrow">BUSINESS MOTION / VISUAL LIBRARY · EXPANDED PROTOTYPE</div>
-    <h1>ビジネス動画の表現を、見た目から探す。</h1>
-    <p class="lead">After Effectsのモーション表現に加えて、カメラワークや映像演出も一覧で確認できる拡張版です。会社紹介・サービス紹介・採用・営業・マニュアル動画で使いやすい表現を、見た目と目的の両方から探せます。</p>
-    <div class="searchbar">
-      <div class="search"><input id="q" type="search" placeholder="例：数字、流れ、UI、B-roll、ドリーイン、インタビュー"></div>
-      <div class="countbox"><span id="count">0</span>&nbsp;/ 75 件</div>
-    </div>
-    <div class="groupLabel">カテゴリで絞り込む</div>
-    <div class="filters" id="catFilters"></div>
-    <div class="groupLabel">作り方で絞り込む</div>
-    <div class="filters" id="methodFilters"></div>
-  </div>
+<div class="wrap">
+<div class="eyebrow">BUSINESS VIDEO VISUAL LIBRARY / AFTER EFFECTS + SHOOTING</div>
+<h1>ビジネス動画の「見せ方」を、見た目から探す。</h1>
+<p class="lead">モーション、図解、構図、カメラワーク、カット、映像演出、UI表現まで。会社紹介・サービス紹介・採用・営業・マニュアル動画で使いやすい表現だけを厳選した実務向けライブラリです。</p>
+<div class="searchRow">
+<div class="search"><input id="q" placeholder="例：数字、インタビュー、B-roll、3つ、UI、寄る、比較"></div>
+<div class="count"><span id="count">0</span>&nbsp;/ 54 件</div>
+</div>
+<div class="filterLabel">カテゴリ</div><div class="filters" id="catFilters"></div>
+<div class="filterLabel">作り方</div><div class="filters" id="methodFilters"></div>
+</div>
 </header>
 
-<main class="main">
-  <div class="wrap">
-    <div class="summary">
-      <div>
-        <h2>表現ライブラリ</h2>
-        <p>「やりたい見せ方」に近いカードを見つけて、詳細で用途・AE機能・撮影方法まで確認できます。</p>
-      </div>
-      <p>今回の拡張版では、<b>カメラワーク</b>と<b>映像表現・演出</b>を追加しています。</p>
-    </div>
-    <div class="grid" id="grid"></div>
-    <div class="empty" id="empty"><b>条件に一致する見本がありません。</b><br><br>キーワードを短くするか、カテゴリや作り方を「すべて」に戻してください。</div>
-  </div>
-</main>
-
-<div class="modal" id="modal" role="dialog" aria-modal="true">
-  <div class="sheet">
-    <div class="sheetTop">
-      <div class="bigPreview" id="bigPreview"></div>
-      <div class="detailHead">
-        <button class="close" id="close">×</button>
-        <div class="sectionCap" id="dCode"></div>
-        <h2 id="dName"></h2>
-        <p id="dPurpose"></p>
-        <div class="pills" id="dPills"></div>
-      </div>
-    </div>
-    <div class="details">
-      <div>
-        <div class="block">
-          <h4>向いている用途</h4>
-          <p id="dUse"></p>
-        </div>
-        <div class="block" style="margin-top:22px">
-          <h4>作り方 / 手順</h4>
-          <ol id="dSteps"></ol>
-        </div>
-      </div>
-      <div>
-        <div class="aeBox">
-          <h4>技術メモ</h4>
-          <p><b>使用プロパティ</b></p>
-          <p id="dProps"></p>
-          <p style="margin-top:14px"><b>主な機能・考え方</b></p>
-          <p id="dFeatures"></p>
-        </div>
-        <div class="block" style="margin-top:22px">
-          <h4>検索ワード</h4>
-          <p id="dKeywords"></p>
-        </div>
-      </div>
-    </div>
-    <div class="footerNote">※ この試作版のプレビューはCSSによる簡易アニメーションです。実運用ではAE書き出しのGIF / WebM / MP4などに差し替える想定です。</div>
-  </div>
+<main><div class="wrap">
+<div class="topline">
+<div><h2>厳選ライブラリ</h2><p>似た項目を整理し、ビジネス動画で使用頻度が高い表現に絞っています。</p></div>
+<p>カードをクリックすると、用途・AE機能・撮影の考え方まで確認できます。</p>
 </div>
+<div class="grid" id="grid"></div><div class="empty" id="empty">条件に一致する見本がありません。</div>
+</div></main>
+
+<div class="modal" id="modal"><div class="sheet">
+<div class="sheetTop"><div class="bigPrev" id="bigPrev"></div>
+<div class="head"><button class="close" id="close">×</button><div class="code" id="dCode"></div><h2 id="dName"></h2><p id="dDesc"></p><div class="pills" id="dPills"></div></div></div>
+<div class="details">
+<div><div class="block"><h4>向いている用途</h4><p id="dUse"></p></div><div class="note"><b>使うときのポイント</b><p id="dNote"></p></div></div>
+<div><div class="tech"><h4>技術メモ</h4><p id="dAE"></p></div><div class="block" style="margin-top:20px"><h4>検索ワード</h4><p id="dTags"></p></div></div>
+</div>
+<div class="foot">※ プレビューはAEでよく使うタイミング・イージング・レイヤー感をCSSで再現した試作です。実運用では実際のAE書き出し動画（WebM/MP4）へ差し替える設計です。</div>
+</div></div>
 
 <script>
-const items = [{"id": "BM-T01", "name": "タイトル・フェードアップ", "cat": "テキスト", "purpose": "章タイトルを上品に登場させる", "keywords": "タイトル 見出し フェード 上に出る 章扉", "diff": "初級", "props": "Position / Opacity", "features": "Easy Ease / Graph Editor", "template": "title", "use": "会社紹介・サービス紹介・章扉", "steps": ["テキストレイヤーを作成", "Positionを下から上へ20〜40px移動", "Opacityを0→100%", "Easy Easeを適用しGraph Editorで減速"], "method": "After Effects"}, {"id": "BM-T02", "name": "マスク文字出現", "cat": "テキスト", "purpose": "文字が枠の中から現れる", "keywords": "文字 マスク スライド 見出し 出現", "diff": "初級", "props": "Position / Mask", "features": "Track Matte / Easy Ease", "template": "masktext", "use": "タイトル・見出し・サービス名", "steps": ["テキストを作成", "長方形シェイプをマットとして用意", "テキストを下から上へ移動", "アルファマットで表示範囲を制御"], "method": "After Effects"}, {"id": "BM-T03", "name": "下線スライド強調", "cat": "テキスト", "purpose": "重要語句をさりげなく強調する", "keywords": "下線 強調 マーカー 文字 ライン", "diff": "初級", "props": "Scale X / Position", "features": "Shape Layer", "template": "underline", "use": "重要ワード・見出し", "steps": ["テキスト下に細いシェイプを作成", "アンカーポイントを左端へ", "Scale Xを0→100%", "文字の登場より2〜4フレーム遅らせる"], "method": "After Effects"}, {"id": "BM-T04", "name": "キーワード・ポップ", "cat": "テキスト", "purpose": "重要な単語だけ瞬間的に目立たせる", "keywords": "ポップ 強調 単語 拡大 弾む", "diff": "初級", "props": "Scale / Opacity", "features": "Easy Ease / Overshoot", "template": "pop", "use": "メリット・特徴・キーワード", "steps": ["強調語を別レイヤーに分離", "Scaleを80→108→100%", "Opacityを0→100%", "2つ目のキーで少しオーバーシュート"], "method": "After Effects"}, {"id": "BM-T05", "name": "箇条書き順次表示", "cat": "テキスト", "purpose": "3つのポイントを順番に理解させる", "keywords": "箇条書き 順番 3つ ポイント リスト", "diff": "初級", "props": "Position / Opacity", "features": "Stagger", "template": "list", "use": "特徴・メリット・要点整理", "steps": ["項目を3レイヤーに分ける", "各項目をOpacity 0→100%", "Positionを10〜20px動かす", "4〜8フレームずつ開始をずらす"], "method": "After Effects"}, {"id": "BM-T06", "name": "タイプライター", "cat": "テキスト", "purpose": "入力・検索・AI応答を表現する", "keywords": "タイプライター 文字入力 検索 AI チャット", "diff": "中級", "props": "Text Animator / Range Selector", "features": "Text Animator", "template": "typing", "use": "AI・検索・入力シーン", "steps": ["テキストアニメーターでOpacityを追加", "Range Selectorを0→100%", "AdvancedでUnitsをIndexへ調整", "カーソル用の縦線を点滅"], "method": "After Effects"}, {"id": "BM-T07", "name": "セクション番号＋見出し", "cat": "テキスト", "purpose": "動画の構成を分かりやすく区切る", "keywords": "章 セクション 01 02 見出し 番号", "diff": "初級", "props": "Opacity / Position", "features": "Shape Layer", "template": "section", "use": "会社紹介・サービス紹介", "steps": ["番号と見出しを別レイヤーにする", "番号を先にフェードイン", "見出しを横からスライド", "細いラインを追加して統一感を出す"], "method": "After Effects"}, {"id": "BM-T08", "name": "文字ハイライト帯", "cat": "テキスト", "purpose": "発言や重要文を読みやすく見せる", "keywords": "ハイライト 帯 テキスト 強調 背景", "diff": "初級", "props": "Scale X / Opacity", "features": "Shape Layer", "template": "highlight", "use": "コピー・重要文・訴求", "steps": ["テキスト背面に長方形を置く", "Scale Xを0→100%", "テキストを2〜3フレーム遅れて表示", "帯の高さは文字サイズの1.2〜1.5倍"], "method": "After Effects"}, {"id": "BM-N01", "name": "カウントアップ", "cat": "数字・データ", "purpose": "実績や導入社数を強く見せる", "keywords": "数字 カウント 実績 1000 導入社数", "diff": "中級", "props": "Slider Control / Source Text", "features": "Expression", "template": "count", "use": "導入社数・利用件数・削減時間", "steps": ["NullにSlider Controlを追加", "テキストのSource Textへ参照式を設定", "Sliderを0→最終値へアニメーション", "最後の数値で少しScaleを強調"], "method": "After Effects"}, {"id": "BM-N02", "name": "大きな数字＋補足", "cat": "数字・データ", "purpose": "1つのKPIを一瞬で理解させる", "keywords": "KPI 数字 大きい 実績 指標", "diff": "初級", "props": "Scale / Opacity", "features": "Typography", "template": "bigstat", "use": "実績・KPI・会社紹介", "steps": ["数字を画面の主役サイズに設定", "補足文を数字の下へ配置", "数字→補足の順で表示", "数字だけScaleで微小な動きを付ける"], "method": "After Effects"}, {"id": "BM-N03", "name": "棒グラフ伸長", "cat": "数字・データ", "purpose": "複数の数値差を直感的に見せる", "keywords": "棒グラフ 比較 数値 データ グラフ", "diff": "初級", "props": "Scale Y", "features": "Shape Layer", "template": "bars", "use": "実績比較・推移・アンケート", "steps": ["各棒をShape Layerで作成", "アンカーポイントを下端へ", "Scale Yを0→100%", "棒ごとに開始を3〜5フレームずらす"], "method": "After Effects"}, {"id": "BM-N04", "name": "円グラフ描画", "cat": "数字・データ", "purpose": "割合・構成比を見せる", "keywords": "円グラフ パーセント 割合 構成比", "diff": "中級", "props": "Trim Paths", "features": "Shape Layer / Trim Paths", "template": "donut", "use": "割合・満足度・構成比", "steps": ["円シェイプを作成", "線のみ表示してTrim Paths追加", "Endを0→割合へ", "中央にパーセント数値を表示"], "method": "After Effects"}, {"id": "BM-N05", "name": "比較メーター", "cat": "数字・データ", "purpose": "Before / Afterの差を強調する", "keywords": "比較 before after 差 削減 改善", "diff": "初級", "props": "Scale X / Source Text", "features": "Shape Layer", "template": "compare", "use": "改善効果・削減効果", "steps": ["2本の水平バーを作成", "BeforeとAfterの長さを設定", "Scale Xで伸長", "差分の数値を最後に表示"], "method": "After Effects"}, {"id": "BM-N06", "name": "KPIカード3枚", "cat": "数字・データ", "purpose": "3つの主要指標を並列で見せる", "keywords": "KPI カード 3つ 数字 指標", "diff": "初級", "props": "Position / Opacity", "features": "Stagger", "template": "cards", "use": "会社紹介・月次実績・成果", "steps": ["同一デザインのカードを3枚作成", "左から順にスライドイン", "数字をカード内で少し遅れて表示", "間隔と余白を均等に保つ"], "method": "After Effects"}, {"id": "BM-I01", "name": "3ステップ横フロー", "cat": "図解", "purpose": "サービスの流れを順番に説明する", "keywords": "流れ ステップ 1 2 3 フロー 手順", "diff": "初級", "props": "Opacity / Position", "features": "Shape Layer / Stagger", "template": "flow", "use": "導入フロー・利用手順", "steps": ["3つのノードを横並び", "1→2→3の順で表示", "ノード間の矢印を後追いで描画", "最後に全体を100%表示"], "method": "After Effects"}, {"id": "BM-I02", "name": "縦ステップ進行", "cat": "図解", "purpose": "工程や手続きを上から順に見せる", "keywords": "縦 ステップ 手順 工程 フロー", "diff": "初級", "props": "Trim Paths / Opacity", "features": "Shape Layer", "template": "vflow", "use": "申込手順・業務フロー", "steps": ["縦ラインをShapeで作成", "Trim Pathsで上から描画", "各ポイントを順にフェードイン", "説明文をポイントより2フレーム遅らせる"], "method": "After Effects"}, {"id": "BM-I03", "name": "Before → After", "cat": "図解", "purpose": "導入前後の変化を一目で見せる", "keywords": "before after 改善 導入前 導入後 比較", "diff": "初級", "props": "Position / Opacity", "features": "Layout", "template": "beforeafter", "use": "課題→解決・改善事例", "steps": ["左右にBefore/Afterカードを作成", "Beforeを先に表示", "中央矢印を描画", "Afterを明るくポップ表示"], "method": "After Effects"}, {"id": "BM-I04", "name": "2項比較カード", "cat": "図解", "purpose": "2つの選択肢や違いを整理する", "keywords": "比較 2つ 左右 違い vs", "diff": "初級", "props": "Position / Opacity", "features": "Layout", "template": "twocol", "use": "旧方式/新方式・プラン比較", "steps": ["左右同幅のカードを配置", "見出し→内容の順で表示", "中央にVSや矢印を置く", "差分だけ強調色を使う"], "method": "After Effects"}, {"id": "BM-I05", "name": "関係図コネクト", "cat": "図解", "purpose": "複数要素のつながりを視覚化する", "keywords": "関係図 つながり ネットワーク 線 構造", "diff": "中級", "props": "Trim Paths / Scale", "features": "Shape Layer", "template": "network", "use": "システム構成・組織・連携", "steps": ["要素をノードとして配置", "ノード間に線を引く", "Trim Pathsで線を描画", "接続完了後に中心ノードを強調"], "method": "After Effects"}, {"id": "BM-I06", "name": "タイムライン", "cat": "図解", "purpose": "沿革や導入スケジュールを説明する", "keywords": "タイムライン 年表 沿革 スケジュール 年", "diff": "初級", "props": "Trim Paths / Opacity", "features": "Shape Layer", "template": "timeline", "use": "会社沿革・ロードマップ", "steps": ["横ラインと年ポイントを作成", "ラインを左→右へ描画", "年ポイントを順番に表示", "説明文を最後にフェードイン"], "method": "After Effects"}, {"id": "BM-I07", "name": "課題→解決フロー", "cat": "図解", "purpose": "問題と解決策の関係を整理する", "keywords": "課題 解決 問題 ソリューション 矢印", "diff": "初級", "props": "Position / Opacity", "features": "Layout", "template": "solve", "use": "サービス紹介・営業動画", "steps": ["左に課題、右に解決を配置", "課題カードを先に表示", "中央矢印をアニメーション", "解決カードを明るく表示"], "method": "After Effects"}, {"id": "BM-I08", "name": "アイコン＋説明3列", "cat": "図解", "purpose": "3つの特徴を簡潔に紹介する", "keywords": "3つ 特徴 アイコン 3列 メリット", "diff": "初級", "props": "Scale / Opacity", "features": "Stagger", "template": "icons", "use": "特徴・メリット・機能紹介", "steps": ["3つのアイコンを均等配置", "アイコンをScaleで順次表示", "見出しを追加", "説明文は短く2行以内に"], "method": "After Effects"}, {"id": "BM-U01", "name": "PCブラウザ登場", "cat": "UI・サービス", "purpose": "Webサービスの画面を自然に見せる", "keywords": "PC ブラウザ web サービス 画面 モック", "diff": "初級", "props": "Scale / Position / Opacity", "features": "Pre-compose", "template": "browser", "use": "SaaS・Webサービス紹介", "steps": ["画面キャプチャをプリコンポーズ", "ブラウザ枠を作成", "Scale 94→100%で登場", "軽いDrop Shadowで奥行き"], "method": "After Effects"}, {"id": "BM-U02", "name": "スマホモック登場", "cat": "UI・サービス", "purpose": "アプリ・モバイル画面を紹介する", "keywords": "スマホ アプリ モバイル 画面 UI", "diff": "初級", "props": "Position / Rotation / Scale", "features": "Pre-compose", "template": "phone", "use": "アプリ・モバイルサービス", "steps": ["画面をスマホ枠へ配置", "Y位置を下→中央", "Rotationを2〜4度戻す", "最後に画面内容を少しスクロール"], "method": "After Effects"}, {"id": "BM-U03", "name": "画面ズームフォーカス", "cat": "UI・サービス", "purpose": "操作箇所を拡大して見せる", "keywords": "ズーム UI 拡大 フォーカス 操作 画面", "diff": "初級", "props": "Scale / Position", "features": "Null Parent", "template": "zoomui", "use": "機能説明・マニュアル", "steps": ["UIをNullへ親子付け", "Scaleを100→135%", "Positionで対象箇所を中央へ", "Ease In/Outで急な拡大を避ける"], "method": "After Effects"}, {"id": "BM-U04", "name": "カーソルクリック", "cat": "UI・サービス", "purpose": "どこを操作するか直感的に示す", "keywords": "カーソル クリック マウス 操作 ボタン", "diff": "初級", "props": "Position / Scale", "features": "Motion Path", "template": "cursor", "use": "操作説明・チュートリアル", "steps": ["カーソル画像/Shapeを作成", "対象ボタンへPosition移動", "クリック時にScale 100→85→100%", "ボタン側も同時に軽く反応"], "method": "After Effects"}, {"id": "BM-U05", "name": "ボタン・パルス強調", "cat": "UI・サービス", "purpose": "押してほしい場所を目立たせる", "keywords": "ボタン パルス 強調 UI 光る CTA", "diff": "初級", "props": "Scale / Opacity", "features": "Shape Layer", "template": "pulse", "use": "UI説明・CTA", "steps": ["ボタン背面に円/角丸Shapeを配置", "Scale 100→150%", "Opacity 40→0%", "1〜2秒間隔で繰り返す"], "method": "After Effects"}, {"id": "BM-U06", "name": "画面スライド切替", "cat": "UI・サービス", "purpose": "複数機能をテンポよく紹介する", "keywords": "UI 切り替え 画面 スライド 機能", "diff": "中級", "props": "Position / Opacity", "features": "Pre-compose / Motion Blur", "template": "uislide", "use": "機能紹介・SaaSデモ", "steps": ["各画面をプリコンポーズ", "現在画面を左へ退場", "次画面を右から登場", "Motion Blurを有効化"], "method": "After Effects"}, {"id": "BM-P01", "name": "ローワーサード", "cat": "人物・会社", "purpose": "氏名・役職をシンプルに表示する", "keywords": "名前 役職 人物 社員 ローワーサード", "diff": "初級", "props": "Position / Opacity", "features": "Shape Layer", "template": "lower", "use": "インタビュー・社員紹介", "steps": ["名前/役職と背景帯を作成", "帯を左からスライド", "名前を2フレーム遅れて表示", "5〜7秒程度で退場"], "method": "After Effects"}, {"id": "BM-P02", "name": "社員紹介カード", "cat": "人物・会社", "purpose": "人物写真と情報をセットで見せる", "keywords": "社員 紹介 人物 プロフィール カード", "diff": "初級", "props": "Scale / Opacity", "features": "Layout", "template": "profile", "use": "採用・会社紹介", "steps": ["写真を円または角丸で切り抜く", "氏名/所属/一言を配置", "カード全体をフェードアップ", "写真を少し遅れてScale表示"], "method": "After Effects"}, {"id": "BM-P03", "name": "引用コメント", "cat": "人物・会社", "purpose": "顧客・社員の声を強調する", "keywords": "コメント 声 引用 インタビュー 顧客", "diff": "初級", "props": "Opacity / Position", "features": "Typography", "template": "quote", "use": "導入事例・社員インタビュー", "steps": ["引用符を大きめに配置", "本文を2〜3行で表示", "名前/所属を小さく添える", "全体をゆっくりフェードアップ"], "method": "After Effects"}, {"id": "BM-P04", "name": "会社情報カード", "cat": "人物・会社", "purpose": "会社名・所在地・設立などを整理する", "keywords": "会社情報 会社概要 所在地 設立 企業", "diff": "初級", "props": "Opacity / Position", "features": "Grid Layout", "template": "company", "use": "会社紹介", "steps": ["項目名と値を2列で配置", "カード背景を薄く敷く", "項目を上から順次表示", "情報量が多い場合は2画面に分割"], "method": "After Effects"}, {"id": "BM-P05", "name": "拠点ピン表示", "cat": "人物・会社", "purpose": "全国拠点や所在地を印象的に見せる", "keywords": "拠点 地図 ピン 所在地 全国 店舗", "diff": "中級", "props": "Scale / Position", "features": "Map / Shape Layer", "template": "pin", "use": "会社紹介・店舗紹介", "steps": ["地図画像/Shapeを配置", "ピンをScale 0→115→100%", "拠点名を横に表示", "複数拠点は順番に出す"], "method": "After Effects"}, {"id": "BM-L01", "name": "左テキスト＋右ビジュアル", "cat": "レイアウト", "purpose": "説明と画像をバランスよく見せる", "keywords": "左右 2カラム テキスト 画像 レイアウト", "diff": "初級", "props": "Position / Opacity", "features": "Grid Layout", "template": "split", "use": "サービス説明・会社紹介", "steps": ["画面を6:4〜5:5で分割", "左に見出し/本文、右に画像", "左右を別タイミングで表示", "余白を広めに取る"], "method": "After Effects"}, {"id": "BM-L02", "name": "3カード横並び", "cat": "レイアウト", "purpose": "3つの特徴・プランを比較しやすくする", "keywords": "カード 3つ 特徴 プラン 横並び", "diff": "初級", "props": "Position / Opacity", "features": "Grid Layout", "template": "threecards", "use": "特徴・プラン・メリット", "steps": ["同幅カードを3枚作成", "中央基準で均等配置", "左→中央→右の順に表示", "重要カードだけ微小に強調"], "method": "After Effects"}, {"id": "BM-L03", "name": "全面写真＋コピー", "cat": "レイアウト", "purpose": "会社・人物・製品写真を印象的に見せる", "keywords": "写真 全面 コピー タイトル 会社", "diff": "初級", "props": "Scale / Opacity", "features": "Ken Burns", "template": "photo", "use": "会社紹介・ブランド動画", "steps": ["写真を全面配置", "Scaleを103→100%でゆっくり移動", "コピーをフェードイン", "必要なら暗いオーバーレイを追加"], "method": "撮影＋AE"}, {"id": "BM-L04", "name": "2画面スプリット", "cat": "レイアウト", "purpose": "2つの映像を同時に比較する", "keywords": "分割 2画面 左右 比較 split", "diff": "初級", "props": "Mask / Position", "features": "Track Matte", "template": "splitvideo", "use": "比較・導入前後", "steps": ["映像を左右に配置", "マスクで50%ずつ表示", "境界線を中央に追加", "必要ならラベルを上部へ"], "method": "After Effects"}, {"id": "BM-L05", "name": "カード積み上げ", "cat": "レイアウト", "purpose": "複数情報を順に整理して見せる", "keywords": "カード 積み上げ リスト 情報 UI", "diff": "中級", "props": "Position / Scale / Rotation", "features": "Parenting", "template": "stack", "use": "機能一覧・事例紹介", "steps": ["同一カードを複製", "Y位置を少しずつずらす", "順番に前面へ移動", "奥のカードはScaleを少し下げる"], "method": "After Effects"}, {"id": "BM-L06", "name": "中央メッセージ", "cat": "レイアウト", "purpose": "結論や重要コピーを1画面で伝える", "keywords": "中央 メッセージ 結論 コピー 一言", "diff": "初級", "props": "Opacity / Scale", "features": "Typography", "template": "center", "use": "結論・キーメッセージ", "steps": ["中央に短いコピーを配置", "前後の情報を一度消す", "Opacityを0→100%", "1〜2秒しっかり静止させる"], "method": "After Effects"}, {"id": "BM-M01", "name": "アイコン・ポップイン", "cat": "モーション・強調", "purpose": "機能や概念を軽快に見せる", "keywords": "アイコン ポップ 動き 機能", "diff": "初級", "props": "Scale / Rotation", "features": "Overshoot", "template": "iconpop", "use": "特徴・機能・図解", "steps": ["アイコンをShape/SVGで配置", "Scale 0→115→100%", "Rotationを-8→0度", "開始位置を少しずつずらす"], "method": "After Effects"}, {"id": "BM-M02", "name": "矢印ドロー", "cat": "モーション・強調", "purpose": "視線を次の情報へ誘導する", "keywords": "矢印 線 描く 誘導 フロー", "diff": "初級", "props": "Trim Paths", "features": "Shape Layer", "template": "arrow", "use": "フロー・導線・強調", "steps": ["ペンツールで矢印線を作成", "Trim Pathsを追加", "Endを0→100%", "矢印先端を最後に表示"], "method": "After Effects"}, {"id": "BM-M03", "name": "チェックマーク", "cat": "モーション・強調", "purpose": "メリット・完了・OKを強調する", "keywords": "チェック OK 完了 メリット 正解", "diff": "初級", "props": "Trim Paths / Scale", "features": "Shape Layer", "template": "check", "use": "メリット・完了・確認", "steps": ["チェック線をShapeで作成", "Trim Pathsで描画", "丸背景をScaleで表示", "テキストを最後に表示"], "method": "After Effects"}, {"id": "BM-M04", "name": "囲み枠アニメーション", "cat": "モーション・強調", "purpose": "画面上の重要箇所を囲って示す", "keywords": "囲み 枠 強調 四角 UI 注目", "diff": "初級", "props": "Trim Paths / Opacity", "features": "Shape Layer", "template": "outline", "use": "UI説明・注意箇所", "steps": ["対象の周囲に角丸Rectangle", "Trim Pathsで描画", "Stroke幅を2〜4px", "描画後に対象を軽くScale"], "method": "After Effects"}, {"id": "BM-M05", "name": "ライン接続", "cat": "モーション・強調", "purpose": "要素同士の関係性を見せる", "keywords": "線 接続 つながり ノード 関係", "diff": "中級", "props": "Trim Paths", "features": "Shape Layer", "template": "connect", "use": "構成図・ネットワーク", "steps": ["2点間にShape Path", "Trim Pathsで線を伸ばす", "接続先ノードをポップ表示", "複数線は順次描画"], "method": "After Effects"}, {"id": "BM-M06", "name": "ソフト・パルス", "cat": "モーション・強調", "purpose": "静かな画面に自然な動きを足す", "keywords": "パルス 呼吸 拡大 繰り返し やさしい", "diff": "初級", "props": "Scale / Opacity", "features": "Loop Expression", "template": "softpulse", "use": "CTA・重要アイコン", "steps": ["Scaleを100→103→100%", "2秒程度で往復", "Easy Easeで滑らかに", "loopOutで繰り返す"], "method": "After Effects"}, {"id": "BM-C01", "name": "章扉カード", "cat": "シーン・CTA", "purpose": "話題の切り替わりを明確にする", "keywords": "章扉 セクション 切り替え タイトル", "diff": "初級", "props": "Scale / Opacity", "features": "Transition", "template": "chapter", "use": "長尺の会社紹介・説明動画", "steps": ["背景を単色/淡いグラデーションに", "章番号と見出しを中央配置", "見出しをフェードアップ", "1〜1.5秒静止して次へ"], "method": "After Effects"}, {"id": "BM-C02", "name": "ロゴ・フェードイン", "cat": "シーン・CTA", "purpose": "冒頭・締めでブランドを自然に見せる", "keywords": "ロゴ オープニング エンディング ブランド", "diff": "初級", "props": "Opacity / Scale", "features": "Easy Ease", "template": "logo", "use": "OP・ED・ブランド表示", "steps": ["ロゴを中央配置", "Opacity 0→100%", "Scale 96→100%", "1秒以上静止してブランドを認識させる"], "method": "After Effects"}, {"id": "BM-C03", "name": "ロゴ・ラインリビール", "cat": "シーン・CTA", "purpose": "少し上質なロゴ登場を作る", "keywords": "ロゴ 線 リビール マスク 高級", "diff": "中級", "props": "Mask / Trim Paths", "features": "Track Matte", "template": "logoline", "use": "OP・ED", "steps": ["ロゴをマットで隠す", "ラインを左→右へ描画", "ラインに追従してロゴを表示", "最後にラインだけ消す"], "method": "After Effects"}, {"id": "BM-C04", "name": "CTAボタン表示", "cat": "シーン・CTA", "purpose": "問い合わせ・資料請求へ誘導する", "keywords": "CTA 問い合わせ 資料請求 ボタン", "diff": "初級", "props": "Scale / Opacity", "features": "Shape Layer", "template": "cta", "use": "エンディング・広告動画", "steps": ["CTA文とボタンを中央配置", "ボタンをScaleでポップ表示", "補足文を遅れて表示", "最後にSoft Pulseを1回"], "method": "After Effects"}, {"id": "BM-C05", "name": "QRコード案内", "cat": "シーン・CTA", "purpose": "詳細ページへの導線を分かりやすくする", "keywords": "QR 二次元コード 誘導 詳細 スキャン", "diff": "初級", "props": "Scale / Opacity", "features": "Layout", "template": "qr", "use": "サイネージ・営業動画・ED", "steps": ["QRを右または中央に配置", "見出しを先に表示", "QRをScale 90→100%", "読み取り時間を最低3秒確保"], "method": "After Effects"}, {"id": "BM-C06", "name": "エンドカード", "cat": "シーン・CTA", "purpose": "ロゴ・URL・問い合わせを整理して締める", "keywords": "エンドカード 最後 URL 問い合わせ ロゴ", "diff": "初級", "props": "Opacity / Position", "features": "Layout", "template": "end", "use": "動画エンディング", "steps": ["ロゴ/URL/CTAを整理", "要素を上から順に表示", "最終画面は3〜5秒保持", "情報を増やしすぎない"], "method": "After Effects"}, {"id": "BM-CW01", "name": "固定カメラ", "cat": "カメラワーク", "purpose": "余計な演出を入れず、内容に集中させる", "keywords": "固定 カメラ 動かない インタビュー 説明", "diff": "初級", "props": "なし", "features": "三脚 / 構図設計", "template": "staticcam", "use": "インタビュー・社長メッセージ・説明パート", "steps": ["三脚でカメラを固定", "被写体の目線と余白を整える", "背景に不要物が入らないようにする", "必要に応じて後から文字や図解を追加"], "method": "撮影"}, {"id": "BM-CW02", "name": "パン", "cat": "カメラワーク", "purpose": "左右方向に情報を見せながら空間を紹介する", "keywords": "パン 左右 カメラワーク オフィス 施設", "diff": "初級", "props": "なし", "features": "ジンバル / 三脚ヘッド", "template": "pan", "use": "オフィス紹介・施設案内・展示紹介", "steps": ["始点と終点を先に決める", "一定速度で左右に振る", "止まり際で揺れないよう注意", "必要ならAEで速度を微調整"], "method": "撮影"}, {"id": "BM-CW03", "name": "チルト", "cat": "カメラワーク", "purpose": "上下方向に見せて高さや情報量を伝える", "keywords": "チルト 上下 建物 製品 看板", "diff": "初級", "props": "なし", "features": "三脚ヘッド", "template": "tilt", "use": "建物・看板・製品・展示物紹介", "steps": ["被写体の上端または下端を決める", "一定速度で上下に動かす", "動き出しと止まりに余裕を持つ", "被写体の中心が外れすぎないよう調整"], "method": "撮影"}, {"id": "BM-CW04", "name": "ドリーイン", "cat": "カメラワーク", "purpose": "被写体に近づき、重要性を高める", "keywords": "ドリーイン 近づく 寄る 強調 カメラ", "diff": "中級", "props": "なし", "features": "ジンバル / スライダー", "template": "dollyin", "use": "製品紹介・人物強調・メッセージ強調", "steps": ["被写体に対して直線で近づく", "スピードはゆっくり一定に保つ", "前後の余白を十分に撮る", "文字入れ位置も考慮して構図を取る"], "method": "撮影"}, {"id": "BM-CW05", "name": "ドリーアウト", "cat": "カメラワーク", "purpose": "全体像や空間の広がりを見せる", "keywords": "ドリーアウト 離れる 引く 全体像 カメラ", "diff": "中級", "props": "なし", "features": "ジンバル / スライダー", "template": "dollyout", "use": "導入シーン・施設紹介・締めカット", "steps": ["被写体に近い位置から撮り始める", "滑らかに後退して全体を見せる", "背景の整理を意識する", "止まり位置で構図が整うようにする"], "method": "撮影"}, {"id": "BM-CW06", "name": "トラック", "cat": "カメラワーク", "purpose": "被写体に並走して動きを見せる", "keywords": "トラック 横移動 並走 作業風景 カメラ", "diff": "中級", "props": "なし", "features": "ジンバル / スライダー", "template": "track", "use": "作業風景・オフィス・移動シーン", "steps": ["被写体と並行に移動する", "被写体との距離を一定に保つ", "背景の流れが出る角度を探す", "必要に応じて手ブレ補正を使う"], "method": "撮影"}, {"id": "BM-CW07", "name": "プッシュイン（疑似含む）", "cat": "カメラワーク", "purpose": "視線を集めて、発言や製品を印象づける", "keywords": "プッシュイン 寄り 疑似ズーム 重要 発言", "diff": "初級", "props": "Scale / Position", "features": "AEでも再現可", "template": "pushin", "use": "インタビュー・重要説明・商品訴求", "steps": ["撮影ならゆっくり前進する", "AEならScale 100→108%程度で擬似的に寄る", "Positionで被写体を中央維持", "寄りすぎて画質が荒れないよう注意"], "method": "撮影＋AE"}, {"id": "BM-CW08", "name": "プルアウト（疑似含む）", "cat": "カメラワーク", "purpose": "話を締めたり、広い状況を見せる", "keywords": "プルアウト 引き 全体 締め 疑似", "diff": "初級", "props": "Scale / Position", "features": "AEでも再現可", "template": "pullout", "use": "締めカット・空間紹介・転換前", "steps": ["撮影ならゆっくり後退する", "AEならScale 108→100%で軽く引く", "前後のシーンとのつながりを確認", "広がりが出る被写体を選ぶ"], "method": "撮影＋AE"}, {"id": "BM-CW09", "name": "オービット", "cat": "カメラワーク", "purpose": "製品や設備を立体的に見せる", "keywords": "オービット 回り込み 製品 機材 立体", "diff": "上級", "props": "なし", "features": "ジンバル / 回り込み動作", "template": "orbit", "use": "製品紹介・設備紹介・機材紹介", "steps": ["被写体を中心に半円状に回り込む", "被写体からの距離を一定に保つ", "背景が散らからない角度を選ぶ", "速度を一定にして高級感を出す"], "method": "撮影"}, {"id": "BM-CW10", "name": "ズームイン", "cat": "カメラワーク", "purpose": "見せたい箇所に素早く注目を集める", "keywords": "ズームイン 拡大 レンズ 視線誘導", "diff": "初級", "props": "Scale / Position", "features": "レンズズーム / AE擬似ズーム", "template": "zoomin", "use": "UI説明・製品の細部・強調", "steps": ["撮影時は急すぎるズームを避ける", "AEではScaleでなめらかに再現可能", "止まり位置の構図を決める", "音や文字演出と合わせると効果的"], "method": "撮影＋AE"}, {"id": "BM-CW11", "name": "ラックフォーカス", "cat": "カメラワーク", "purpose": "手前と奥の情報を切り替えて見せる", "keywords": "ラックフォーカス ピント 手前 奥 切り替え", "diff": "中級", "props": "Blur / Opacity", "features": "レンズフォーカス / AE模擬表現", "template": "rackfocus", "use": "製品と人物・手元と画面・前景と背景", "steps": ["撮影では手前と奥に明確な被写体を置く", "ピント送りの始点と終点を決める", "AEなら被写界深度風にブラーで模擬できる", "意味のある情報切替に使う"], "method": "撮影＋AE"}, {"id": "BM-CW12", "name": "ハンドヘルド", "cat": "カメラワーク", "purpose": "現場感・臨場感を出す", "keywords": "ハンドヘルド 手持ち 現場感 密着 ドキュメント", "diff": "中級", "props": "Position / Rotation（微小）", "features": "手ブレ表現 / Warp Stabilizer", "template": "handheld", "use": "現場密着・社員同行・イベントレポート", "steps": ["あえて少しだけ揺れを残す", "ただし見づらくならない範囲にする", "AEなら微小な揺れを後付け可能", "重要情報の説明パートでは使いすぎない"], "method": "撮影＋AE"}, {"id": "BM-V01", "name": "B-roll差し込み", "cat": "映像表現・演出", "purpose": "話の内容を補足し、単調さを防ぐ", "keywords": "B-roll 差し込み 補足 インタビュー 仕事風景", "diff": "初級", "props": "カット編集", "features": "素材選定 / タイミング", "template": "broll", "use": "インタビュー・会社紹介・導入事例", "steps": ["話している内容に合う補助映像を用意", "発言内容に合わせて差し込む", "長さは短めにテンポよく", "説明の妨げにならない素材を選ぶ"], "method": "撮影＋AE"}, {"id": "BM-V02", "name": "カットアウェイ", "cat": "映像表現・演出", "purpose": "主題から補足対象へ自然に切り替える", "keywords": "カットアウェイ 手元 資料 補足 切り替え", "diff": "初級", "props": "カット編集", "features": "構成設計", "template": "cutaway", "use": "プレゼン・説明・マニュアル", "steps": ["話している対象を先に見せる", "次に手元・資料・画面などへ切り替える", "戻るタイミングを決める", "話の流れと一致させる"], "method": "撮影＋AE"}, {"id": "BM-V03", "name": "スピードランプ", "cat": "映像表現・演出", "purpose": "移動や切替をテンポよく見せる", "keywords": "スピードランプ 加速 減速 移動 テンポ", "diff": "中級", "props": "Time Remapping", "features": "Time Remap / Graph Editor", "template": "speedramp", "use": "移動シーン・施設導線・印象的な切替", "steps": ["加速させたい区間を決める", "Time Remapでキーフレームを打つ", "Graph Editorで速度変化を滑らかにする", "使いすぎてせわしなくならないよう注意"], "method": "After Effects"}, {"id": "BM-V04", "name": "フリーズフレーム", "cat": "映像表現・演出", "purpose": "一瞬止めて情報を追加する", "keywords": "フリーズ 止める 静止 文字 情報追加", "diff": "初級", "props": "Freeze Frame / Time Remap", "features": "テロップ連携", "template": "freeze", "use": "人物紹介・特徴紹介・導入ポイント", "steps": ["止める瞬間を選ぶ", "フリーズして名前や補足を重ねる", "止め時間は0.5〜1.5秒程度", "再開時のつながりを自然にする"], "method": "After Effects"}, {"id": "BM-V05", "name": "パララックス", "cat": "映像表現・演出", "purpose": "静止画に奥行き感と動きを出す", "keywords": "パララックス 写真 静止画 奥行き 2.5D", "diff": "中級", "props": "Position / Scale / 3D Layer", "features": "2.5D / Camera", "template": "parallax", "use": "沿革・写真紹介・実績紹介", "steps": ["前景・中景・背景に素材を分ける", "3Dレイヤー化して奥行きを設定", "カメラでゆっくり移動", "動きは控えめにして読みやすさ優先"], "method": "After Effects"}, {"id": "BM-V06", "name": "2.5Dカメラ", "cat": "映像表現・演出", "purpose": "平面素材でも映像的な奥行きを作る", "keywords": "2.5D カメラ 立体 AE 奥行き", "diff": "中級", "props": "3D Position / Camera", "features": "3D Layer / Camera", "template": "twopointfive", "use": "図解・写真・サービス紹介", "steps": ["素材を複数の奥行きに配置", "AEカメラを作成", "移動やプッシュインを追加", "遠近が強すぎないようにする"], "method": "After Effects"}, {"id": "BM-V07", "name": "マッチカット", "cat": "映像表現・演出", "purpose": "似た形や動きで気持ちよくつなぐ", "keywords": "マッチカット つなぎ 切替 類似 動き", "diff": "中級", "props": "カット編集 / Transform", "features": "素材選定", "template": "matchcut", "use": "会社紹介・プロモーション・事例紹介", "steps": ["似た構図や動きの素材を探す", "つながるフレーム位置を合わせる", "必要ならAEで位置を微調整", "意味のある対比になるように使う"], "method": "撮影＋AE"}, {"id": "BM-V08", "name": "画面分割マルチビュー", "cat": "映像表現・演出", "purpose": "複数の情報を同時に見せる", "keywords": "画面分割 マルチビュー 複数 同時 split", "diff": "初級", "props": "Scale / Position / Mask", "features": "Layout", "template": "multiview", "use": "社員紹介・工程紹介・複数機能紹介", "steps": ["見せたい映像を2〜4個に整理", "分割レイアウトを決める", "各枠にラベルを付けると分かりやすい", "情報量が多すぎないよう注意"], "method": "After Effects"}, {"id": "BM-V09", "name": "マスクトランジション", "cat": "映像表現・演出", "purpose": "人や物を利用して自然に場面転換する", "keywords": "マスクトランジション 人 物 切替 自然", "diff": "中級", "props": "Mask / Track Matte", "features": "Track Matte", "template": "masktrans", "use": "オフィス紹介・施設紹介・導線説明", "steps": ["前景で画面を一度隠す素材を選ぶ", "隠れたタイミングで次カットへ接続", "必要ならマスクでつながりを補正", "やりすぎると派手になるので注意"], "method": "撮影＋AE"}, {"id": "BM-V10", "name": "タイムリマップ", "cat": "映像表現・演出", "purpose": "速度を細かく制御して見せたい部分を調整する", "keywords": "タイムリマップ 速度 時間 操作 AE", "diff": "中級", "props": "Time Remapping", "features": "Time Remap", "template": "timemap", "use": "説明動画・動作強調・導線映像", "steps": ["速度変更したい部分にキーフレーム", "止める・遅くする・早くするを設計", "前後のつながりを確認", "BGMやナレーションとタイミングを合わせる"], "method": "After Effects"}, {"id": "BM-V11", "name": "モンタージュ", "cat": "映像表現・演出", "purpose": "複数カットを短くつないで印象づける", "keywords": "モンタージュ 複数カット テンポ 印象", "diff": "初級", "props": "カット編集", "features": "構成設計 / 音合わせ", "template": "montage", "use": "会社紹介冒頭・ダイジェスト・イベントまとめ", "steps": ["短いカットを複数用意", "音楽やナレーションのリズムに合わせる", "似たカットが続きすぎないようにする", "短くても情報の流れを作る"], "method": "撮影＋AE"}, {"id": "BM-V12", "name": "リビールショット", "cat": "映像表現・演出", "purpose": "遮蔽物の向こうから対象を見せて印象づける", "keywords": "リビール ショット 見えてくる 遮蔽物 登場", "diff": "中級", "props": "Mask / Position", "features": "撮影演出 / AE補助", "template": "reveal", "use": "人物登場・製品登場・施設紹介", "steps": ["手前に壁や物体を入れて撮影", "その向こうに主役を配置", "遮蔽物を抜けるタイミングで主役を見せる", "AEで不要部分を整える"], "method": "撮影＋AE"}];
-const cats = ["すべて", "テキスト", "数字・データ", "図解", "UI・サービス", "人物・会社", "レイアウト", "モーション・強調", "シーン・CTA", "カメラワーク", "映像表現・演出"];
-const methods = ["すべて", "After Effects", "撮影", "撮影＋AE"];
+const items=[{"id": "M01", "cat": "モーション", "name": "タイトル・フェードアップ", "desc": "章タイトルを上品に登場させる", "method": "AE", "level": "初級", "tags": "タイトル 見出し 会社紹介 サービス紹介", "preview": "title", "use": "章扉 / 冒頭 / セクション切替", "ae": "Position + Opacity / Easy Ease / Graph Editor", "note": "20〜40px程度の移動で十分。大きく動かしすぎない。"}, {"id": "M02", "cat": "モーション", "name": "マスク・リビール", "desc": "文字や画像を面の中から見せる", "method": "AE", "level": "初級", "tags": "マスク 文字 画像 リビール", "preview": "mask", "use": "サービス名 / 見出し / 製品名", "ae": "Track Matte / Mask / Position", "note": "情報量が多い画面では、出現方向を統一すると見やすい。"}, {"id": "M03", "cat": "モーション", "name": "キーワード・ポップ", "desc": "重要語だけ瞬間的に強調する", "method": "AE", "level": "初級", "tags": "強調 ポップ キーワード メリット", "preview": "pop", "use": "特徴 / メリット / 数値", "ae": "Scale 82→108→100 / Opacity", "note": "オーバーシュートは控えめに。ビジネス動画では弾ませすぎない。"}, {"id": "M04", "cat": "モーション", "name": "ライン・ドロー", "desc": "線が伸びて情報同士をつなぐ", "method": "AE", "level": "初級", "tags": "ライン 線 矢印 図解", "preview": "line", "use": "フロー / 関係図 / 視線誘導", "ae": "Shape Layer / Trim Paths", "note": "線の太さと角丸を統一すると資料感が出る。"}, {"id": "M05", "cat": "モーション", "name": "アイコン・ポップイン", "desc": "概念や機能を軽快に出す", "method": "AE", "level": "初級", "tags": "アイコン 機能 特徴", "preview": "icons", "use": "特徴3点 / 機能紹介", "ae": "Scale / Rotation / Opacity", "note": "3〜5フレームずつずらすと自然。"}, {"id": "M06", "cat": "モーション", "name": "ロゴ・ラインリビール", "desc": "ロゴを落ち着いて印象づける", "method": "AE", "level": "中級", "tags": "ロゴ オープニング エンディング", "preview": "logo", "use": "OP / ED / ブランド表示", "ae": "Trim Paths / Track Matte / Opacity", "note": "1秒以上静止してロゴを認識できる時間を取る。"}, {"id": "M07", "cat": "モーション", "name": "ソフト・パルス", "desc": "静かな画面に微細な動きを足す", "method": "AE", "level": "初級", "tags": "パルス CTA ボタン やさしい", "preview": "pulse", "use": "CTA / 重要アイコン", "ae": "Scale 100→103→100 / loopOut", "note": "常時動かさず、誘導したい場面だけ使う。"}, {"id": "M08", "cat": "モーション", "name": "キネティック・コピー", "desc": "短いコピーをリズムよく見せる", "method": "AE", "level": "中級", "tags": "コピー タイポグラフィ テキスト", "preview": "kinetic", "use": "サービス訴求 / 冒頭", "ae": "Text Animator / Position / Scale / Opacity", "note": "1画面1メッセージ。文章ではなく短い語句向き。"}, {"id": "D01", "cat": "図解・データ", "name": "カウントアップ", "desc": "実績・導入社数を強く見せる", "method": "AE", "level": "中級", "tags": "数字 実績 導入社数 KPI", "preview": "count", "use": "導入社数 / 利用件数 / 削減時間", "ae": "Slider Control / Source Text Expression", "note": "最終値を0.5秒以上止めて読ませる。"}, {"id": "D02", "cat": "図解・データ", "name": "KPIカード", "desc": "複数の主要指標を整理して見せる", "method": "AE", "level": "初級", "tags": "KPI カード 数字 3つ", "preview": "kpi", "use": "成果 / 実績 / 月次レポート", "ae": "Position / Opacity / Stagger", "note": "3項目までに絞ると読みやすい。"}, {"id": "D03", "cat": "図解・データ", "name": "棒グラフ伸長", "desc": "数値差を直感的に比較する", "method": "AE", "level": "初級", "tags": "棒グラフ 比較 データ", "preview": "bars", "use": "実績比較 / アンケート", "ae": "Shape Layer / Scale Y", "note": "0基準を崩さず、差を誇張しない。"}, {"id": "D04", "cat": "図解・データ", "name": "円グラフ描画", "desc": "割合や構成比を見せる", "method": "AE", "level": "中級", "tags": "円グラフ パーセント 割合", "preview": "donut", "use": "満足度 / 構成比", "ae": "Trim Paths / Slider Control", "note": "比較対象が多い場合は棒グラフの方が読みやすい。"}, {"id": "D05", "cat": "図解・データ", "name": "3ステップ・フロー", "desc": "サービスの流れを順番に説明する", "method": "AE", "level": "初級", "tags": "ステップ フロー 手順 1 2 3", "preview": "flow", "use": "導入フロー / 利用手順", "ae": "Shape Layer / Trim Paths / Stagger", "note": "ノード → 線 → 次ノードの順で出す。"}, {"id": "D06", "cat": "図解・データ", "name": "Before → After", "desc": "導入前後の変化を一目で見せる", "method": "AE", "level": "初級", "tags": "before after 改善 比較", "preview": "ba", "use": "課題→解決 / 導入効果", "ae": "Position / Opacity / Scale", "note": "Afterだけ色を強めると差が伝わりやすい。"}, {"id": "D07", "cat": "図解・データ", "name": "関係図・コネクト", "desc": "複数要素のつながりを見せる", "method": "AE", "level": "中級", "tags": "関係図 システム構成 連携", "preview": "network", "use": "システム構成 / 連携", "ae": "Shape Layer / Trim Paths", "note": "中心ノードを1つ決め、線を増やしすぎない。"}, {"id": "D08", "cat": "図解・データ", "name": "タイムライン", "desc": "沿革やロードマップを時系列で見せる", "method": "AE", "level": "初級", "tags": "タイムライン 沿革 ロードマップ", "preview": "timeline", "use": "会社沿革 / 導入計画", "ae": "Trim Paths / Opacity", "note": "年表はすべて出さず、重要年だけ抜粋する。"}, {"id": "L01", "cat": "構図・レイアウト", "name": "左テキスト＋右ビジュアル", "desc": "説明と画を最も安定して見せる定番構図", "method": "AE", "level": "初級", "tags": "2カラム 左右 テキスト 画像", "preview": "split", "use": "サービス説明 / 会社紹介", "ae": "Grid / Position / Opacity", "note": "比率は5:5〜6:4。余白を大きく取る。"}, {"id": "L02", "cat": "構図・レイアウト", "name": "中央メッセージ", "desc": "結論を1画面で強く伝える", "method": "AE", "level": "初級", "tags": "中央 コピー 結論 一言", "preview": "center", "use": "キーメッセージ / 締め", "ae": "Opacity / Scale", "note": "文字数は20〜30字以内が目安。"}, {"id": "L03", "cat": "構図・レイアウト", "name": "3カード横並び", "desc": "特徴・プラン・要点を並列で見せる", "method": "AE", "level": "初級", "tags": "カード 3つ 特徴 プラン", "preview": "cards", "use": "特徴 / メリット / プラン", "ae": "Grid / Stagger / Position", "note": "カードごとの文章量を揃える。"}, {"id": "L04", "cat": "構図・レイアウト", "name": "全面写真＋コピー", "desc": "写真を主役にして会社や人の印象を残す", "method": "撮影＋AE", "level": "初級", "tags": "写真 コピー ブランド 会社紹介", "preview": "photo", "use": "会社紹介 / 採用 / ブランド", "ae": "Scale / Opacity / Gradient Overlay", "note": "コピーを置く余白を撮影時から確保する。"}, {"id": "L05", "cat": "構図・レイアウト", "name": "2画面スプリット", "desc": "2つの映像や状態を同時比較する", "method": "AE", "level": "初級", "tags": "分割 2画面 比較 split", "preview": "twosplit", "use": "Before/After / 比較", "ae": "Mask / Scale / Position", "note": "左右どちらが何かラベルを必ず付ける。"}, {"id": "L06", "cat": "構図・レイアウト", "name": "UI＋解説パネル", "desc": "サービス画面と説明を同時に見せる", "method": "AE", "level": "初級", "tags": "UI 解説 パネル SaaS", "preview": "uiPanel", "use": "SaaS / Webサービス紹介", "ae": "Pre-compose / Scale / Position", "note": "画面キャプチャを小さくしすぎない。"}, {"id": "L07", "cat": "構図・レイアウト", "name": "人物＋ローワーサード", "desc": "人物を主役にしながら所属情報を補足する", "method": "撮影＋AE", "level": "初級", "tags": "人物 インタビュー 名前 役職", "preview": "lower", "use": "インタビュー / 社員紹介", "ae": "Lower Third / Safe Area", "note": "顔とテロップが競合しない位置に。"}, {"id": "L08", "cat": "構図・レイアウト", "name": "余白を活かすミニマル構図", "desc": "情報量を絞って高級感を出す", "method": "撮影＋AE", "level": "初級", "tags": "余白 ミニマル 高級感", "preview": "minimal", "use": "ブランド動画 / 製品紹介", "ae": "Typography / Negative Space", "note": "要素を減らし、動きも遅くする。"}, {"id": "C01", "cat": "カメラワーク", "name": "固定カメラ", "desc": "内容に集中させる基本の撮り方", "method": "撮影", "level": "初級", "tags": "固定 インタビュー 三脚", "preview": "static", "use": "インタビュー / メッセージ", "ae": "三脚 / 構図設計", "note": "背景の水平・垂直を整える。"}, {"id": "C02", "cat": "カメラワーク", "name": "パン", "desc": "左右に振って空間や対象を紹介する", "method": "撮影", "level": "初級", "tags": "パン 左右 オフィス 施設", "preview": "pan", "use": "オフィス / 施設紹介", "ae": "三脚ヘッド / ジンバル", "note": "始点と終点を先に決める。"}, {"id": "C03", "cat": "カメラワーク", "name": "チルト", "desc": "上下方向に動かして高さを見せる", "method": "撮影", "level": "初級", "tags": "チルト 上下 建物", "preview": "tilt", "use": "建物 / 看板 / 製品", "ae": "三脚ヘッド", "note": "速度は一定。止まり際を丁寧に。"}, {"id": "C04", "cat": "カメラワーク", "name": "ドリーイン", "desc": "被写体へ近づき、重要性を高める", "method": "撮影", "level": "中級", "tags": "ドリーイン 寄る 強調", "preview": "dollyin", "use": "人物 / 製品 / 重要発言", "ae": "ジンバル / スライダー", "note": "寄りすぎると圧が強くなる。"}, {"id": "C05", "cat": "カメラワーク", "name": "プッシュイン（疑似）", "desc": "AEでも再現できる穏やかな寄り", "method": "撮影＋AE", "level": "初級", "tags": "プッシュイン 擬似 寄り AE", "preview": "push", "use": "インタビュー / 製品", "ae": "Scale 100→108 / Position", "note": "4K素材をFHDで使うと画質を保ちやすい。"}, {"id": "C06", "cat": "カメラワーク", "name": "トラック", "desc": "横移動で仕事風景や空間を見せる", "method": "撮影", "level": "中級", "tags": "トラック 横移動 並走", "preview": "track", "use": "作業風景 / オフィス", "ae": "ジンバル / スライダー", "note": "被写体との距離を一定に。"}, {"id": "C07", "cat": "カメラワーク", "name": "オービット", "desc": "被写体の周囲を回り立体感を出す", "method": "撮影", "level": "上級", "tags": "オービット 回り込み 製品", "preview": "orbit", "use": "製品 / 機材 / 設備", "ae": "ジンバル", "note": "背景が散らかりやすいのでロケーション選びが重要。"}, {"id": "C08", "cat": "カメラワーク", "name": "ラックフォーカス", "desc": "手前と奥の注目対象を切り替える", "method": "撮影＋AE", "level": "中級", "tags": "ラックフォーカス ピント 手前 奥", "preview": "focus", "use": "手元→画面 / 製品→人物", "ae": "フォーカス送り / Blurで模擬可", "note": "意味のある情報切替に使う。"}, {"id": "E01", "cat": "カット・つなぎ", "name": "B-roll差し込み", "desc": "発言を補足する映像を挟んで単調さを防ぐ", "method": "撮影＋AE", "level": "初級", "tags": "B-roll 差し込み インタビュー", "preview": "broll", "use": "インタビュー / 会社紹介", "ae": "素材選定 / カット編集", "note": "発言内容と一致する画を選ぶ。"}, {"id": "E02", "cat": "カット・つなぎ", "name": "カットアウェイ", "desc": "人物から資料や手元へ自然に切り替える", "method": "撮影＋AE", "level": "初級", "tags": "カットアウェイ 手元 資料", "preview": "cutaway", "use": "説明 / プレゼン", "ae": "カット編集", "note": "何を見てほしいかが明確な時に使う。"}, {"id": "E03", "cat": "カット・つなぎ", "name": "Jカット", "desc": "次の音を先に聞かせて自然につなぐ", "method": "AE", "level": "中級", "tags": "Jカット 音 声 先行", "preview": "jcut", "use": "インタビュー / 導入事例", "ae": "Audio Edit / Timeline", "note": "映像より音を先に入れて次シーンを予告する。"}, {"id": "E04", "cat": "カット・つなぎ", "name": "Lカット", "desc": "前の音を残しながら次の映像へ移る", "method": "AE", "level": "中級", "tags": "Lカット 音 声 残す", "preview": "lcut", "use": "インタビュー / ナレーション", "ae": "Audio Edit / Timeline", "note": "話の余韻を残したい時に有効。"}, {"id": "E05", "cat": "カット・つなぎ", "name": "マッチカット", "desc": "似た形・動きで気持ちよくつなぐ", "method": "撮影＋AE", "level": "中級", "tags": "マッチカット 形 動き つなぎ", "preview": "match", "use": "会社紹介 / プロモーション", "ae": "素材選定 / Transform微調整", "note": "見た目だけでなく意味のつながりも意識。"}, {"id": "E06", "cat": "カット・つなぎ", "name": "マスクトランジション", "desc": "人や物で画面を覆って場面転換する", "method": "撮影＋AE", "level": "中級", "tags": "マスク トランジション 人 物", "preview": "masktrans", "use": "施設紹介 / 導線動画", "ae": "Mask / Track Matte", "note": "派手にしすぎず1動画1〜2回程度。"}, {"id": "E07", "cat": "カット・つなぎ", "name": "テンポカット", "desc": "短いカットを連ねて勢いを出す", "method": "AE", "level": "初級", "tags": "テンポ カット 短い ダイジェスト", "preview": "tempo", "use": "冒頭 / ダイジェスト", "ae": "Cut Edit / Beat Sync", "note": "同じ画角が続かないようにする。"}, {"id": "E08", "cat": "カット・つなぎ", "name": "ワイド→ミディアム→クローズ", "desc": "情報量を段階的に絞る基本カット構成", "method": "撮影＋AE", "level": "初級", "tags": "ワイド ミディアム クローズ 構図", "preview": "shotseq", "use": "作業紹介 / 製品紹介", "ae": "Shot Size Design", "note": "同じ動作を3サイズで撮ると編集しやすい。"}, {"id": "V01", "cat": "映像演出", "name": "スピードランプ", "desc": "移動や切替を加速・減速してテンポを作る", "method": "AE", "level": "中級", "tags": "スピードランプ 加速 減速", "preview": "speed", "use": "移動 / 施設紹介", "ae": "Time Remap / Graph Editor", "note": "ビジネス動画では短く控えめに。"}, {"id": "V02", "cat": "映像演出", "name": "フリーズフレーム", "desc": "一瞬止めて情報を載せる", "method": "AE", "level": "初級", "tags": "フリーズ 止める 情報", "preview": "freeze", "use": "人物 / 製品 / ポイント", "ae": "Freeze Frame / Time Remap", "note": "0.5〜1.5秒程度が使いやすい。"}, {"id": "V03", "cat": "映像演出", "name": "パララックス", "desc": "静止画に奥行きと動きを与える", "method": "AE", "level": "中級", "tags": "パララックス 静止画 写真 2.5D", "preview": "parallax", "use": "沿革 / 写真紹介", "ae": "3D Layer / Camera", "note": "動かしすぎると写真が不自然になる。"}, {"id": "V04", "cat": "映像演出", "name": "2.5Dカメラ", "desc": "平面素材だけで立体的なカメラ移動を作る", "method": "AE", "level": "中級", "tags": "2.5D カメラ AE 立体", "preview": "camera25", "use": "図解 / 写真 / UI", "ae": "3D Layer / Camera / Null", "note": "Z方向の差は控えめに。"}, {"id": "V05", "cat": "映像演出", "name": "モンタージュ", "desc": "複数カットを短くつないで印象を作る", "method": "撮影＋AE", "level": "初級", "tags": "モンタージュ ダイジェスト 複数カット", "preview": "montage", "use": "会社紹介冒頭 / イベント", "ae": "Cut Edit / Music Sync", "note": "全体で1つの意味やテーマを持たせる。"}, {"id": "V06", "cat": "映像演出", "name": "リビールショット", "desc": "遮蔽物の向こうから主役を見せる", "method": "撮影＋AE", "level": "中級", "tags": "リビール 遮蔽物 登場", "preview": "reveal", "use": "製品 / 人物 / 施設", "ae": "撮影演出 / Mask補助", "note": "偶然ではなく構図として設計する。"}, {"id": "V07", "cat": "映像演出", "name": "ブラー→シャープ", "desc": "ぼけた状態から情報を認識させる", "method": "AE", "level": "初級", "tags": "ブラー ぼけ フォーカス", "preview": "blur", "use": "導入 / 見出し / UI", "ae": "Gaussian Blur / Opacity", "note": "文字は最終的に完全にシャープに戻す。"}, {"id": "V08", "cat": "映像演出", "name": "グロー・アクセント", "desc": "重要UIや数値に控えめな発光を加える", "method": "AE", "level": "初級", "tags": "グロー 光る UI 数字", "preview": "glow", "use": "AI / テック / KPI", "ae": "Glow / Opacity / Blend Mode", "note": "白飛びしない程度に。ネオン化しすぎない。"}, {"id": "U01", "cat": "UI表現", "name": "PCブラウザ・モック", "desc": "Webサービス画面を整えて見せる", "method": "AE", "level": "初級", "tags": "PC ブラウザ SaaS Web UI", "preview": "browser", "use": "SaaS / Webサービス", "ae": "Pre-compose / Drop Shadow", "note": "ブラウザ枠より画面内容を大きく見せる。"}, {"id": "U02", "cat": "UI表現", "name": "スマホ・モック", "desc": "アプリ画面を実機風に見せる", "method": "AE", "level": "初級", "tags": "スマホ アプリ UI", "preview": "phone", "use": "アプリ / モバイルサービス", "ae": "Pre-compose / Corner Pin / Transform", "note": "傾けすぎず、読める角度を優先。"}, {"id": "U03", "cat": "UI表現", "name": "カーソル・クリック", "desc": "操作箇所を直感的に示す", "method": "AE", "level": "初級", "tags": "カーソル クリック ボタン 操作", "preview": "cursor", "use": "マニュアル / 機能説明", "ae": "Position / Scale / Motion Path", "note": "クリック対象側にも小さく反応を付ける。"}, {"id": "U04", "cat": "UI表現", "name": "UIズーム・フォーカス", "desc": "画面の見せたい部分だけ拡大する", "method": "AE", "level": "初級", "tags": "UI ズーム フォーカス 機能説明", "preview": "uizoom", "use": "SaaS / 操作説明", "ae": "Scale / Position / Null Parent", "note": "拡大後の文字が読めるサイズまで。"}, {"id": "U05", "cat": "UI表現", "name": "画面スライド切替", "desc": "複数機能をテンポよく紹介する", "method": "AE", "level": "中級", "tags": "UI 切替 スライド 機能", "preview": "uislide", "use": "機能紹介 / デモ", "ae": "Position / Motion Blur / Pre-compose", "note": "切替方向を統一する。"}, {"id": "U06", "cat": "UI表現", "name": "ボタン・パルス", "desc": "クリックしてほしいUIを目立たせる", "method": "AE", "level": "初級", "tags": "ボタン パルス CTA UI", "preview": "buttonpulse", "use": "操作説明 / CTA", "ae": "Scale / Opacity / Shape Layer", "note": "1〜2回だけで十分。"}];
+const cats=["すべて", "モーション", "図解・データ", "構図・レイアウト", "カメラワーク", "カット・つなぎ", "映像演出", "UI表現"];
+const methods=["すべて", "AE", "撮影", "撮影＋AE"];
+let activeCat="すべて", activeMethod="すべて";
+const q=document.getElementById("q"),grid=document.getElementById("grid"),count=document.getElementById("count"),empty=document.getElementById("empty");
 
-const grid = document.getElementById('grid');
-const q = document.getElementById('q');
-const count = document.getElementById('count');
-const catFilters = document.getElementById('catFilters');
-const methodFilters = document.getElementById('methodFilters');
-const empty = document.getElementById('empty');
+function methodClass(m){return m==="AE"?"ae":m==="撮影"?"shoot":"both"}
+function tag(m,big=false){return big?"":`<div class="previewTag">${m}</div>`}
 
-let activeCat = 'すべて';
-let activeMethod = 'すべて';
-
-function methodClass(m){
-  if(m==='After Effects') return 'method-ae';
-  if(m==='撮影') return 'method-shoot';
-  return 'method-both';
-}
-
-function methodShort(m){
-  if(m==='After Effects') return 'AE';
-  if(m==='撮影') return '撮影';
-  return '撮影＋AE';
-}
-
-function preview(t, method, big=false){
-  const tag = big ? '' : `<div class="smalltag ${methodClass(method)}">${methodShort(method)}</div>`;
-  const map = {
-    title:`${tag}<div class="titleDemo"><div class="demoText">伝わる会社紹介。</div><div class="sub">Corporate Movie</div></div>`,
-    masktext:`${tag}<div class="maskDemo"><span>サービスの特徴</span></div>`,
-    underline:`${tag}<div class="underlineDemo"><div class="demoText">業務を自動化</div><div class="line"></div></div>`,
-    pop:`${tag}<div class="popDemo">最短 1日</div>`,
-    list:`${tag}<div class="listDemo"><div>✓ 問い合わせを自動化</div><div>✓ 24時間対応</div><div>✓ 履歴を可視化</div></div>`,
-    typing:`${tag}<div class="typingDemo">AIが問い合わせに回答します｜</div>`,
-    section:`${tag}<div class="sectionDemo"><div class="n">SECTION 02</div><div class="t">サービスの特徴</div></div>`,
-    highlight:`${tag}<div class="highlightDemo"><span>対応時間を大幅削減</span></div>`,
-    count:`${tag}<div class="countDemo"><div class="num"></div><div class="sub">導入社数</div></div>`,
-    bigstat:`${tag}<div class="bigstatDemo"><div class="num">98%</div><div class="sub">お客様満足度</div></div>`,
-    bars:`${tag}<div class="barsDemo"><i></i><i></i><i></i></div>`,
-    donut:`${tag}<div class="donutDemo"></div>`,
-    compare:`${tag}<div class="compareDemo"><div class="meter"><b>Before</b><div class="track"><div class="fill before"></div></div></div><div class="meter"><b>After</b><div class="track"><div class="fill after"></div></div></div></div>`,
-    cards:`${tag}<div class="cardsDemo"><div></div><div></div><div></div></div>`,
-    flow:`${tag}<div class="flowDemo"><div class="node">相談</div><div class="arr">→</div><div class="node">導入</div><div class="arr">→</div><div class="node">運用</div></div>`,
-    vflow:`${tag}<div class="vflowDemo"><div class="vstep"><span class="dot">1</span>お問い合わせ</div><div class="vstep"><span class="dot">2</span>ヒアリング</div><div class="vstep"><span class="dot">3</span>ご提案</div></div>`,
-    beforeafter:`${tag}<div class="baDemo"><div class="miniCard">Before<br>手作業</div><div class="midArr">→</div><div class="miniCard good">After<br>自動化</div></div>`,
-    twocol:`${tag}<div class="twoDemo"><div class="miniCard">従来方式</div><div class="midArr">↔</div><div class="miniCard good">新方式</div></div>`,
-    network:`${tag}<div class="networkDemo"><div class="bubble a">Web</div><div class="bubble b">電話</div><div class="bubble c">AI</div><div class="bubble d">FAQ</div><div class="bubble e">担当者</div></div>`,
-    timeline:`${tag}<div class="timelineDemo"><div class="tl"></div><div class="years"><span>2022</span><span>2024</span><span>2026</span></div></div>`,
-    solve:`${tag}<div class="solveDemo"><div class="miniCard">課題<br>待ち時間</div><div class="midArr">→</div><div class="miniCard good">解決<br>自動案内</div></div>`,
-    icons:`${tag}<div class="iconsDemo"><div class="iconbox"><div class="iconcirc">⚡</div>速い</div><div class="iconbox"><div class="iconcirc">◎</div>正確</div><div class="iconbox"><div class="iconcirc">↗</div>効率化</div></div>`,
-    browser:`${tag}<div class="browserDemo"><div class="browserTop"></div><div class="browserBody"><i></i><i></i><i></i></div></div>`,
-    phone:`${tag}<div class="phoneDemo"><i></i><i></i><i></i></div>`,
-    zoomui:`${tag}<div class="zoomDemo"><i></i><i></i><i></i></div>`,
-    cursor:`${tag}<div class="cursorDemo"><div class="btn">資料を見る</div><div class="cur">↖</div></div>`,
-    pulse:`${tag}<div class="pulseDemo">問い合わせ</div>`,
-    uislide:`${tag}<div class="uiSlideDemo"><div class="screen one"></div><div class="screen two"></div></div>`,
-    lower:`${tag}<div class="lowerDemo"><div class="lowerBar"><b>山田 太郎</b><span>プロジェクトマネージャー</span></div></div>`,
-    profile:`${tag}<div class="profileDemo"><div class="avatar"></div><div class="lines"><i></i><i></i><i></i></div></div>`,
-    quote:`${tag}<div class="quoteDemo">導入後、対応時間が大きく減りました。</div>`,
-    company:`${tag}<div class="companyDemo"><div><span>会社名</span><b>ABC株式会社</b></div><div><span>設立</span><b>2010年</b></div><div><span>拠点</span><b>東京 / 大阪</b></div></div>`,
-    pin:`${tag}<div class="pinDemo"><span class="pin"></span><span class="pin"></span><span class="pin"></span></div>`,
-    split:`${tag}<div class="splitDemo"><div class="txtLines"><i></i><i></i><i></i></div><div class="visualBox"></div></div>`,
-    threecards:`${tag}<div class="threecardsDemo"><div></div><div></div><div></div></div>`,
-    photo:`${tag}<div class="photoDemo"><span>私たちについて</span></div>`,
-    splitvideo:`${tag}<div class="splitVideoDemo"><div>Before</div><div>After</div></div>`,
-    stack:`${tag}<div class="stackDemo"><div></div><div></div><div></div></div>`,
-    center:`${tag}<div class="centerDemo">仕事を、もっとシンプルに。</div>`,
-    iconpop:`${tag}<div class="iconPopDemo"><span>◎</span><span>⚙</span><span>↗</span></div>`,
-    arrow:`${tag}<div class="arrowDemo">→</div>`,
-    check:`${tag}<div class="checkDemo">✓</div>`,
-    outline:`${tag}<div class="outlineDemo">重要ポイント</div>`,
-    connect:`${tag}<div class="connectDemo"><div class="cnode">顧客</div><div class="connline"></div><div class="cnode">AI</div></div>`,
-    softpulse:`${tag}<div class="softPulseDemo">→</div>`,
-    chapter:`${tag}<div class="chapterDemo"><div class="num">01</div><div class="ch">課題について</div></div>`,
-    logo:`${tag}<div class="logoDemo">YOUR LOGO</div>`,
-    logoline:`${tag}<div class="logoLineDemo">YOUR LOGO</div>`,
-    cta:`${tag}<div class="ctaDemo"><b>まずはお気軽にご相談ください</b><span class="ctaBtn">お問い合わせ</span></div>`,
-    qr:`${tag}<div class="qrDemo"><div class="qrbox"></div><span>詳しくはこちら<br>スマホでチェック</span></div>`,
-    end:`${tag}<div class="endDemo"><div class="lg">YOUR LOGO</div><div class="url">www.example.jp</div><span class="miniCta">CONTACT</span></div>`,
-
-    staticcam:`${tag}<div class="cameraFrame staticDemo"><div class="subject"></div></div>`,
-    pan:`${tag}<div class="cameraFrame panDemo"><div class="subject"></div></div>`,
-    tilt:`${tag}<div class="cameraFrame tiltDemo"><div class="subject"></div></div>`,
-    dollyin:`${tag}<div class="cameraFrame dollyInDemo"><div class="subject"></div></div>`,
-    dollyout:`${tag}<div class="cameraFrame dollyOutDemo"><div class="subject"></div></div>`,
-    track:`${tag}<div class="cameraFrame trackDemo"><div class="bgline"></div><div class="bgline"></div><div class="bgline"></div><div class="subject"></div></div>`,
-    pushin:`${tag}<div class="cameraFrame pushInDemo"><div class="subject"></div></div>`,
-    pullout:`${tag}<div class="cameraFrame pullOutDemo"><div class="subject"></div></div>`,
-    orbit:`${tag}<div class="cameraFrame orbitDemo"><div class="ring"></div><div class="subject"></div></div>`,
-    zoomin:`${tag}<div class="cameraFrame zoomInDemo"><div class="subject"></div></div>`,
-    rackfocus:`${tag}<div class="cameraFrame rackFocusDemo"><div class="front"></div><div class="back"></div></div>`,
-    handheld:`${tag}<div class="cameraFrame handheldDemo"><div class="subject"></div></div>`,
-
-    broll:`${tag}<div class="brollDemo"><div class="main box"></div><div class="overlay"></div></div>`,
-    cutaway:`${tag}<div class="cutawayDemo"><div class="a">人物</div><div class="b">資料</div></div>`,
-    speedramp:`${tag}<div class="speedRampDemo"><div class="speedTrack"></div><div class="speedLabel"><span>Slow</span><span>Fast</span><span>Slow</span></div></div>`,
-    freeze:`${tag}<div class="freezeDemo"><div class="freezeFrame">POINT</div></div>`,
-    parallax:`${tag}<div class="parallaxDemo"><div class="layer1"></div><div class="layer2"></div><div class="layer3"></div></div>`,
-    twopointfive:`${tag}<div class="twopointfiveDemo"><div class="p1"></div><div class="p2"></div><div class="p3"></div></div>`,
-    matchcut:`${tag}<div class="matchCutDemo"><div class="mc"></div><div class="mc two"></div></div>`,
-    multiview:`${tag}<div class="multiviewDemo"><div></div><div></div><div></div><div></div></div>`,
-    masktrans:`${tag}<div class="maskTransDemo"><div class="bg1"></div><div class="bg2"></div><div class="occluder"></div></div>`,
-    timemap:`${tag}<div class="timeMapDemo"><div class="tmLine"></div><div class="speedLabel"><span>Stop</span><span>Normal</span><span>Fast</span></div></div>`,
-    montage:`${tag}<div class="montageDemo"><div></div><div></div><div></div><div></div></div>`,
-    reveal:`${tag}<div class="revealDemo"><div class="target"></div><div class="cover"></div></div>`
-  };
-  return map[t] || map.title;
+function preview(k,m,big=false){
+ const t=tag(m,big);
+ const p={
+ title:`${t}<div class="demoTitle">伝わる、会社紹介。</div>`,
+ mask:`${t}<div class="maskWrap"><b>サービスの特徴</b></div>`,
+ pop:`${t}<div class="popWord">最短 1日</div>`,
+ line:`${t}<div class="lineDemo"><b>導入フロー</b><i></i></div>`,
+ icons:`${t}<div class="iconRow"><span>⚡</span><span>◎</span><span>↗</span></div>`,
+ logo:`${t}<div class="logoDemo">YOUR LOGO</div>`,
+ pulse:`${t}<div class="pulseDemo">お問い合わせ</div>`,
+ kinetic:`${t}<div class="kinetic"><span>仕事を、</span><span>もっとシンプルに。</span></div>`,
+ count:`${t}<div><div class="countNum"></div><div style="font-size:11px;color:#667085;text-align:center">導入社数</div></div>`,
+ kpi:`${t}<div class="kpiRow"><div class="kpi"><b>98%</b>満足度</div><div class="kpi"><b>30h</b>削減</div><div class="kpi"><b>24h</b>対応</div></div>`,
+ bars:`${t}<div class="barRow"><i></i><i></i><i></i></div>`,
+ donut:`${t}<div class="donut"></div>`,
+ flow:`${t}<div class="flow"><div class="n">相談</div><em>→</em><div class="n">導入</div><em>→</em><div class="n">運用</div></div>`,
+ ba:`${t}<div class="ba"><div>Before<br>手作業</div><b>→</b><div class="after">After<br>自動化</div></div>`,
+ network:`${t}<div class="network"><div class="node a">Web</div><div class="node b">電話</div><div class="node c">AI</div><div class="node d">FAQ</div><div class="node e">担当者</div></div>`,
+ timeline:`${t}<div class="timeline"><i></i><div class="years"><span>2022</span><span>2024</span><span>2026</span></div></div>`,
+ split:`${t}<div class="splitLayout"><div class="copyLines"><i></i><i></i><i></i></div><div class="visual"></div></div>`,
+ center:`${t}<div class="centerMsg">業務を、もっとシンプルに。</div>`,
+ cards:`${t}<div class="cardRow"><div class="miniCard"></div><div class="miniCard"></div><div class="miniCard"></div></div>`,
+ photo:`${t}<div class="fullPhoto"><span>私たちについて</span></div>`,
+ twosplit:`${t}<div class="twoSplit"><div>Before</div><div>After</div></div>`,
+ uiPanel:`${t}<div class="uiPanel"><div class="browserSmall"></div><div class="sidePanel"></div></div>`,
+ lower:`${t}<div class="lowerDemo"><div class="person"></div><div class="lowerbar">山田 太郎 / Project Manager</div></div>`,
+ minimal:`${t}<div class="minimal"><b>Simple.</b><i></i></div>`,
+ static:`${t}<div class="camera static"><div class="subject"></div></div>`,
+ pan:`${t}<div class="camera pan"><div class="subject"></div></div>`,
+ tilt:`${t}<div class="camera tilt"><div class="subject"></div></div>`,
+ dollyin:`${t}<div class="camera dollyin"><div class="subject"></div></div>`,
+ push:`${t}<div class="camera push"><div class="subject"></div></div>`,
+ track:`${t}<div class="camera track"><div class="subject"></div></div>`,
+ orbit:`${t}<div class="camera orbit"><div class="subject"></div></div>`,
+ focus:`${t}<div class="camera focus"><div class="f1"></div><div class="f2"></div></div>`,
+ broll:`${t}<div class="broll"><div class="a"></div><div class="b"></div></div>`,
+ cutaway:`${t}<div class="cutaway"><div>人物</div><div>資料</div></div>`,
+ jcut:`${t}<div class="jlcut"><div class="videoTrack"></div><div class="audioTrack"></div></div>`,
+ lcut:`${t}<div class="jlcut l"><div class="videoTrack"></div><div class="audioTrack"></div></div>`,
+ match:`${t}<div class="match"><div></div><div></div></div>`,
+ masktrans:`${t}<div class="maskTrans"><i></i></div>`,
+ tempo:`${t}<div class="tempo"><div></div><div></div><div></div><div></div></div>`,
+ shotseq:`${t}<div class="shotseq"><div class="w">WIDE</div><div class="m">MED</div><div class="c">CLOSE</div></div>`,
+ speed:`${t}<div class="speed"><i></i><small><span>Slow</span><span>Fast</span><span>Slow</span></small></div>`,
+ freeze:`${t}<div class="freeze">POINT</div>`,
+ parallax:`${t}<div class="parallax"><i class="a"></i><i class="b"></i><i class="c"></i></div>`,
+ camera25:`${t}<div class="camera25"><div class="a"></div><div class="b"></div><div class="c"></div></div>`,
+ montage:`${t}<div class="montage"><div></div><div></div><div></div><div></div></div>`,
+ reveal:`${t}<div class="reveal"><div class="t"></div><div class="cover"></div></div>`,
+ blur:`${t}<div class="blurDemo">FOCUS MESSAGE</div>`,
+ glow:`${t}<div class="glowDemo">AI × DATA</div>`,
+ browser:`${t}<div class="browser"></div>`,
+ phone:`${t}<div class="phone"><i></i><i></i><i></i></div>`,
+ cursor:`${t}<div class="cursorBox"><div class="cursorBtn">資料を見る</div><div class="cursorIcon">↖</div></div>`,
+ uizoom:`${t}<div class="uizoom"><i></i><i></i><i></i></div>`,
+ uislide:`${t}<div class="uislide"><div class="s a"></div><div class="s b"></div></div>`,
+ buttonpulse:`${t}<div class="buttonPulse">お問い合わせ</div>`
+ };
+ return p[k]||p.title;
 }
 
 function render(){
-  const word = q.value.trim().toLowerCase();
-  const filtered = items.filter(x => {
-    const catMatch = activeCat === 'すべて' || x.cat === activeCat;
-    const methodMatch = activeMethod === 'すべて' || x.method === activeMethod;
-    const hay = (x.id + ' ' + x.name + ' ' + x.purpose + ' ' + x.keywords + ' ' + x.cat + ' ' + x.method).toLowerCase();
-    const wordMatch = !word || hay.includes(word);
-    return catMatch && methodMatch && wordMatch;
-  });
-  count.textContent = filtered.length;
-  grid.innerHTML = filtered.map(x => `
-    <article class="card" data-id="${x.id}">
-      <div class="preview">${preview(x.template, x.method)}</div>
-      <div class="meta">
-        <div class="row">
-          <span class="code">${x.id}</span>
-          <div class="badges">
-            <span class="badge">${x.cat}</span>
-            <span class="badge ${methodClass(x.method)}">${methodShort(x.method)}</span>
-          </div>
-        </div>
-        <h3>${x.name}</h3>
-        <p>${x.purpose}</p>
-      </div>
-    </article>`).join('');
-  empty.style.display = filtered.length ? 'none' : 'block';
-  document.querySelectorAll('.card').forEach(el => el.addEventListener('click', () => openDetail(el.dataset.id)));
+ const word=q.value.trim().toLowerCase();
+ const filtered=items.filter(x=>{
+  const c=activeCat==="すべて"||x.cat===activeCat;
+  const m=activeMethod==="すべて"||x.method===activeMethod;
+  const w=!word||(x.id+" "+x.cat+" "+x.name+" "+x.desc+" "+x.tags+" "+x.use).toLowerCase().includes(word);
+  return c&&m&&w;
+ });
+ count.textContent=filtered.length;
+ grid.innerHTML=filtered.map(x=>`<article class="card" data-id="${x.id}">
+ <div class="preview">${preview(x.preview,x.method)}</div>
+ <div class="cardBody"><div class="meta"><span class="code">${x.id}</span><div class="tags"><span class="tag">${x.cat}</span><span class="tag ${methodClass(x.method)}">${x.method}</span></div></div>
+ <h3>${x.name}</h3><p>${x.desc}</p></div></article>`).join("");
+ empty.style.display=filtered.length?"none":"block";
+ document.querySelectorAll(".card").forEach(el=>el.onclick=()=>openDetail(el.dataset.id));
 }
-
-function makeFilters(list, targetEl, type){
-  list.forEach(v => {
-    const b = document.createElement('button');
-    b.className = 'filter' + (type==='method' ? ' method' : '') + (v==='すべて' ? ' active' : '');
-    b.textContent = v;
-    b.onclick = () => {
-      if(type==='cat') activeCat = v; else activeMethod = v;
-      [...targetEl.querySelectorAll('.filter')].forEach(x => x.classList.remove('active'));
-      b.classList.add('active');
-      render();
-    };
-    targetEl.appendChild(b);
-  });
+function buildFilters(vals,target,type){
+ vals.forEach(v=>{
+  const b=document.createElement("button");b.className="filter"+(type==="method"?" method":"")+(v==="すべて"?" active":"");b.textContent=v;
+  b.onclick=()=>{if(type==="cat")activeCat=v;else activeMethod=v;[...target.querySelectorAll(".filter")].forEach(x=>x.classList.remove("active"));b.classList.add("active");render();};
+  target.appendChild(b);
+ });
 }
+buildFilters(cats,document.getElementById("catFilters"),"cat");buildFilters(methods,document.getElementById("methodFilters"),"method");
+q.oninput=render;
 
-makeFilters(cats, catFilters, 'cat');
-makeFilters(methods, methodFilters, 'method');
-
-q.addEventListener('input', render);
-
-const modal = document.getElementById('modal');
+const modal=document.getElementById("modal");
 function openDetail(id){
-  const x = items.find(i => i.id === id); if(!x) return;
-  document.getElementById('bigPreview').innerHTML = preview(x.template, x.method, true);
-  document.getElementById('dCode').textContent = `${x.id} / ${x.cat} / ${x.method}`;
-  document.getElementById('dName').textContent = x.name;
-  document.getElementById('dPurpose').textContent = x.purpose;
-  document.getElementById('dUse').textContent = x.use;
-  document.getElementById('dProps').textContent = x.props;
-  document.getElementById('dFeatures').textContent = x.features;
-  document.getElementById('dKeywords').textContent = x.keywords;
-  document.getElementById('dPills').innerHTML = `
-    <span class="pill">${x.diff}</span>
-    <span class="pill">${x.cat}</span>
-    <span class="pill">${x.method}</span>
-  `;
-  document.getElementById('dSteps').innerHTML = x.steps.map(s => `<li>${s}</li>`).join('');
-  modal.classList.add('open');
-  document.body.style.overflow = 'hidden';
+ const x=items.find(i=>i.id===id); if(!x)return;
+ document.getElementById("bigPrev").innerHTML=preview(x.preview,x.method,true);
+ document.getElementById("dCode").textContent=`${x.id} / ${x.cat}`;
+ document.getElementById("dName").textContent=x.name;document.getElementById("dDesc").textContent=x.desc;
+ document.getElementById("dPills").innerHTML=`<span class="pill">${x.level}</span><span class="pill">${x.method}</span><span class="pill">${x.cat}</span>`;
+ document.getElementById("dUse").textContent=x.use;document.getElementById("dAE").textContent=x.ae;document.getElementById("dNote").textContent=x.note;document.getElementById("dTags").textContent=x.tags;
+ modal.classList.add("open");document.body.style.overflow="hidden";
 }
-function closeModal(){
-  modal.classList.remove('open');
-  document.body.style.overflow = '';
-}
-document.getElementById('close').onclick = closeModal;
-modal.addEventListener('click', e => { if(e.target === modal) closeModal(); });
-window.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
-
+function closeModal(){modal.classList.remove("open");document.body.style.overflow=""}
+document.getElementById("close").onclick=closeModal;modal.onclick=e=>{if(e.target===modal)closeModal()};window.onkeydown=e=>{if(e.key==="Escape")closeModal()};
 render();
 </script>
-</body>
-</html>
+</body></html>
