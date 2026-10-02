@@ -63,7 +63,7 @@ async function activateAdmin(user) {
     startItemsSubscription();
   } catch (error) {
     console.error(error);
-    setAuthError("管理者確認に失敗しました。Firestore Rulesの設定を確認してください。", user);
+    setAuthError("管理者確認に失敗しました。アクセスルールの設定を確認してください。", user);
   }
 }
 
@@ -97,14 +97,14 @@ function startItemsSubscription() {
   if (unsubscribeItems) unsubscribeItems();
   unsubscribeItems = subscribeLibraryItems((fresh) => {
     items = fresh;
-    $("emptyFirestoreBanner").classList.toggle("hidden", items.length !== 0);
+    $("emptyデータベースBanner").classList.toggle("hidden", items.length !== 0);
     if (!selectedId || !items.some((x) => x.id === selectedId)) selectedId = items[0]?.id || null;
     renderList();
     if (selectedId) loadSelected();
     else clearForm();
   }, (error) => {
     console.error(error);
-    $("status").textContent = "Firestoreの読み込みに失敗しました";
+    $("status").textContent = "データベースの読み込みに失敗しました";
   });
 }
 
@@ -168,7 +168,7 @@ function renderPreview() {
 }
 ["fPreview","fAnimate","fMediaUrl","fName","fMethod"].forEach((id) => $(id).addEventListener("input", renderPreview));
 
-function showSavedFeedback(message = "Firestoreに保存しました") {
+function showSavedFeedback(message = "保存しました") {
   const btn = $("saveBtn");
   btn.textContent = "✓ 編集完了！";
   btn.classList.add("saved");
@@ -176,7 +176,7 @@ function showSavedFeedback(message = "Firestoreに保存しました") {
   $("status").textContent = message;
   $("saveToast").classList.add("show");
   setTimeout(() => {
-    btn.textContent = "Firestoreへ保存";
+    btn.textContent = "保存する";
     btn.classList.remove("saved");
     btn.disabled = false;
   }, 1700);
@@ -193,20 +193,20 @@ $("saveBtn").onclick = async () => {
   const old = items.find((i) => i.id === selectedId) || {};
   $("saveBtn").disabled = true;
   $("saveBtn").textContent = "保存中...";
-  $("status").textContent = "Firestoreへ保存中...";
+  $("status").textContent = "保存する中...";
   try {
     await saveLibraryItem(x);
     if (selectedId && selectedId !== x.id && old.id) {
       await deleteLibraryItem(old);
     }
     selectedId = x.id;
-    showSavedFeedback("Firestoreに保存しました");
+    showSavedFeedback("保存しました");
   } catch (error) {
     console.error(error);
     $("saveBtn").disabled = false;
-    $("saveBtn").textContent = "Firestoreへ保存";
+    $("saveBtn").textContent = "保存する";
     $("status").textContent = "保存に失敗しました";
-    alert("保存に失敗しました。Firestore Rules とログイン権限を確認してください。\n\n" + (error.message || error));
+    alert("保存に失敗しました。保存権限とログイン状態を確認してください。\n\n" + (error.message || error));
   }
 };
 
@@ -229,10 +229,10 @@ $("sideSearch").oninput = renderList;
 
 $("seedBtn").onclick = async () => {
   if (!adminAllowed) return;
-  if (!confirm("初期データをFirestoreへ登録しますか？ 同じIDは初期内容で上書きされます。")) return;
+  if (!confirm("初期データをデータベースへ登録しますか？ 同じIDは初期内容で上書きされます。")) return;
   $("status").textContent = "初期データを登録中...";
   try { await seedLibraryItems(window.STARTER_ITEMS || []); showSavedFeedback("初期データを登録しました"); }
-  catch (error) { console.error(error); alert("初期データ登録に失敗しました。Firestore Rulesを確認してください。"); }
+  catch (error) { console.error(error); alert("初期データ登録に失敗しました。アクセスルールを確認してください。"); }
 };
 
 $("exportBtn").onclick = () => {
@@ -251,9 +251,9 @@ $("importFile").onchange = (e) => {
     try {
       const arr = JSON.parse(reader.result);
       if (!Array.isArray(arr)) throw new Error("JSON must be an array");
-      if (!confirm(`${arr.length}件をFirestoreへ登録しますか？ 同じIDは上書きされます。`)) return;
+      if (!confirm(`${arr.length}件をデータベースへ登録しますか？ 同じIDは上書きされます。`)) return;
       await seedLibraryItems(arr);
-      showSavedFeedback("JSONをFirestoreへ登録しました");
+      showSavedFeedback("JSONをデータベースへ登録しました");
     } catch (error) {
       console.error(error);
       alert("JSONの読み込みに失敗しました。");

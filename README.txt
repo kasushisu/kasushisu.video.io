@@ -1,8 +1,8 @@
-Business Video Visual Library - Firestore 無料版
+Business Video Visual Library - データベース 無料版
 =================================================
 
 無料構成:
-- Firestore: コンテンツデータ
+- データベース: コンテンツデータ
 - Authentication: 管理者Googleログイン
 - GitHub Pages: HTML/CSS/JS + 画像/動画
 - Firebase Storage: 使用しません
@@ -14,7 +14,7 @@ Business Video Visual Library - Firestore 無料版
 - admin.html
 
 初回:
-1. Firestore Rulesを公開
+1. アクセスルールを公開
 2. Authentication Googleを有効化
 3. Authorized domainsにGitHub Pagesドメイン追加
 4. GitHub Pagesへ本ファイル一式をアップロード

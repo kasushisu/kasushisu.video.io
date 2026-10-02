@@ -1,20 +1,20 @@
 <!doctype html>
 <html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>管理画面 - Business Video Visual Library</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="admin.css"></head>
 <body>
-<div id="saveToast" class="saveToast" role="status" aria-live="polite"><span class="saveToastIcon">✓</span><div><b>編集完了！</b><small>Firestoreに保存しました</small></div></div>
+<div id="saveToast" class="saveToast" role="status" aria-live="polite"><span class="saveToastIcon">✓</span><div><b>編集完了！</b><small>保存しました</small></div></div>
 <div id="authGate" class="authGate"><div class="authCard"><div class="authMark">⚙</div><h1>管理画面</h1><p id="authMessage">編集するにはGoogleアカウントでログインしてください。</p><button id="loginBtn" class="btn primary authButton">Googleでログイン</button><button id="logoutGateBtn" class="btn ghost authButton hidden">ログアウト</button><div id="authDetail" class="authDetail"></div><p class="authHint">初回のみ、最初にログインしたGoogleアカウントが管理者として登録されます。</p></div></div>
-<div class="adminShell" id="adminShell" aria-hidden="true"><aside class="sidebar"><div class="brand">Visual Library CMS</div><div class="sideNote">Firestoreに保存され、公開ページへ全端末共通で反映されます。画像・動画はGitHubのURLを使用します。</div>
+<div class="adminShell" id="adminShell" aria-hidden="true"><aside class="sidebar"><div class="brand">Visual Library CMS</div><div class="sideNote">保存すると、公開ページへ全端末共通で反映されます。画像・動画はGitHubのURLを使用します。</div>
 <div class="accountBox"><div id="accountName" class="accountName"></div><div id="accountEmail" class="accountEmail"></div><button id="logoutBtn" class="miniLogout">ログアウト</button></div>
 <div class="sideActions"><button id="newBtn" class="btn primary">＋ 新規</button><a class="btn light" style="text-align:center;text-decoration:none" href="index.html">公開ページ</a></div>
 <input id="sideSearch" class="sideSearch" placeholder="項目を検索"><div class="itemList" id="itemList"></div></aside>
 <main class="editor"><div class="editorTop"><div><h1>項目を編集</h1><div class="status" id="status"></div></div><div class="toolbar"><button id="seedBtn" class="btn ghost">初期データを登録</button><button id="exportBtn" class="btn ghost">JSON書き出し</button><label class="btn ghost" style="display:inline-block">JSON読込<input id="importFile" type="file" accept="application/json" class="hidden"></label></div></div>
-<div id="emptyFirestoreBanner" class="cloudBanner hidden"><b>Firestoreに項目がありません。</b><span>「初期データを登録」を押すと、現在の見本データをクラウドへ登録できます。</span></div>
+<div id="emptyデータベースBanner" class="cloudBanner hidden"><b>データベースに項目がありません。</b><span>「初期データを登録」を押すと、現在の見本データをクラウドへ登録できます。</span></div>
 <div class="formGrid"><section class="panelBox"><h2>基本情報</h2>
 <div class="two"><div class="field"><label>ID</label><input id="fId"></div><div class="field"><label>カテゴリ</label><select id="fCategory"></select></div></div>
 <div class="field"><label>名称</label><input id="fName"></div><div class="field"><label>一言説明</label><input id="fDesc"></div>
 <div class="two"><div class="field"><label>作り方</label><select id="fMethod"></select></div><div class="field"><label>難易度</label><select id="fLevel"><option>初級</option><option>中級</option><option>上級</option></select></div></div>
 <div class="field"><label>向いている用途</label><input id="fUse"></div><div class="field"><label>技術メモ</label><textarea id="fTech"></textarea></div><div class="field"><label>使うときのポイント</label><textarea id="fNote"></textarea></div><div class="field"><label>検索ワード</label><input id="fTags"></div><div class="field"><label>参考YouTube URL</label><input id="fYoutube" placeholder="https://www.youtube.com/..."></div>
-<div class="toolbar"><button id="saveBtn" class="btn primary">Firestoreへ保存</button><button id="deleteBtn" class="btn danger">削除</button></div></section>
+<div class="toolbar"><button id="saveBtn" class="btn primary">保存する</button><button id="deleteBtn" class="btn danger">削除</button></div></section>
 <section class="panelBox"><h2>プレビュー</h2><div id="previewAdmin" class="previewAdmin"></div>
 <div class="field" style="margin-top:14px"><label>内蔵プレビュー</label><select id="fPreview"></select></div><div class="field"><label><input id="fAnimate" type="checkbox" style="width:auto;margin-right:6px">分かりやすい場合だけアニメーションする</label></div>
 <div class="uploadBox">

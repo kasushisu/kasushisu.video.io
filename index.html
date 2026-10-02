@@ -15,20 +15,20 @@
   <div class="toplinks">
     <a class="toplink primary adminTopButton" href="admin.html">⚙ 管理画面を開く</a>
     <a class="toplink" href="https://www.generalasahi.co.jp/cd/movie/topics/movie-effect/" target="_blank" rel="noopener">参考記事：動画エフェクト</a>
-    <span class="toplink syncStatus" id="syncStatus">● Firestore接続中...</span>
+    <span class="toplink syncStatus" id="syncStatus">● データベース接続中...</span>
   </div>
   <div class="searchRow"><div class="search"><input id="q" placeholder="例：インタビュー、KPI、パン、トランジション、UI"></div><div class="count"><span id="count">0</span>&nbsp;件</div></div>
   <div class="fl">カテゴリ</div><div class="filters" id="catFilters"></div>
   <div class="fl">作り方</div><div class="filters" id="methodFilters"></div>
 </div></header>
 <main><div class="wrap">
-  <div class="intro"><div><h2>Visual Library</h2><p>一覧では「何をしている表現か」が一目で分かることを優先しています。</p></div><p>管理画面で保存するとFirestore経由で全端末に反映されます。</p></div>
+  <div class="intro"><div><h2>Visual Library</h2><p>一覧では「何をしている表現か」が一目で分かることを優先しています。</p></div><p>管理画面で保存するとデータベース経由で全端末に反映されます。</p></div>
   <div class="grid" id="grid"></div><div class="empty" id="empty">条件に一致する見本がありません。</div>
 </div></main>
 <div class="modal" id="modal"><div class="sheet">
   <div class="sheetTop"><div class="bigPrev" id="bigPrev"></div><div class="head"><button class="close" id="close">×</button><div class="code" id="dCode"></div><h2 id="dName"></h2><p id="dDesc"></p><div class="pills" id="dPills"></div></div></div>
   <div class="details"><div><div class="block"><h4>向いている用途</h4><p id="dUse"></p></div><div class="note"><b>使うときのポイント</b><p id="dNote"></p></div></div><div><div class="tech"><h4>技術メモ</h4><p id="dTech"></p><div class="yt"><a id="dYT" class="ytLink" href="#" target="_blank" rel="noopener"><div>参考YouTube / チュートリアルを見る</div><div class="play">▶</div></a></div></div><div class="block" style="margin-top:20px"><h4>検索ワード</h4><p id="dTags"></p></div></div></div>
-  <div class="foot">管理画面の編集内容はFirestoreに保存されます。画像・動画はGitHub上のファイルを参照します。</div>
+  <div class="foot">管理画面の編集内容はデータベースに保存されます。画像・動画はGitHub上のファイルを参照します。</div>
 </div></div>
 <script src="data.js"></script>
 <script src="app.js"></script>

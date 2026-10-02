@@ -68,12 +68,12 @@ render();
 subscribeLibraryItems((firestoreItems) => {
   if (firestoreItems.length) items = firestoreItems;
   else items = JSON.parse(JSON.stringify(window.STARTER_ITEMS || []));
-  syncStatus.textContent = firestoreItems.length ? "● Firestore同期済み" : "● Firestoreは空（初期見本を表示）";
+  syncStatus.textContent = firestoreItems.length ? "● データベース同期済み" : "● データベースは空（初期見本を表示）";
   syncStatus.classList.add("online");
   render();
 }, (error) => {
   console.error(error);
-  syncStatus.textContent = "● Firestore接続エラー（初期見本を表示）";
+  syncStatus.textContent = "● データベース接続エラー（初期見本を表示）";
   syncStatus.classList.add("error");
   items = JSON.parse(JSON.stringify(window.STARTER_ITEMS || []));
   render();

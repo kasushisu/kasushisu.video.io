@@ -4,14 +4,14 @@
 無料運用は次の構成です。
 
 - Firebase Authentication：Googleログイン
-- Cloud Firestore：タイトル・説明・カテゴリ・YouTube URL・画像/動画URLなどを保存
+- Cloud データベース：タイトル・説明・カテゴリ・YouTube URL・画像/動画URLなどを保存
 - GitHub Pages：サイト本体 + プレビュー画像/動画を保存
 
-## 1. Firestore
+## 1. データベース
 
 すでに作成済みであればそのままでOKです。
 
-Firebase Console → Firestore Database → ルール に
+Firebase Console → データベース Database → ルール に
 `firestore.rules` の内容を貼り付けて公開してください。
 
 ## 2. Authentication
@@ -53,7 +53,7 @@ GitHub Pagesで公開後、`admin.html` を開きます。
 
 ## 6. 文章・項目の編集
 
-adminで編集して「Firestoreへ保存」を押すだけです。
+adminで編集して「保存する」を押すだけです。
 別PC・スマホの公開ページにも反映されます。
 
 ## 7. 画像・動画を変更する方法
