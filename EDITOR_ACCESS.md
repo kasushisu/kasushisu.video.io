@@ -24,3 +24,8 @@
 
 この版へ切り替えるときは、Firebase Console の
 **Firestore Database → ルール** に `firestore.rules` の内容を貼り付けて **公開** してください。
+
+
+## YouTube自動検索
+
+YouTubeの自動検索は、カードに表示されている名称をそのまま使用します。After Effectsなどの製品名・英語表記は無理にカタカナ化しません。

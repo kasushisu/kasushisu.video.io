@@ -3,6 +3,36 @@ import { subscribeLibraryItems, trackEvent } from "./firebase.js";
 let items = JSON.parse(JSON.stringify(window.STARTER_ITEMS || []));
 let activeCat = "すべて";
 let activeMethod = "すべて";
+
+function youtubeAutoQuery(item) {
+  const name = String(item?.name || "").trim();
+
+  // Use the wording shown on the card as-is.
+  // Keep product / technical terms such as "After Effects" in their normal notation.
+  if (item?.method === "AE") {
+    return `After Effects ${name}`.trim();
+  }
+  if (item?.method === "撮影") {
+    return `${name} カメラワーク`.trim();
+  }
+  if (item?.method === "撮影＋AE") {
+    return `${name} After Effects`.trim();
+  }
+  return name;
+}
+
+function youtubeLinkFor(item) {
+  const saved = String(item?.youtube || "").trim();
+  const isSearchUrl = /youtube\.com\/results\?search_query=/i.test(saved);
+
+  // Respect a manually specified direct YouTube video/channel URL.
+  if (saved && !isSearchUrl) return saved;
+
+  // Automatic searches are rebuilt from the exact card wording.
+  return "https://www.youtube.com/results?search_query=" +
+    encodeURIComponent(youtubeAutoQuery(item));
+}
+
 const q = document.getElementById("q");
 const grid = document.getElementById("grid");
 const count = document.getElementById("count");
@@ -54,7 +84,7 @@ function openDetail(id) {
   document.getElementById("dTech").textContent = x.tech || "";
   document.getElementById("dNote").textContent = x.note || "";
   document.getElementById("dTags").textContent = x.tags || "";
-  document.getElementById("dYT").href = x.youtube || ("https://www.youtube.com/results?search_query=" + encodeURIComponent(x.name + " tutorial"));
+  document.getElementById("dYT").href = youtubeLinkFor(x);
   trackEvent("library_item_open", { item_id: x.id, category: x.category || "" });
   modal.classList.add("open");
   document.body.style.overflow = "hidden";

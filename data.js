@@ -9,7 +9,7 @@ window.STARTER_ITEMS = [
     "tech": "Position + Opacity / Easy Ease",
     "note": "移動は20〜40px程度。大きく動かしすぎない。",
     "tags": "タイトル 見出し フェード",
-    "youtube": "https://www.youtube.com/results?search_query=After+Effects+title+fade+up+tutorial",
+    "youtube": "https://www.youtube.com/results?search_query=%E3%82%A2%E3%83%95%E3%82%BF%E3%83%BC%E3%82%A8%E3%83%95%E3%82%A7%E3%82%AF%E3%83%88+%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB+%E3%83%95%E3%82%A7%E3%83%BC%E3%83%89%E3%82%A2%E3%83%83%E3%83%97+%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB",
     "preview": "title",
     "animate": true
   },
@@ -23,7 +23,7 @@ window.STARTER_ITEMS = [
     "tech": "Track Matte / Mask / Position",
     "note": "出現方向を画面内で統一する。",
     "tags": "マスク リビール テキスト",
-    "youtube": "https://www.youtube.com/results?search_query=After+Effects+mask+reveal+text+tutorial",
+    "youtube": "https://www.youtube.com/results?search_query=%E3%82%A2%E3%83%95%E3%82%BF%E3%83%BC%E3%82%A8%E3%83%95%E3%82%A7%E3%82%AF%E3%83%88+%E3%83%9E%E3%82%B9%E3%82%AF+%E3%83%AA%E3%83%93%E3%83%BC%E3%83%AB+%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88+%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB",
     "preview": "mask",
     "animate": true
   },
@@ -37,7 +37,7 @@ window.STARTER_ITEMS = [
     "tech": "Scale / Color / Opacity",
     "note": "ビジネス動画では弾ませすぎない。",
     "tags": "強調 ポップ キーワード",
-    "youtube": "https://www.youtube.com/results?search_query=After+Effects+text+pop+animation+tutorial",
+    "youtube": "https://www.youtube.com/results?search_query=%E3%82%A2%E3%83%95%E3%82%BF%E3%83%BC%E3%82%A8%E3%83%95%E3%82%A7%E3%82%AF%E3%83%88+%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88+%E3%83%9D%E3%83%83%E3%83%97+%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3+%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB",
     "preview": "keyword",
     "animate": false
   },
@@ -51,7 +51,7 @@ window.STARTER_ITEMS = [
     "tech": "Scale / Opacity / Stagger",
     "note": "3〜5フレームずつずらすと自然。",
     "tags": "アイコン 機能 特徴",
-    "youtube": "https://www.youtube.com/results?search_query=After+Effects+icon+pop+animation+tutorial",
+    "youtube": "https://www.youtube.com/results?search_query=%E3%82%A2%E3%83%95%E3%82%BF%E3%83%BC%E3%82%A8%E3%83%95%E3%82%A7%E3%82%AF%E3%83%88+%E3%82%A2%E3%82%A4%E3%82%B3%E3%83%B3+%E3%83%9D%E3%83%83%E3%83%97+%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3+%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB",
     "preview": "icons",
     "animate": true
   },
@@ -79,7 +79,7 @@ window.STARTER_ITEMS = [
     "tech": "Grid / Position / Opacity",
     "note": "3項目程度に絞ると読みやすい。",
     "tags": "KPI カード 数字",
-    "youtube": "https://www.youtube.com/results?search_query=After+Effects+KPI+card+animation",
+    "youtube": "https://www.youtube.com/results?search_query=%E3%82%A2%E3%83%95%E3%82%BF%E3%83%BC%E3%82%A8%E3%83%95%E3%82%A7%E3%82%AF%E3%83%88+%E3%82%B1%E3%83%BC%E3%83%94%E3%83%BC%E3%82%A2%E3%82%A4+%E3%82%AB%E3%83%BC%E3%83%89+%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3+%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB",
     "preview": "kpi",
     "animate": false
   },
@@ -107,7 +107,7 @@ window.STARTER_ITEMS = [
     "tech": "Shape Layer / Trim Paths",
     "note": "1→2→3の順で視線を誘導する。",
     "tags": "フロー ステップ 手順",
-    "youtube": "https://www.youtube.com/results?search_query=After+Effects+process+flow+animation",
+    "youtube": "https://www.youtube.com/results?search_query=%E3%82%A2%E3%83%95%E3%82%BF%E3%83%BC%E3%82%A8%E3%83%95%E3%82%A7%E3%82%AF%E3%83%88+%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9+%E3%83%95%E3%83%AD%E3%83%BC+%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3+%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB",
     "preview": "flow",
     "animate": true
   },
@@ -121,7 +121,7 @@ window.STARTER_ITEMS = [
     "tech": "Layout / Position / Opacity",
     "note": "After側だけアクセント色を使う。",
     "tags": "Before After 改善 比較",
-    "youtube": "https://www.youtube.com/results?search_query=After+Effects+before+after+animation",
+    "youtube": "https://www.youtube.com/results?search_query=%E3%82%A2%E3%83%95%E3%82%BF%E3%83%BC%E3%82%A8%E3%83%95%E3%82%A7%E3%82%AF%E3%83%88+%E3%83%93%E3%83%95%E3%82%A9%E3%83%BC+%E3%82%A2%E3%83%95%E3%82%BF%E3%83%BC+%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3+%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB",
     "preview": "beforeafter",
     "animate": false
   },
@@ -135,7 +135,7 @@ window.STARTER_ITEMS = [
     "tech": "Grid / Safe Area / Position",
     "note": "5:5〜6:4、余白を広く取る。",
     "tags": "2カラム 左右 レイアウト",
-    "youtube": "https://www.youtube.com/results?search_query=corporate+video+layout+motion+graphics",
+    "youtube": "https://www.youtube.com/results?search_query=%E3%82%B3%E3%83%BC%E3%83%9D%E3%83%AC%E3%83%BC%E3%83%88+%E3%83%93%E3%83%87%E3%82%AA+%E3%83%AC%E3%82%A4%E3%82%A2%E3%82%A6%E3%83%88+%E3%83%A2%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%B0%E3%83%A9%E3%83%95%E3%82%A3%E3%83%83%E3%82%AF%E3%82%B9",
     "preview": "split",
     "animate": false
   },
@@ -149,7 +149,7 @@ window.STARTER_ITEMS = [
     "tech": "Lower Third / Safe Area",
     "note": "顔とテロップが競合しない位置に置く。",
     "tags": "人物 名前 役職 インタビュー",
-    "youtube": "https://www.youtube.com/results?search_query=After+Effects+lower+third+corporate+tutorial",
+    "youtube": "https://www.youtube.com/results?search_query=%E3%82%A2%E3%83%95%E3%82%BF%E3%83%BC%E3%82%A8%E3%83%95%E3%82%A7%E3%82%AF%E3%83%88+%E3%83%AD%E3%83%BC%E3%83%AF%E3%83%BC%E3%82%B5%E3%83%BC%E3%83%89+%E3%82%B3%E3%83%BC%E3%83%9D%E3%83%AC%E3%83%BC%E3%83%88+%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB",
     "preview": "lowerthird",
     "animate": true
   },
@@ -163,7 +163,7 @@ window.STARTER_ITEMS = [
     "tech": "Pre-compose / Scale / Position",
     "note": "画面キャプチャを小さくしすぎない。",
     "tags": "UI SaaS 解説 パネル",
-    "youtube": "https://www.youtube.com/results?search_query=After+Effects+SaaS+UI+animation+tutorial",
+    "youtube": "https://www.youtube.com/results?search_query=%E3%82%A2%E3%83%95%E3%82%BF%E3%83%BC%E3%82%A8%E3%83%95%E3%82%A7%E3%82%AF%E3%83%88+%E3%82%B5%E3%83%BC%E3%82%B9+%E3%83%A6%E3%83%BC%E3%82%A2%E3%82%A4+%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3+%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB",
     "preview": "uipanel",
     "animate": false
   },
@@ -219,7 +219,7 @@ window.STARTER_ITEMS = [
     "tech": "フォーカス送り / Blurで模擬",
     "note": "意味のある情報切替に使う。",
     "tags": "ピント 手前 奥 フォーカス",
-    "youtube": "https://www.youtube.com/results?search_query=rack+focus+filmmaking+tutorial",
+    "youtube": "https://www.youtube.com/results?search_query=%E3%83%A9%E3%83%83%E3%82%AF%E3%83%95%E3%82%A9%E3%83%BC%E3%82%AB%E3%82%B9+%E3%83%95%E3%82%A3%E3%83%AB%E3%83%A0%E3%83%A1%E3%82%A4%E3%82%AD%E3%83%B3%E3%82%B0+%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB",
     "preview": "focus",
     "animate": true
   },
@@ -233,7 +233,7 @@ window.STARTER_ITEMS = [
     "tech": "素材選定 / カット編集",
     "note": "話している内容と一致する画を選ぶ。",
     "tags": "B-roll インタビュー 差し込み",
-    "youtube": "https://www.youtube.com/results?search_query=B-roll+corporate+interview+editing",
+    "youtube": "https://www.youtube.com/results?search_query=%E3%83%93%E3%83%BC%E3%83%AD%E3%83%BC%E3%83%AB+%E3%82%B3%E3%83%BC%E3%83%9D%E3%83%AC%E3%83%BC%E3%83%88+%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%93%E3%83%A5%E3%83%BC+%E3%82%A8%E3%83%87%E3%82%A3%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0",
     "preview": "broll",
     "animate": false
   },
@@ -261,7 +261,7 @@ window.STARTER_ITEMS = [
     "tech": "Shot Size Design",
     "note": "同じ動作を複数サイズで撮っておく。",
     "tags": "ワイド ミディアム クローズ",
-    "youtube": "https://www.youtube.com/results?search_query=wide+medium+close+shot+sequence+filmmaking",
+    "youtube": "https://www.youtube.com/results?search_query=%E3%83%AF%E3%82%A4%E3%83%89+%E3%83%9F%E3%83%87%E3%82%A3%E3%82%A2%E3%83%A0+%E3%82%AF%E3%83%AD%E3%83%BC%E3%82%BA+%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88+%E3%82%B7%E3%83%BC%E3%82%AF%E3%82%A8%E3%83%B3%E3%82%B9+%E3%83%95%E3%82%A3%E3%83%AB%E3%83%A0%E3%83%A1%E3%82%A4%E3%82%AD%E3%83%B3%E3%82%B0",
     "preview": "shotseq",
     "animate": false
   },
@@ -275,7 +275,7 @@ window.STARTER_ITEMS = [
     "tech": "Time Remap / Graph Editor",
     "note": "ビジネス動画では短く控えめに。",
     "tags": "速度 加速 減速",
-    "youtube": "https://www.youtube.com/results?search_query=After+Effects+speed+ramp+tutorial",
+    "youtube": "https://www.youtube.com/results?search_query=%E3%82%A2%E3%83%95%E3%82%BF%E3%83%BC%E3%82%A8%E3%83%95%E3%82%A7%E3%82%AF%E3%83%88+%E3%82%B9%E3%83%94%E3%83%BC%E3%83%89%E3%83%A9%E3%83%B3%E3%83%97+%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB",
     "preview": "speedramp",
     "animate": true
   },
@@ -289,7 +289,7 @@ window.STARTER_ITEMS = [
     "tech": "3D Layer / Camera",
     "note": "動かしすぎると写真が不自然になる。",
     "tags": "静止画 2.5D 奥行き",
-    "youtube": "https://www.youtube.com/results?search_query=After+Effects+parallax+photo+tutorial",
+    "youtube": "https://www.youtube.com/results?search_query=%E3%82%A2%E3%83%95%E3%82%BF%E3%83%BC%E3%82%A8%E3%83%95%E3%82%A7%E3%82%AF%E3%83%88+%E3%83%91%E3%83%A9%E3%83%A9%E3%83%83%E3%82%AF%E3%82%B9+%E3%83%95%E3%82%A9%E3%83%88+%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB",
     "preview": "parallax",
     "animate": true
   },
@@ -303,7 +303,7 @@ window.STARTER_ITEMS = [
     "tech": "Pre-compose / Drop Shadow",
     "note": "ブラウザ枠より画面内容を大きく見せる。",
     "tags": "PC ブラウザ SaaS UI",
-    "youtube": "https://www.youtube.com/results?search_query=After+Effects+website+UI+mockup+animation",
+    "youtube": "https://www.youtube.com/results?search_query=%E3%82%A2%E3%83%95%E3%82%BF%E3%83%BC%E3%82%A8%E3%83%95%E3%82%A7%E3%82%AF%E3%83%88+%E3%82%A6%E3%82%A7%E3%83%96%E3%82%B5%E3%82%A4%E3%83%88+%E3%83%A6%E3%83%BC%E3%82%A2%E3%82%A4+%E3%83%A2%E3%83%83%E3%82%AF%E3%82%A2%E3%83%83%E3%83%97+%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3",
     "preview": "browser",
     "animate": false
   },
@@ -317,7 +317,7 @@ window.STARTER_ITEMS = [
     "tech": "Position / Scale / Motion Path",
     "note": "クリック対象側にも小さく反応を付ける。",
     "tags": "カーソル クリック ボタン",
-    "youtube": "https://www.youtube.com/results?search_query=After+Effects+cursor+click+animation+tutorial",
+    "youtube": "https://www.youtube.com/results?search_query=%E3%82%A2%E3%83%95%E3%82%BF%E3%83%BC%E3%82%A8%E3%83%95%E3%82%A7%E3%82%AF%E3%83%88+%E3%82%AB%E3%83%BC%E3%82%BD%E3%83%AB+%E3%82%AF%E3%83%AA%E3%83%83%E3%82%AF+%E3%82%A2%E3%83%8B%E3%83%A1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3+%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB",
     "preview": "cursor",
     "animate": true
   },
@@ -331,7 +331,7 @@ window.STARTER_ITEMS = [
     "tech": "Opacity / Dip to Black",
     "note": "企業動画で使いやすい定番。長すぎるとテンポが落ちる。",
     "tags": "フェード 暗転 明転",
-    "youtube": "https://www.youtube.com/results?search_query=After+Effects+fade+transition+tutorial",
+    "youtube": "https://www.youtube.com/results?search_query=%E3%82%A2%E3%83%95%E3%82%BF%E3%83%BC%E3%82%A8%E3%83%95%E3%82%A7%E3%82%AF%E3%83%88+%E3%83%95%E3%82%A7%E3%83%BC%E3%83%89+%E3%83%88%E3%83%A9%E3%83%B3%E3%82%B8%E3%82%B7%E3%83%A7%E3%83%B3+%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB",
     "preview": "fade",
     "animate": true
   },
@@ -345,7 +345,7 @@ window.STARTER_ITEMS = [
     "tech": "Opacity Crossfade",
     "note": "意味の近いカット同士をつなぐと自然。",
     "tags": "ディゾルブ クロスフェード",
-    "youtube": "https://www.youtube.com/results?search_query=After+Effects+cross+dissolve+transition",
+    "youtube": "https://www.youtube.com/results?search_query=%E3%82%A2%E3%83%95%E3%82%BF%E3%83%BC%E3%82%A8%E3%83%95%E3%82%A7%E3%82%AF%E3%83%88+%E3%82%AF%E3%83%AD%E3%82%B9%E3%83%87%E3%82%A3%E3%82%BE%E3%83%AB%E3%83%96+%E3%83%88%E3%83%A9%E3%83%B3%E3%82%B8%E3%82%B7%E3%83%A7%E3%83%B3",
     "preview": "dissolve",
     "animate": true
   },
@@ -359,7 +359,7 @@ window.STARTER_ITEMS = [
     "tech": "Linear Wipe / Mask / Track Matte",
     "note": "ビジネス動画では直線ワイプが使いやすい。",
     "tags": "ワイプ 左右 上下",
-    "youtube": "https://www.youtube.com/results?search_query=After+Effects+wipe+transition+tutorial",
+    "youtube": "https://www.youtube.com/results?search_query=%E3%82%A2%E3%83%95%E3%82%BF%E3%83%BC%E3%82%A8%E3%83%95%E3%82%A7%E3%82%AF%E3%83%88+%E3%83%AF%E3%82%A4%E3%83%97+%E3%83%88%E3%83%A9%E3%83%B3%E3%82%B8%E3%82%B7%E3%83%A7%E3%83%B3+%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB",
     "preview": "wipe",
     "animate": true
   },
@@ -373,7 +373,7 @@ window.STARTER_ITEMS = [
     "tech": "Position / Motion Blur",
     "note": "方向を統一すると資料動画と相性が良い。",
     "tags": "スライド プッシュ 横移動",
-    "youtube": "https://www.youtube.com/results?search_query=After+Effects+push+slide+transition+tutorial",
+    "youtube": "https://www.youtube.com/results?search_query=%E3%82%A2%E3%83%95%E3%82%BF%E3%83%BC%E3%82%A8%E3%83%95%E3%82%A7%E3%82%AF%E3%83%88+%E3%83%97%E3%83%83%E3%82%B7%E3%83%A5+%E3%82%B9%E3%83%A9%E3%82%A4%E3%83%89+%E3%83%88%E3%83%A9%E3%83%B3%E3%82%B8%E3%82%B7%E3%83%A7%E3%83%B3+%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB",
     "preview": "pushtrans",
     "animate": true
   }
